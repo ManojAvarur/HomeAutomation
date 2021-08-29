@@ -34,5 +34,9 @@ StaticJsonDocument<96> User_request_check;
 int DEBUG_CODE = 0;
 int DEBUG_DELAY_TIME = 1000; // 1 sec
 
+// ---------------- Execution Time Period -------------
+unsigned long PERIOD = 5 * 60 * 1000L; // Executes in every 5 mins
+unsigned long TARGET_TIME = 0L;
+
 // _________________ Function Declaration -----------
 void setup_wifi();
