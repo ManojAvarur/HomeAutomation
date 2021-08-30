@@ -17,7 +17,7 @@ WiFiClient client;
 // ------------------ Water Level Sensor Settings ------
 // For Tank
 #define WL_T_LOW D0 // LOW
-#define WL_T_MID D3 // LOW
+#define WL_T_MID D3 // MID
 #define WL_T_HIGH D5 // HIGH
 
 // For Sump
@@ -31,12 +31,16 @@ StaticJsonDocument<96> User_request_check;
 // StaticJsonDocument<768> TimeStamp;
 
 // ----------------- DEBUG CODE ---------------------
-int DEBUG_CODE = 0;
-int DEBUG_DELAY_TIME = 1000; // 1 sec
+bool DEBUG_CODE = false;
+int DEBUG_DELAY_TIME = 5000; // 1 sec
 
 // ---------------- Execution Time Period -------------
 unsigned long PERIOD = 5 * 60 * 1000L; // Executes in every 5 mins
 unsigned long TARGET_TIME = 0L;
 
 // _________________ Function Declaration -----------
+bool low_water_level_in_tank( String from );
+bool mid_water_level_in_tank( String from );
+bool high_water_level_in_tank( String from );
+bool low_water_level_in_sump( String from );
 void setup_wifi();

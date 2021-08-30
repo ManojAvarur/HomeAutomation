@@ -2,7 +2,7 @@ void setup(){
     Serial.begin(9600);
 
     // Setting Up Wifi
-    setup_wifi();
+//    setup_wifi();
 
     // Settings for Water Level Sensor
     pinMode(RELAY_1, OUTPUT);
