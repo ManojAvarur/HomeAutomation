@@ -3,6 +3,8 @@
 String URL = "http://iotproject.coolpage.biz/home_automation";
 String USER_ID = "0e7f970107b5e113284bbb706da47ba2";
 
+int INITIAL_PUMP_LOAD_TIME = 5000; // 5 Sec
+
 // ------------------ Wi-Fi Settings ------------------
 #include <ESP8266WiFi.h>
 #include <ESP8266HTTPClient.h>
@@ -13,6 +15,8 @@ WiFiClient client;
 
 // ------------------ Relay Sensor Settings -----------
 #define RELAY_1 D7 // For Water Pump
+#define ON HIGH // Turing on the pump / relay
+#define OFF LOW // Turing off the pump / relay
 
 // ------------------ Water Level Sensor Settings ------
 // For Tank
