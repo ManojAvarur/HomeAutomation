@@ -61,6 +61,27 @@ bool high_water_level_in_tank( String from ){
     }
 }
 
+bool mid_water_level_in_sump( String from ){
+    if( DEBUG_CODE ){
+        Serial.print("\nDEBUG CODE ENABLED : \n\tlow_water_level_in_tank called from ' " + from + " '\n\n");
+        Serial.print("\tLOW = " + String( digitalRead( WL_S_MID ) ) );
+        delay( DEBUG_DELAY_TIME );
+    }
+
+    if( digitalRead( WL_S_MID ) == 0 ){
+        return false;
+    }
+
+    if( digitalRead( WL_S_MID ) == 1 ){
+        pinMode( WL_S_MID, OUTPUT);
+        digitalWrite( WL_S_MID, LOW);
+        pinMode( WL_S_MID, INPUT);
+        if( digitalRead( WL_S_MID ) == 1 ){
+            return true;
+        }
+    }
+}
+
 bool low_water_level_in_sump( String from ){
     if( DEBUG_CODE ){
         Serial.print("\nDEBUG CODE ENABLED : \n\tlow_water_level_in_tank called from ' " + from + " '\n\n");
@@ -82,23 +103,32 @@ bool low_water_level_in_sump( String from ){
     }
 }
 
-bool mid_water_level_in_sump( String from ){
+int water_level_in_tank( String from ){
     if( DEBUG_CODE ){
-        Serial.print("\nDEBUG CODE ENABLED : \n\tlow_water_level_in_tank called from ' " + from + " '\n\n");
-        Serial.print("\tLOW = " + String( digitalRead( WL_S_MID ) ) );
+        Serial.print("\nDEBUG CODE ENABLED : \n\twater_level_in_tank called from ' " + from + " '\n\n");
+        // Serial.print("\tLOW = " + String( digitalRead( WL_S_MID ) ) );
         delay( DEBUG_DELAY_TIME );
     }
 
-    if( digitalRead( WL_S_MID ) == 0 ){
-        return false;
+    if( high_water_level_in_tank("water_level_tank_in_tank") ){
+        return 2;
+    } else if( mid_water_level_in_tank("water_level_tank_in_tank") ){
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
+int water_level_in_sump( String from ){
+    if( DEBUG_CODE ){
+        Serial.print("\nDEBUG CODE ENABLED : \n\twater_level_in_sump called from ' " + from + " '\n\n");
+        // Serial.print("\tLOW = " + String( digitalRead( WL_S_MID ) ) );
+        delay( DEBUG_DELAY_TIME );
     }
 
-    if( digitalRead( WL_S_MID ) == 1 ){
-        pinMode( WL_S_MID, OUTPUT);
-        digitalWrite( WL_S_MID, LOW);
-        pinMode( WL_S_MID, INPUT);
-        if( digitalRead( WL_S_MID ) == 1 ){
-            return true;
-        }
+    if( mid_water_level_in_sump("water_level_in_sump") ){
+        return 1;
+    } else {
+        return 0;
     }
 }
