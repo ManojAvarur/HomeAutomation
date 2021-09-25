@@ -1,4 +1,6 @@
 void setup_wifi(){
+  int while_counter = 0;
+  int delay_counter = 0;
   WiFi.begin(SSID, PASSWORD);
   Serial.println("Connecting");
   while(WiFi.status() != WL_CONNECTED) {

@@ -1,172 +1,190 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Circuit Diagram, cdlibrary.dll 4.0.0.0 -->
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" width="840" height="860" xmlns="http://www.w3.org/2000/svg">
-	<line x1="260" y1="390" x2="300" y2="390" style="stroke:rgba(255, 165, 0, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="300" y1="390" x2="300" y2="490" style="stroke:rgba(255, 165, 0, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="120" y1="490" x2="300" y2="490" style="stroke:rgba(255, 165, 0, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="120" y1="490" x2="120" y2="630" style="stroke:rgba(255, 165, 0, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="120" y1="630" x2="160" y2="630" style="stroke:rgba(255, 165, 0, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="410" y1="730" x2="410" y2="760" style="stroke:rgba(255, 0, 0, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="300" y1="730" x2="410" y2="730" style="stroke:rgba(255, 0, 0, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="300" y1="620" x2="300" y2="730" style="stroke:rgba(255, 0, 0, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="240" y1="620" x2="300" y2="620" style="stroke:rgba(255, 0, 0, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="140" y1="610" x2="150" y2="610" style="stroke:rgba(255, 0, 0, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="140" y1="540" x2="140" y2="610" style="stroke:rgba(255, 0, 0, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="140" y1="540" x2="340" y2="540" style="stroke:rgba(255, 0, 0, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="340" y1="540" x2="340" y2="630" style="stroke:rgba(255, 0, 0, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="340" y1="630" x2="390" y2="630" style="stroke:rgba(255, 0, 0, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="410" y1="780" x2="410" y2="830" style="stroke:rgba(34, 139, 34, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="410" y1="830" x2="450" y2="830" style="stroke:rgba(34, 139, 34, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="450" y1="630" x2="450" y2="830" style="stroke:rgba(34, 139, 34, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="420" y1="630" x2="450" y2="630" style="stroke:rgba(34, 139, 34, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="380" y1="630" x2="393" y2="630" style="stroke:rgb(0, 0, 0);stroke-linecap:square;stroke-width:2" />
-	<ellipse cx="405" cy="630" rx="12" ry="12" style="fill-opacity:0;fill:rgb(0, 0, 0);stroke:rgb(0, 0, 0);stroke-width:2" />
-	<line x1="417" y1="630" x2="430" y2="630" style="stroke:rgb(0, 0, 0);stroke-linecap:square;stroke-width:2" />
-	<path d="M 405,630 M 397,630 A 4,4 180 1 1 405,630 A 4,4 180 1 0 413,630" style="fill-opacity:0;fill:rgb(0, 0, 0);stroke:rgb(0, 0, 0);stroke-linecap:square;stroke-width:2" />
-	<line x1="80" y1="390" x2="150" y2="390" style="stroke:rgba(34, 139, 34, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="80" y1="390" x2="80" y2="680" style="stroke:rgba(34, 139, 34, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="80" y1="680" x2="270" y2="680" style="stroke:rgba(34, 139, 34, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="270" y1="650" x2="270" y2="680" style="stroke:rgba(34, 139, 34, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="240" y1="650" x2="270" y2="650" style="stroke:rgba(34, 139, 34, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="100" y1="440" x2="140" y2="440" style="stroke:rgba(255, 0, 0, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="100" y1="440" x2="100" y2="650" style="stroke:rgba(255, 0, 0, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="100" y1="650" x2="160" y2="650" style="stroke:rgba(255, 0, 0, 255);stroke-linecap:square;stroke-width:2" />
-	<rect x="160" y="580" width="80" height="80" style="fill-opacity:0;fill:rgb(0, 0, 0);stroke:rgb(0, 0, 0);stroke-width:2" />
-	<ellipse cx="180" cy="640" rx="5" ry="10" style="fill-opacity:0;fill:rgb(0, 0, 0);stroke:rgb(0, 0, 0);stroke-width:2" />
-	<ellipse cx="185" cy="640" rx="5" ry="10" style="fill-opacity:0;fill:rgb(0, 0, 0);stroke:rgb(0, 0, 0);stroke-width:2" />
-	<ellipse cx="190" cy="640" rx="5" ry="10" style="fill-opacity:0;fill:rgb(0, 0, 0);stroke:rgb(0, 0, 0);stroke-width:2" />
-	<ellipse cx="195" cy="640" rx="5" ry="10" style="fill-opacity:0;fill:rgb(0, 0, 0);stroke:rgb(0, 0, 0);stroke-width:2" />
-	<ellipse cx="200" cy="640" rx="5" ry="10" style="fill-opacity:0;fill:rgb(0, 0, 0);stroke:rgb(0, 0, 0);stroke-width:2" />
-	<ellipse cx="205" cy="640" rx="5" ry="10" style="fill-opacity:0;fill:rgb(0, 0, 0);stroke:rgb(0, 0, 0);stroke-width:2" />
-	<ellipse cx="210" cy="640" rx="5" ry="10" style="fill-opacity:0;fill:rgb(0, 0, 0);stroke:rgb(0, 0, 0);stroke-width:2" />
-	<ellipse cx="215" cy="640" rx="5" ry="10" style="fill-opacity:0;fill:rgb(0, 0, 0);stroke:rgb(0, 0, 0);stroke-width:2" />
-	<ellipse cx="220" cy="640" rx="5" ry="10" style="fill-opacity:0;fill:rgb(0, 0, 0);stroke:rgb(0, 0, 0);stroke-width:2" />
-	<line x1="150" y1="650" x2="180" y2="650" style="stroke:rgb(0, 0, 0);stroke-linecap:square;stroke-width:2" />
-	<line x1="220" y1="650" x2="250" y2="650" style="stroke:rgb(0, 0, 0);stroke-linecap:square;stroke-width:2" />
-	<line x1="220" y1="600" x2="250" y2="600" style="stroke:rgb(0, 0, 0);stroke-linecap:square;stroke-width:2" />
-	<line x1="150" y1="610" x2="180" y2="610" style="stroke:rgb(0, 0, 0);stroke-linecap:square;stroke-width:2" />
-	<line x1="220" y1="620" x2="250" y2="620" style="stroke:rgb(0, 0, 0);stroke-linecap:square;stroke-width:2" />
-	<line x1="180" y1="610" x2="220" y2="600" style="stroke:rgb(0, 0, 0);stroke-linecap:square;stroke-width:2" />
-	<ellipse cx="220" cy="600" rx="2" ry="2" style="fill-opacity:0;fill:rgb(0, 0, 0);stroke:rgb(0, 0, 0);stroke-width:2" />
-	<ellipse cx="220" cy="620" rx="2" ry="2" style="fill-opacity:0;fill:rgb(0, 0, 0);stroke:rgb(0, 0, 0);stroke-width:2" />
-	<text x="200" y="590" style="font-family:Arial;font-size:11px;text-anchor:middle" dominant-baseline="middle" transform="rotate(0, 200, 590)">Relay</text>
-	<text x="244" y="596" style="font-family:Arial;font-size:11px;text-anchor:start" dominant-baseline="baseline" transform="rotate(0, 244, 596)">NC</text>
-	<text x="244" y="616" style="font-family:Arial;font-size:11px;text-anchor:start" dominant-baseline="baseline" transform="rotate(0, 244, 616)">NO</text>
-	<line x1="30" y1="20" x2="30" y2="770" style="stroke:rgba(100, 149, 237, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="30" y1="770" x2="400" y2="770" style="stroke:rgba(100, 149, 237, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="780" y1="100" x2="810" y2="100" style="stroke:rgba(100, 149, 237, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="810" y1="30" x2="810" y2="100" style="stroke:rgba(100, 149, 237, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="40" y1="30" x2="810" y2="30" style="stroke:rgba(100, 149, 237, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="40" y1="30" x2="40" y2="760" style="stroke:rgba(100, 149, 237, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="40" y1="760" x2="400" y2="760" style="stroke:rgba(100, 149, 237, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="530" y1="650" x2="580" y2="650" style="stroke:rgba(100, 149, 237, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="530" y1="650" x2="530" y2="770" style="stroke:rgba(100, 149, 237, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="420" y1="770" x2="530" y2="770" style="stroke:rgba(100, 149, 237, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="520" y1="640" x2="580" y2="640" style="stroke:rgba(100, 149, 237, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="520" y1="640" x2="520" y2="760" style="stroke:rgba(100, 149, 237, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="420" y1="760" x2="520" y2="760" style="stroke:rgba(100, 149, 237, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="780" y1="110" x2="820" y2="110" style="stroke:rgba(100, 149, 237, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="820" y1="20" x2="820" y2="110" style="stroke:rgba(100, 149, 237, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="30" y1="20" x2="820" y2="20" style="stroke:rgba(100, 149, 237, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="410" y1="750" x2="410" y2="757" style="stroke:rgb(0, 0, 0);stroke-linecap:square;stroke-width:2" />
-	<line x1="410" y1="783" x2="410" y2="790" style="stroke:rgb(0, 0, 0);stroke-linecap:square;stroke-width:2" />
-	<ellipse cx="410" cy="770" rx="12" ry="12" style="fill-opacity:0;fill:rgb(0, 0, 0);stroke:rgb(0, 0, 0);stroke-width:2" />
-	<text x="410" y="770" style="font-family:Arial;font-size:12px;text-anchor:middle" dominant-baseline="middle" transform="rotate(0, 410, 770)">M</text>
-	<line x1="600" y1="460" x2="600" y2="630" style="stroke:rgba(34, 139, 34, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="390" y1="460" x2="600" y2="460" style="stroke:rgba(34, 139, 34, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="390" y1="400" x2="390" y2="460" style="stroke:rgba(34, 139, 34, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="250" y1="400" x2="390" y2="400" style="stroke:rgba(34, 139, 34, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="590" y1="470" x2="590" y2="630" style="stroke:rgba(255, 0, 0, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="380" y1="470" x2="590" y2="470" style="stroke:rgba(255, 0, 0, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="380" y1="440" x2="380" y2="470" style="stroke:rgba(255, 0, 0, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="250" y1="440" x2="380" y2="440" style="stroke:rgba(255, 0, 0, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="620" y1="40" x2="620" y2="130" style="stroke:rgba(34, 139, 34, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="420" y1="40" x2="620" y2="40" style="stroke:rgba(34, 139, 34, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="420" y1="40" x2="420" y2="370" style="stroke:rgba(34, 139, 34, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="260" y1="370" x2="420" y2="370" style="stroke:rgba(34, 139, 34, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="610" y1="50" x2="610" y2="240" style="stroke:rgba(100, 149, 237, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="440" y1="50" x2="610" y2="50" style="stroke:rgba(100, 149, 237, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="440" y1="50" x2="440" y2="330" style="stroke:rgba(100, 149, 237, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="260" y1="330" x2="440" y2="330" style="stroke:rgba(100, 149, 237, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="600" y1="60" x2="600" y2="350" style="stroke:rgba(255, 165, 0, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="460" y1="60" x2="600" y2="60" style="stroke:rgba(255, 165, 0, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="460" y1="60" x2="460" y2="300" style="stroke:rgba(255, 165, 0, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="250" y1="300" x2="460" y2="300" style="stroke:rgba(255, 165, 0, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="590" y1="70" x2="590" y2="350" style="stroke:rgba(255, 0, 0, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="480" y1="70" x2="590" y2="70" style="stroke:rgba(255, 0, 0, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="480" y1="70" x2="480" y2="350" style="stroke:rgba(255, 0, 0, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="260" y1="350" x2="480" y2="350" style="stroke:rgba(255, 0, 0, 255);stroke-linecap:square;stroke-width:2" />
-	<text x="200" y="280" style="font-family:Arial;font-size:11px;text-anchor:middle" dominant-baseline="middle" transform="rotate(0, 200, 280)">NodeMCU</text>
-	<rect x="150" y="290" width="100" height="160" style="fill-opacity:0;fill:rgb(0, 0, 0);stroke:rgb(0, 0, 0);stroke-width:2" />
-	<line x1="140" y1="300" x2="150" y2="300" style="stroke:rgb(0, 0, 0);stroke-linecap:square;stroke-width:2" />
-	<text x="154" y="300" style="font-family:Arial;font-size:11px;text-anchor:start" dominant-baseline="middle" transform="rotate(0, 154, 300)">A0</text>
-	<line x1="250" y1="300" x2="260" y2="300" style="stroke:rgb(0, 0, 0);stroke-linecap:square;stroke-width:2" />
-	<text x="246" y="300" style="font-family:Arial;font-size:11px;text-anchor:end" dominant-baseline="middle" transform="rotate(0, 246, 300)">D0</text>
-	<line x1="140" y1="310" x2="150" y2="310" style="stroke:rgb(0, 0, 0);stroke-linecap:square;stroke-width:2" />
-	<text x="154" y="310" style="font-family:Arial;font-size:11px;text-anchor:start" dominant-baseline="middle" transform="rotate(0, 154, 310)">RSV</text>
-	<line x1="250" y1="310" x2="260" y2="310" style="stroke:rgb(0, 0, 0);stroke-linecap:square;stroke-width:2" />
-	<text x="246" y="310" style="font-family:Arial;font-size:11px;text-anchor:end" dominant-baseline="middle" transform="rotate(0, 246, 310)">D1</text>
-	<line x1="140" y1="320" x2="150" y2="320" style="stroke:rgb(0, 0, 0);stroke-linecap:square;stroke-width:2" />
-	<text x="154" y="320" style="font-family:Arial;font-size:11px;text-anchor:start" dominant-baseline="middle" transform="rotate(0, 154, 320)">RSV</text>
-	<line x1="250" y1="320" x2="260" y2="320" style="stroke:rgb(0, 0, 0);stroke-linecap:square;stroke-width:2" />
-	<text x="246" y="320" style="font-family:Arial;font-size:11px;text-anchor:end" dominant-baseline="middle" transform="rotate(0, 246, 320)">D2</text>
-	<line x1="140" y1="330" x2="150" y2="330" style="stroke:rgb(0, 0, 0);stroke-linecap:square;stroke-width:2" />
-	<text x="154" y="330" style="font-family:Arial;font-size:11px;text-anchor:start" dominant-baseline="middle" transform="rotate(0, 154, 330)">SD3</text>
-	<line x1="250" y1="330" x2="260" y2="330" style="stroke:rgb(0, 0, 0);stroke-linecap:square;stroke-width:2" />
-	<text x="246" y="330" style="font-family:Arial;font-size:11px;text-anchor:end" dominant-baseline="middle" transform="rotate(0, 246, 330)">D3</text>
-	<line x1="140" y1="340" x2="150" y2="340" style="stroke:rgb(0, 0, 0);stroke-linecap:square;stroke-width:2" />
-	<text x="154" y="340" style="font-family:Arial;font-size:11px;text-anchor:start" dominant-baseline="middle" transform="rotate(0, 154, 340)">SD2</text>
-	<line x1="250" y1="340" x2="260" y2="340" style="stroke:rgb(0, 0, 0);stroke-linecap:square;stroke-width:2" />
-	<text x="246" y="340" style="font-family:Arial;font-size:11px;text-anchor:end" dominant-baseline="middle" transform="rotate(0, 246, 340)">D4</text>
-	<line x1="140" y1="350" x2="150" y2="350" style="stroke:rgb(0, 0, 0);stroke-linecap:square;stroke-width:2" />
-	<text x="154" y="350" style="font-family:Arial;font-size:11px;text-anchor:start" dominant-baseline="middle" transform="rotate(0, 154, 350)">SD1</text>
-	<line x1="250" y1="350" x2="260" y2="350" style="stroke:rgb(0, 0, 0);stroke-linecap:square;stroke-width:2" />
-	<text x="246" y="350" style="font-family:Arial;font-size:11px;text-anchor:end" dominant-baseline="middle" transform="rotate(0, 246, 350)">3V3</text>
-	<line x1="140" y1="360" x2="150" y2="360" style="stroke:rgb(0, 0, 0);stroke-linecap:square;stroke-width:2" />
-	<text x="154" y="360" style="font-family:Arial;font-size:11px;text-anchor:start" dominant-baseline="middle" transform="rotate(0, 154, 360)">CMD</text>
-	<line x1="250" y1="360" x2="260" y2="360" style="stroke:rgb(0, 0, 0);stroke-linecap:square;stroke-width:2" />
-	<text x="246" y="360" style="font-family:Arial;font-size:11px;text-anchor:end" dominant-baseline="middle" transform="rotate(0, 246, 360)">GND</text>
-	<line x1="140" y1="370" x2="150" y2="370" style="stroke:rgb(0, 0, 0);stroke-linecap:square;stroke-width:2" />
-	<text x="154" y="370" style="font-family:Arial;font-size:11px;text-anchor:start" dominant-baseline="middle" transform="rotate(0, 154, 370)">SD0</text>
-	<line x1="250" y1="370" x2="260" y2="370" style="stroke:rgb(0, 0, 0);stroke-linecap:square;stroke-width:2" />
-	<text x="246" y="370" style="font-family:Arial;font-size:11px;text-anchor:end" dominant-baseline="middle" transform="rotate(0, 246, 370)">D5</text>
-	<line x1="140" y1="380" x2="150" y2="380" style="stroke:rgb(0, 0, 0);stroke-linecap:square;stroke-width:2" />
-	<text x="154" y="380" style="font-family:Arial;font-size:11px;text-anchor:start" dominant-baseline="middle" transform="rotate(0, 154, 380)">CLK</text>
-	<line x1="250" y1="380" x2="260" y2="380" style="stroke:rgb(0, 0, 0);stroke-linecap:square;stroke-width:2" />
-	<text x="246" y="380" style="font-family:Arial;font-size:11px;text-anchor:end" dominant-baseline="middle" transform="rotate(0, 246, 380)">D6</text>
-	<line x1="140" y1="390" x2="150" y2="390" style="stroke:rgb(0, 0, 0);stroke-linecap:square;stroke-width:2" />
-	<text x="154" y="390" style="font-family:Arial;font-size:11px;text-anchor:start" dominant-baseline="middle" transform="rotate(0, 154, 390)">GND</text>
-	<line x1="250" y1="390" x2="260" y2="390" style="stroke:rgb(0, 0, 0);stroke-linecap:square;stroke-width:2" />
-	<text x="246" y="390" style="font-family:Arial;font-size:11px;text-anchor:end" dominant-baseline="middle" transform="rotate(0, 246, 390)">D7</text>
-	<line x1="140" y1="400" x2="150" y2="400" style="stroke:rgb(0, 0, 0);stroke-linecap:square;stroke-width:2" />
-	<text x="154" y="400" style="font-family:Arial;font-size:11px;text-anchor:start" dominant-baseline="middle" transform="rotate(0, 154, 400)">3V3</text>
-	<line x1="250" y1="400" x2="260" y2="400" style="stroke:rgb(0, 0, 0);stroke-linecap:square;stroke-width:2" />
-	<text x="246" y="400" style="font-family:Arial;font-size:11px;text-anchor:end" dominant-baseline="middle" transform="rotate(0, 246, 400)">D8</text>
-	<line x1="140" y1="410" x2="150" y2="410" style="stroke:rgb(0, 0, 0);stroke-linecap:square;stroke-width:2" />
-	<text x="154" y="410" style="font-family:Arial;font-size:11px;text-anchor:start" dominant-baseline="middle" transform="rotate(0, 154, 410)">EN</text>
-	<line x1="250" y1="410" x2="260" y2="410" style="stroke:rgb(0, 0, 0);stroke-linecap:square;stroke-width:2" />
-	<text x="246" y="410" style="font-family:Arial;font-size:11px;text-anchor:end" dominant-baseline="middle" transform="rotate(0, 246, 410)">RX</text>
-	<line x1="140" y1="420" x2="150" y2="420" style="stroke:rgb(0, 0, 0);stroke-linecap:square;stroke-width:2" />
-	<text x="154" y="420" style="font-family:Arial;font-size:11px;text-anchor:start" dominant-baseline="middle" transform="rotate(0, 154, 420)">RST</text>
-	<line x1="250" y1="420" x2="260" y2="420" style="stroke:rgb(0, 0, 0);stroke-linecap:square;stroke-width:2" />
-	<text x="246" y="420" style="font-family:Arial;font-size:11px;text-anchor:end" dominant-baseline="middle" transform="rotate(0, 246, 420)">TX</text>
-	<line x1="140" y1="430" x2="150" y2="430" style="stroke:rgb(0, 0, 0);stroke-linecap:square;stroke-width:2" />
-	<text x="154" y="430" style="font-family:Arial;font-size:11px;text-anchor:start" dominant-baseline="middle" transform="rotate(0, 154, 430)">GND</text>
-	<line x1="250" y1="430" x2="260" y2="430" style="stroke:rgb(0, 0, 0);stroke-linecap:square;stroke-width:2" />
-	<text x="246" y="430" style="font-family:Arial;font-size:11px;text-anchor:end" dominant-baseline="middle" transform="rotate(0, 246, 430)">GND</text>
-	<line x1="140" y1="440" x2="150" y2="440" style="stroke:rgb(0, 0, 0);stroke-linecap:square;stroke-width:2" />
-	<text x="154" y="440" style="font-family:Arial;font-size:11px;text-anchor:start" dominant-baseline="middle" transform="rotate(0, 154, 440)">Vin</text>
-	<line x1="250" y1="440" x2="260" y2="440" style="stroke:rgb(0, 0, 0);stroke-linecap:square;stroke-width:2" />
-	<text x="246" y="440" style="font-family:Arial;font-size:11px;text-anchor:end" dominant-baseline="middle" transform="rotate(0, 246, 440)">3V3</text>
-	<line x1="780" y1="480" x2="780" y2="680" style="stroke:rgba(0, 0, 0, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="580" y1="680" x2="780" y2="680" style="stroke:rgba(0, 0, 0, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="580" y1="480" x2="580" y2="680" style="stroke:rgba(0, 0, 0, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="780" y1="80" x2="780" y2="380" style="stroke:rgba(0, 0, 0, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="580" y1="380" x2="780" y2="380" style="stroke:rgba(0, 0, 0, 255);stroke-linecap:square;stroke-width:2" />
-	<line x1="580" y1="80" x2="580" y2="380" style="stroke:rgba(0, 0, 0, 255);stroke-linecap:square;stroke-width:2" />
-	<ellipse cx="780" cy="100" rx="2" ry="2" style="fill-opacity:1;fill:rgba(0, 0, 0, 255);stroke:rgba(0, 0, 0, 255);stroke-width:2" />
-	<ellipse cx="580" cy="650" rx="2" ry="2" style="fill-opacity:1;fill:rgba(0, 0, 0, 255);stroke:rgba(0, 0, 0, 255);stroke-width:2" />
-	<ellipse cx="580" cy="640" rx="2" ry="2" style="fill-opacity:1;fill:rgba(0, 0, 0, 255);stroke:rgba(0, 0, 0, 255);stroke-width:2" />
-	<ellipse cx="780" cy="110" rx="2" ry="2" style="fill-opacity:1;fill:rgba(0, 0, 0, 255);stroke:rgba(0, 0, 0, 255);stroke-width:2" />
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="-13.703 -3.328 1025.629 875.765" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <line x1="609.205" y1="450" x2="609.205" y2="560" style="stroke: rgb(34, 139, 34); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="408.734" y1="450" x2="609.205" y2="450" style="stroke: rgb(34, 139, 34); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="408.734" y1="390" x2="408.734" y2="450" style="stroke: rgb(34, 139, 34); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="248.357" y1="390" x2="408.734" y2="390" style="stroke: rgb(34, 139, 34); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="258.38" y1="380" x2="298.475" y2="380" style="stroke: rgb(100, 149, 237); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="298.475" y1="380" x2="298.475" y2="490" style="stroke: rgb(100, 149, 237); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="118.051" y1="490" x2="298.475" y2="490" style="stroke: rgb(100, 149, 237); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="118.051" y1="490" x2="118.051" y2="630" style="stroke: rgb(100, 149, 237); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="118.051" y1="630" x2="158.145" y2="630" style="stroke: rgb(100, 149, 237); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="408.734" y1="730" x2="408.734" y2="760" style="stroke: rgb(255, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="298.475" y1="730" x2="408.734" y2="730" style="stroke: rgb(255, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="298.475" y1="600" x2="298.475" y2="730" style="stroke: rgb(255, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="238.333" y1="600" x2="298.475" y2="600" style="stroke: rgb(255, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="138.098" y1="610" x2="148.121" y2="610" style="stroke: rgb(255, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="138.098" y1="540" x2="138.098" y2="610" style="stroke: rgb(255, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="138.098" y1="540" x2="338.569" y2="540" style="stroke: rgb(255, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="338.569" y1="540" x2="338.569" y2="630" style="stroke: rgb(255, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="338.569" y1="630" x2="388.687" y2="630" style="stroke: rgb(255, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="408.734" y1="780" x2="408.734" y2="830" style="stroke: rgb(34, 139, 34); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="408.734" y1="830" x2="448.828" y2="830" style="stroke: rgb(34, 139, 34); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="448.828" y1="630" x2="448.828" y2="830" style="stroke: rgb(34, 139, 34); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="418.757" y1="630" x2="448.828" y2="630" style="stroke: rgb(34, 139, 34); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="378.663" y1="630" x2="391.694" y2="630" style="stroke: rgb(0, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <ellipse cx="403.722" cy="630" rx="12.028" ry="12" style="fill-opacity: 0; fill: rgb(0, 0, 0); stroke: rgb(0, 0, 0); stroke-width: 2;"/>
+  <line x1="415.75" y1="630" x2="428.781" y2="630" style="stroke: rgb(0, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <path d="M 403.722 630 M 395.703 630 C 395.703 626.921 399.044 624.996 401.717 626.536 C 402.958 627.25 403.722 628.571 403.722 630 C 403.722 633.079 407.063 635.004 409.736 633.464 C 410.977 632.75 411.741 631.429 411.741 630" style="fill-opacity: 0; fill: rgb(0, 0, 0); stroke: rgb(0, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="77.956" y1="390" x2="148.121" y2="390" style="stroke: rgb(34, 139, 34); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="77.956" y1="390" x2="77.956" y2="680" style="stroke: rgb(34, 139, 34); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="77.956" y1="680" x2="268.404" y2="680" style="stroke: rgb(34, 139, 34); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="268.404" y1="650" x2="268.404" y2="680" style="stroke: rgb(34, 139, 34); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="238.333" y1="650" x2="268.404" y2="650" style="stroke: rgb(34, 139, 34); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="98.003" y1="440" x2="138.098" y2="440" style="stroke: rgb(255, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="98.003" y1="440" x2="98.003" y2="650" style="stroke: rgb(255, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="98.003" y1="650" x2="158.145" y2="650" style="stroke: rgb(255, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <rect x="158.145" y="580" width="80.188" height="80" style="fill-opacity: 0; fill: rgb(0, 0, 0); stroke: rgb(0, 0, 0); stroke-width: 2;"/>
+  <ellipse cx="178.192" cy="640" rx="5.012" ry="10" style="fill-opacity: 0; fill: rgb(0, 0, 0); stroke: rgb(0, 0, 0); stroke-width: 2;"/>
+  <ellipse cx="183.204" cy="640" rx="5.012" ry="10" style="fill-opacity: 0; fill: rgb(0, 0, 0); stroke: rgb(0, 0, 0); stroke-width: 2;"/>
+  <ellipse cx="188.215" cy="640" rx="5.012" ry="10" style="fill-opacity: 0; fill: rgb(0, 0, 0); stroke: rgb(0, 0, 0); stroke-width: 2;"/>
+  <ellipse cx="193.227" cy="640" rx="5.012" ry="10" style="fill-opacity: 0; fill: rgb(0, 0, 0); stroke: rgb(0, 0, 0); stroke-width: 2;"/>
+  <ellipse cx="198.239" cy="640" rx="5.012" ry="10" style="fill-opacity: 0; fill: rgb(0, 0, 0); stroke: rgb(0, 0, 0); stroke-width: 2;"/>
+  <ellipse cx="203.251" cy="640" rx="5.012" ry="10" style="fill-opacity: 0; fill: rgb(0, 0, 0); stroke: rgb(0, 0, 0); stroke-width: 2;"/>
+  <ellipse cx="208.263" cy="640" rx="5.012" ry="10" style="fill-opacity: 0; fill: rgb(0, 0, 0); stroke: rgb(0, 0, 0); stroke-width: 2;"/>
+  <ellipse cx="213.274" cy="640" rx="5.012" ry="10" style="fill-opacity: 0; fill: rgb(0, 0, 0); stroke: rgb(0, 0, 0); stroke-width: 2;"/>
+  <ellipse cx="218.286" cy="640" rx="5.012" ry="10" style="fill-opacity: 0; fill: rgb(0, 0, 0); stroke: rgb(0, 0, 0); stroke-width: 2;"/>
+  <line x1="148.121" y1="650" x2="178.192" y2="650" style="stroke: rgb(0, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="218.286" y1="650" x2="248.357" y2="650" style="stroke: rgb(0, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="218.286" y1="600" x2="248.357" y2="600" style="stroke: rgb(0, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="148.121" y1="610" x2="178.192" y2="610" style="stroke: rgb(0, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="218.286" y1="620" x2="248.357" y2="620" style="stroke: rgb(0, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="178.192" y1="610" x2="218.286" y2="600" style="stroke: rgb(0, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <ellipse cx="218.286" cy="600" rx="2.005" ry="2" style="fill-opacity: 0; fill: rgb(0, 0, 0); stroke: rgb(0, 0, 0); stroke-width: 2;"/>
+  <ellipse cx="218.286" cy="620" rx="2.005" ry="2" style="fill-opacity: 0; fill: rgb(0, 0, 0); stroke: rgb(0, 0, 0); stroke-width: 2;"/>
+  <text x="200" y="590" style="font-family: Arial; font-size: 11px; text-anchor: middle; white-space: pre;" dominant-baseline="middle" transform="matrix(1.002356, 0, 0, 1, -2.232171, 0)">Relay</text>
+  <text x="244" y="596" style="font-family: Arial; font-size: 11px; text-anchor: start; white-space: pre;" dominant-baseline="baseline" transform="matrix(1.002356, 0, 0, 1, -2.232171, 0)">NC</text>
+  <text x="244" y="616" style="font-family: Arial; font-size: 11px; text-anchor: start; white-space: pre;" dominant-baseline="baseline" transform="matrix(1.002356, 0, 0, 1, -2.232171, 0)">NO</text>
+  <line x1="27.839" y1="20" x2="27.839" y2="770" style="stroke: rgb(100, 149, 237); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="27.839" y1="770" x2="398.71" y2="770" style="stroke: rgb(100, 149, 237); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="779.605" y1="100" x2="809.676" y2="100" style="stroke: rgb(100, 149, 237); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="809.676" y1="30" x2="809.676" y2="100" style="stroke: rgb(100, 149, 237); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="37.862" y1="30" x2="809.676" y2="30" style="stroke: rgb(100, 149, 237); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="37.862" y1="30" x2="37.862" y2="760" style="stroke: rgb(100, 149, 237); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="37.862" y1="760" x2="398.71" y2="760" style="stroke: rgb(100, 149, 237); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="529.016" y1="650" x2="579.134" y2="650" style="stroke: rgb(100, 149, 237); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="529.016" y1="650" x2="529.016" y2="770" style="stroke: rgb(100, 149, 237); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="418.757" y1="770" x2="529.016" y2="770" style="stroke: rgb(100, 149, 237); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="518.993" y1="640" x2="579.134" y2="640" style="stroke: rgb(100, 149, 237); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="518.993" y1="640" x2="518.993" y2="760" style="stroke: rgb(100, 149, 237); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="418.757" y1="760" x2="518.993" y2="760" style="stroke: rgb(100, 149, 237); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="779.605" y1="110" x2="819.7" y2="110" style="stroke: rgb(100, 149, 237); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="819.7" y1="20" x2="819.7" y2="110" style="stroke: rgb(100, 149, 237); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="27.839" y1="20" x2="819.7" y2="20" style="stroke: rgb(100, 149, 237); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="408.734" y1="750" x2="408.734" y2="757" style="stroke: rgb(0, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="408.734" y1="783" x2="408.734" y2="790" style="stroke: rgb(0, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <ellipse cx="408.734" cy="770" rx="12.028" ry="12" style="fill-opacity: 0; fill: rgb(0, 0, 0); stroke: rgb(0, 0, 0); stroke-width: 2;"/>
+  <text x="410" y="770" style="font-family: Arial; font-size: 12px; text-anchor: middle; white-space: pre;" dominant-baseline="middle" transform="matrix(1.002356, 0, 0, 1, -2.232171, 0)">M</text>
+  <line x1="599.181" y1="460" x2="599.181" y2="630" style="stroke: rgb(255, 165, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="388.687" y1="460" x2="599.181" y2="460" style="stroke: rgb(255, 165, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="388.687" y1="400" x2="388.687" y2="460" style="stroke: rgb(255, 165, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="248.357" y1="400" x2="388.687" y2="400" style="stroke: rgb(255, 165, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="589.158" y1="470" x2="589.158" y2="630" style="stroke: rgb(255, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="378.663" y1="470" x2="589.158" y2="470" style="stroke: rgb(255, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="378.663" y1="440" x2="378.663" y2="470" style="stroke: rgb(255, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="248.357" y1="440" x2="378.663" y2="440" style="stroke: rgb(255, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="619.229" y1="40" x2="619.229" y2="130" style="stroke: rgb(34, 139, 34); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="418.757" y1="40" x2="619.229" y2="40" style="stroke: rgb(34, 139, 34); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="418.757" y1="40" x2="418.757" y2="370" style="stroke: rgb(34, 139, 34); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="258.38" y1="370" x2="418.757" y2="370" style="stroke: rgb(34, 139, 34); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="609.205" y1="50" x2="609.205" y2="240" style="stroke: rgb(100, 149, 237); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="438.804" y1="50" x2="609.205" y2="50" style="stroke: rgb(100, 149, 237); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="438.804" y1="50" x2="438.804" y2="330" style="stroke: rgb(100, 149, 237); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="258.38" y1="330" x2="438.804" y2="330" style="stroke: rgb(100, 149, 237); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="599.181" y1="60" x2="599.181" y2="350" style="stroke: rgb(255, 165, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="458.852" y1="60" x2="599.181" y2="60" style="stroke: rgb(255, 165, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="458.852" y1="60" x2="458.852" y2="300" style="stroke: rgb(255, 165, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="248.357" y1="300" x2="458.852" y2="300" style="stroke: rgb(255, 165, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="589.158" y1="70" x2="589.158" y2="350" style="stroke: rgb(255, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="478.899" y1="70" x2="589.158" y2="70" style="stroke: rgb(255, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="478.899" y1="70" x2="478.899" y2="350" style="stroke: rgb(255, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="258.38" y1="350" x2="478.899" y2="350" style="stroke: rgb(255, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <text x="200" y="280" style="font-family: Arial; font-size: 11px; text-anchor: middle; white-space: pre;" dominant-baseline="middle" transform="matrix(1.002356, 0, 0, 1, -2.232171, 0)">NodeMCU</text>
+  <rect x="148.121" y="290" width="100.236" height="160" style="fill-opacity: 0; fill: rgb(0, 0, 0); stroke: rgb(0, 0, 0); stroke-width: 2;"/>
+  <line x1="138.098" y1="300" x2="148.121" y2="300" style="stroke: rgb(0, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <text x="154" y="300" style="font-family: Arial; font-size: 11px; text-anchor: start; white-space: pre;" dominant-baseline="middle" transform="matrix(1.002356, 0, 0, 1, -2.232171, 0)">A0</text>
+  <line x1="248.357" y1="300" x2="258.38" y2="300" style="stroke: rgb(0, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <text x="246" y="300" style="font-family: Arial; font-size: 11px; text-anchor: end; white-space: pre;" dominant-baseline="middle" transform="matrix(1.002356, 0, 0, 1, -2.232171, 0)">D0</text>
+  <line x1="138.098" y1="310" x2="148.121" y2="310" style="stroke: rgb(0, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <text x="154" y="310" style="font-family: Arial; font-size: 11px; text-anchor: start; white-space: pre;" dominant-baseline="middle" transform="matrix(1.002356, 0, 0, 1, -2.232171, 0)">RSV</text>
+  <line x1="248.357" y1="310" x2="258.38" y2="310" style="stroke: rgb(0, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <text x="246" y="310" style="font-family: Arial; font-size: 11px; text-anchor: end; white-space: pre;" dominant-baseline="middle" transform="matrix(1.002356, 0, 0, 1, -2.232171, 0)">D1</text>
+  <line x1="138.098" y1="320" x2="148.121" y2="320" style="stroke: rgb(0, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <text x="154" y="320" style="font-family: Arial; font-size: 11px; text-anchor: start; white-space: pre;" dominant-baseline="middle" transform="matrix(1.002356, 0, 0, 1, -2.232171, 0)">RSV</text>
+  <line x1="248.357" y1="320" x2="258.38" y2="320" style="stroke: rgb(0, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <text x="246" y="320" style="font-family: Arial; font-size: 11px; text-anchor: end; white-space: pre;" dominant-baseline="middle" transform="matrix(1.002356, 0, 0, 1, -2.232171, 0)">D2</text>
+  <line x1="138.098" y1="330" x2="148.121" y2="330" style="stroke: rgb(0, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <text x="154" y="330" style="font-family: Arial; font-size: 11px; text-anchor: start; white-space: pre;" dominant-baseline="middle" transform="matrix(1.002356, 0, 0, 1, -2.232171, 0)">SD3</text>
+  <line x1="248.357" y1="330" x2="258.38" y2="330" style="stroke: rgb(0, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <text x="246" y="330" style="font-family: Arial; font-size: 11px; text-anchor: end; white-space: pre;" dominant-baseline="middle" transform="matrix(1.002356, 0, 0, 1, -2.232171, 0)">D3</text>
+  <line x1="138.098" y1="340" x2="148.121" y2="340" style="stroke: rgb(0, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <text x="154" y="340" style="font-family: Arial; font-size: 11px; text-anchor: start; white-space: pre;" dominant-baseline="middle" transform="matrix(1.002356, 0, 0, 1, -2.232171, 0)">SD2</text>
+  <line x1="248.357" y1="340" x2="258.38" y2="340" style="stroke: rgb(0, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <text x="246" y="340" style="font-family: Arial; font-size: 11px; text-anchor: end; white-space: pre;" dominant-baseline="middle" transform="matrix(1.002356, 0, 0, 1, -2.232171, 0)">D4</text>
+  <line x1="138.098" y1="350" x2="148.121" y2="350" style="stroke: rgb(0, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <text x="154" y="350" style="font-family: Arial; font-size: 11px; text-anchor: start; white-space: pre;" dominant-baseline="middle" transform="matrix(1.002356, 0, 0, 1, -2.232171, 0)">SD1</text>
+  <line x1="248.357" y1="350" x2="258.38" y2="350" style="stroke: rgb(0, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <text x="246" y="350" style="font-family: Arial; font-size: 11px; text-anchor: end; white-space: pre;" dominant-baseline="middle" transform="matrix(1.002356, 0, 0, 1, -2.232171, 0)">3V3</text>
+  <line x1="138.098" y1="360" x2="148.121" y2="360" style="stroke: rgb(0, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <text x="154" y="360" style="font-family: Arial; font-size: 11px; text-anchor: start; white-space: pre;" dominant-baseline="middle" transform="matrix(1.002356, 0, 0, 1, -2.232171, 0)">CMD</text>
+  <line x1="248.357" y1="360" x2="258.38" y2="360" style="stroke: rgb(0, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <text x="246" y="360" style="font-family: Arial; font-size: 11px; text-anchor: end; white-space: pre;" dominant-baseline="middle" transform="matrix(1.002356, 0, 0, 1, -2.232171, 0)">GND</text>
+  <line x1="138.098" y1="370" x2="148.121" y2="370" style="stroke: rgb(0, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <text x="154" y="370" style="font-family: Arial; font-size: 11px; text-anchor: start; white-space: pre;" dominant-baseline="middle" transform="matrix(1.002356, 0, 0, 1, -2.232171, 0)">SD0</text>
+  <line x1="248.357" y1="370" x2="258.38" y2="370" style="stroke: rgb(0, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <text x="246" y="370" style="font-family: Arial; font-size: 11px; text-anchor: end; white-space: pre;" dominant-baseline="middle" transform="matrix(1.002356, 0, 0, 1, -2.232171, 0)">D5</text>
+  <line x1="138.098" y1="380" x2="148.121" y2="380" style="stroke: rgb(0, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <text x="154" y="380" style="font-family: Arial; font-size: 11px; text-anchor: start; white-space: pre;" dominant-baseline="middle" transform="matrix(1.002356, 0, 0, 1, -2.232171, 0)">CLK</text>
+  <line x1="248.357" y1="380" x2="258.38" y2="380" style="stroke: rgb(0, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <text x="246" y="380" style="font-family: Arial; font-size: 11px; text-anchor: end; white-space: pre;" dominant-baseline="middle" transform="matrix(1.002356, 0, 0, 1, -2.232171, 0)">D6</text>
+  <line x1="138.098" y1="390" x2="148.121" y2="390" style="stroke: rgb(0, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <text x="154" y="390" style="font-family: Arial; font-size: 11px; text-anchor: start; white-space: pre;" dominant-baseline="middle" transform="matrix(1.002356, 0, 0, 1, -2.232171, 0)">GND</text>
+  <line x1="248.357" y1="390" x2="258.38" y2="390" style="stroke: rgb(0, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <text x="246" y="390" style="font-family: Arial; font-size: 11px; text-anchor: end; white-space: pre;" dominant-baseline="middle" transform="matrix(1.002356, 0, 0, 1, -2.232171, 0)">D7</text>
+  <line x1="138.098" y1="400" x2="148.121" y2="400" style="stroke: rgb(0, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <text x="154" y="400" style="font-family: Arial; font-size: 11px; text-anchor: start; white-space: pre;" dominant-baseline="middle" transform="matrix(1.002356, 0, 0, 1, -2.232171, 0)">3V3</text>
+  <line x1="248.357" y1="400" x2="258.38" y2="400" style="stroke: rgb(0, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <text x="246" y="400" style="font-family: Arial; font-size: 11px; text-anchor: end; white-space: pre;" dominant-baseline="middle" transform="matrix(1.002356, 0, 0, 1, -2.232171, 0)">D8</text>
+  <line x1="138.098" y1="410" x2="148.121" y2="410" style="stroke: rgb(0, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <text x="154" y="410" style="font-family: Arial; font-size: 11px; text-anchor: start; white-space: pre;" dominant-baseline="middle" transform="matrix(1.002356, 0, 0, 1, -2.232171, 0)">EN</text>
+  <line x1="248.357" y1="410" x2="258.38" y2="410" style="stroke: rgb(0, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <text x="246" y="410" style="font-family: Arial; font-size: 11px; text-anchor: end; white-space: pre;" dominant-baseline="middle" transform="matrix(1.002356, 0, 0, 1, -2.232171, 0)">RX</text>
+  <line x1="138.098" y1="420" x2="148.121" y2="420" style="stroke: rgb(0, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <text x="154" y="420" style="font-family: Arial; font-size: 11px; text-anchor: start; white-space: pre;" dominant-baseline="middle" transform="matrix(1.002356, 0, 0, 1, -2.232171, 0)">RST</text>
+  <line x1="248.357" y1="420" x2="258.38" y2="420" style="stroke: rgb(0, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <text x="246" y="420" style="font-family: Arial; font-size: 11px; text-anchor: end; white-space: pre;" dominant-baseline="middle" transform="matrix(1.002356, 0, 0, 1, -2.232171, 0)">TX</text>
+  <line x1="138.098" y1="430" x2="148.121" y2="430" style="stroke: rgb(0, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <text x="154" y="430" style="font-family: Arial; font-size: 11px; text-anchor: start; white-space: pre;" dominant-baseline="middle" transform="matrix(1.002356, 0, 0, 1, -2.232171, 0)">GND</text>
+  <line x1="248.357" y1="430" x2="258.38" y2="430" style="stroke: rgb(0, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <text x="246" y="430" style="font-family: Arial; font-size: 11px; text-anchor: end; white-space: pre;" dominant-baseline="middle" transform="matrix(1.002356, 0, 0, 1, -2.232171, 0)">GND</text>
+  <line x1="138.098" y1="440" x2="148.121" y2="440" style="stroke: rgb(0, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <text x="154" y="440" style="font-family: Arial; font-size: 11px; text-anchor: start; white-space: pre;" dominant-baseline="middle" transform="matrix(1.002356, 0, 0, 1, -2.232171, 0)">Vin</text>
+  <line x1="248.357" y1="440" x2="258.38" y2="440" style="stroke: rgb(0, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <text x="246" y="440" style="font-family: Arial; font-size: 11px; text-anchor: end; white-space: pre;" dominant-baseline="middle" transform="matrix(1.002356, 0, 0, 1, -2.232171, 0)">3V3</text>
+  <line x1="779.605" y1="480" x2="779.605" y2="680" style="stroke: rgb(0, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="579.134" y1="680" x2="779.605" y2="680" style="stroke: rgb(0, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="579.134" y1="480" x2="579.134" y2="680" style="stroke: rgb(0, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="779.605" y1="80" x2="779.605" y2="380" style="stroke: rgb(0, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="579.134" y1="380" x2="779.605" y2="380" style="stroke: rgb(0, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <line x1="579.134" y1="80" x2="579.134" y2="380" style="stroke: rgb(0, 0, 0); stroke-linecap: square; stroke-width: 2;"/>
+  <ellipse cx="779.605" cy="100" rx="2.005" ry="2" style="fill-opacity: 1; fill: rgb(0, 0, 0); stroke: rgb(0, 0, 0); stroke-width: 2;"/>
+  <ellipse cx="579.134" cy="650" rx="2.005" ry="2" style="fill-opacity: 1; fill: rgb(0, 0, 0); stroke: rgb(0, 0, 0); stroke-width: 2;"/>
+  <ellipse cx="579.134" cy="640" rx="2.005" ry="2" style="fill-opacity: 1; fill: rgb(0, 0, 0); stroke: rgb(0, 0, 0); stroke-width: 2;"/>
+  <ellipse cx="779.605" cy="110" rx="2.005" ry="2" style="fill-opacity: 1; fill: rgb(0, 0, 0); stroke: rgb(0, 0, 0); stroke-width: 2;"/>
+  <text style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 26.4px;" x="659.895" y="217.078" transform="matrix(1.002356, 0, 0, 1, -2.232171, 0)">TANK</text>
+  <text style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 26.4px;" x="648.58" y="591.432" transform="matrix(1.002356, 0, 0, 1, -2.232171, 0)">SUMP</text>
+  <path d="M 614.191 340.634 H 794.325 L 794.325 325.634 L 834.419 345.634 L 794.325 365.634 L 794.325 350.634 H 614.191 V 340.634 Z" style="fill: rgb(216, 216, 216);" transform="matrix(0.999991, 0.004282, -0.004302, 0.999991, -0.739624, -2.62661)" bx:shape="arrow 614.191 325.634 220.229 40 10 40.094 0 1@fe48015e"/>
+  <path d="M 628.972 227.48 H 793.982 L 793.982 212.48 L 834.076 232.48 L 793.982 252.48 L 793.982 237.48 H 628.972 V 227.48 Z" style="fill: rgb(216, 216, 216);" bx:shape="arrow 628.972 212.48 205.104 40 10 40.094 0 1@67abfb5d"/>
+  <path d="M 634.643 116.211 H 833.679 L 833.679 101.211 L 873.773 121.211 L 833.679 141.211 L 833.679 126.211 H 634.643 V 116.211 Z" style="fill: rgb(216, 216, 216);" bx:shape="arrow 634.643 101.211 239.13 40 10 40.094 0 1@9a807b8b"/>
+  <path d="M 613.245 616.921 H 796.231 L 796.231 601.921 L 836.325 621.921 L 796.231 641.921 L 796.231 626.921 H 613.245 V 616.921 Z" style="fill: rgb(216, 216, 216);" transform="matrix(0.99992, 0.012681, -0.012741, 0.999919, 5.74113, -7.726304)" bx:shape="arrow 613.245 601.921 223.08 40 10 40.094 0 1@75942896"/>
+  <path d="M 629.314 535.827 H 798.107 L 798.107 520.827 L 838.201 540.827 L 798.107 560.827 L 798.107 545.827 H 629.314 V 535.827 Z" style="fill: rgb(216, 216, 216);" transform="matrix(0.99999, 0.004514, -0.004536, 0.99999, 0.227191, -2.835315)" bx:shape="arrow 629.314 520.827 208.887 40 10 40.094 0 1@306c7fce"/>
+  <text style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 26.4px;" x="881.491" y="131.165" transform="matrix(1.002356, 0, 0, 1, -2.232171, 0)">HIGH</text>
+  <text style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 26.4px;" x="842.828" y="241.49" transform="matrix(1.002356, 0, 0, 1, -2.232171, 0)">MID</text>
+  <text style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 26.4px;" x="841.886" y="356.531" transform="matrix(1.002356, 0, 0, 1, -2.232171, 0)">LOW</text>
+  <text style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 26.4px;" x="841.886" y="551.723" transform="matrix(1.002356, 0, 0, 1, -2.232171, 0)">MID</text>
+  <text style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 26.4px;" x="841.886" y="633.761" transform="matrix(1.002356, 0, 0, 1, -2.232171, 0)">LOW</text>
+  <line style="stroke: rgb(0, 0, 0);" x1="-12.62239064688282" y1="409.63782927587675" x2="-13.703137578530601" y2="459.3521881316744"/>
+  <line style="stroke: rgb(0, 0, 0);" x1="409.94965962739747" y1="872.437681605115" x2="468.30999393637734" y2="871.3569346734672"/>
+  <line style="stroke: rgb(0, 0, 0);" x1="1010.8449536235607" y1="306.846788235013" x2="1011.9257005552086" y2="365.20712254399285"/>
+  <line style="stroke: rgb(0, 0, 0);" x1="369.9620231564298" y1="-3.3275811478985986" x2="457.5025246198996" y2="-2.246834216250818"/>
 </svg>

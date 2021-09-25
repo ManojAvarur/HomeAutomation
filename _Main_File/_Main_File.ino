@@ -14,9 +14,9 @@ const char* PASSWORD = "";
 WiFiClient client;
 
 // ------------------ Relay Sensor Settings -----------
-#define RELAY_1 D7 // For Water Pump
-#define ON HIGH // Turing on the pump / relay
-#define OFF LOW // Turing off the pump / relay
+#define RELAY_1 D6 // For Water Pump
+#define MOTOR_ON HIGH // Turing on the pump / relay
+#define MOTOR_OFF LOW // Turing off the pump / relay
 
 // ------------------ Water Level Sensor Settings ------
 // For Tank
@@ -26,6 +26,7 @@ WiFiClient client;
 
 // For Sump
 #define WL_S_LOW D8
+#define WL_S_MID D7
 
 // ----------------- Json Libraies Settings ------------
 #include <ArduinoJson.h>
@@ -43,8 +44,12 @@ unsigned long PERIOD = 5 * 60 * 1000L; // Executes in every 5 mins
 unsigned long TARGET_TIME = 0L;
 
 // _________________ Function Declaration -----------
+void setup_wifi();
+void motor_status( bool status, String from );
+void start_process();
 bool low_water_level_in_tank( String from );
 bool mid_water_level_in_tank( String from );
 bool high_water_level_in_tank( String from );
 bool low_water_level_in_sump( String from );
-void setup_wifi();
+bool mid_water_level_in_sump( String from );
+

@@ -7,7 +7,7 @@ void setup(){
     // Settings for Relay
     delay( INITIAL_PUMP_LOAD_TIME );
     pinMode(RELAY_1, OUTPUT);
-    digitalWrite(RELAY_1, OFF);
+    digitalWrite(RELAY_1, MOTOR_OFF);
 
     // --------- For Tank --------------------
     // Setting Initial Value ( 0 ) to WL_T_LOW
