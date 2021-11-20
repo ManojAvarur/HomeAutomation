@@ -62,24 +62,7 @@ bool high_water_level_in_tank( String from ){
 }
 
 bool mid_water_level_in_sump( String from ){
-    if( DEBUG_CODE ){
-        Serial.print("\nDEBUG CODE ENABLED : \n\tlow_water_level_in_tank called from ' " + from + " '\n\n");
-        Serial.print("\tLOW = " + String( digitalRead( WL_S_MID ) ) );
-        delay( DEBUG_DELAY_TIME );
-    }
 
-    if( digitalRead( WL_S_MID ) == 0 ){
-        return false;
-    }
-
-    if( digitalRead( WL_S_MID ) == 1 ){
-        pinMode( WL_S_MID, OUTPUT);
-        digitalWrite( WL_S_MID, LOW);
-        pinMode( WL_S_MID, INPUT);
-        if( digitalRead( WL_S_MID ) == 1 ){
-            return true;
-        }
-    }
 }
 
 bool low_water_level_in_sump( String from ){
