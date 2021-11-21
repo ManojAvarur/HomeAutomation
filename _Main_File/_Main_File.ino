@@ -29,9 +29,9 @@ WiFiClient client;
 #define WL_S_MID D7
 
 // ----------------- Json Libraies Settings ------------
-#include <ArduinoJson.h>
-StaticJsonDocument<48> Json_result_responce;
-StaticJsonDocument<96> User_request_check;
+//#include <ArduinoJson.h>
+//StaticJsonDocument<48> Json_result_responce;
+//StaticJsonDocument<96> User_request_check;
 // StaticJsonDocument<192> DB_update;
 // StaticJsonDocument<768> TimeStamp;
 
@@ -45,11 +45,79 @@ unsigned long TARGET_TIME = 0L;
 
 // _________________ Function Declaration -----------
 void setup_wifi();
-void motor_status( bool status, String from );
-void start_process();
-bool low_water_level_in_tank( String from );
-bool mid_water_level_in_tank( String from );
-bool high_water_level_in_tank( String from );
-bool low_water_level_in_sump( String from );
-bool mid_water_level_in_sump( String from );
+void  highDigitalPin( int pin, bool changeToInput, bool delayRequired );
+void lowDigitalPin( int pin, bool changeToInput, bool delayRequired );
 
+
+class Sump{
+    private:
+        short waterStatus = -1;
+
+        void updateSumpDetails( bool updateFromStart = false ){
+
+            int tempWaterLevelInSump = waterStatus;
+            bool caseBreakCheck = true;
+
+            if( tempWaterLevelInSump == -1 || tempWaterLevelInSump > 1 || updateFromStart ){
+                tempWaterLevelInSump = 0;
+            }
+
+            switch( tempWaterLevelInSump ){
+
+            case 0 :
+                lowDigitalPin( WL_S_LOW, true, true );
+                if( digitalRead( WL_S_LOW ) == 1 ){
+
+                    lowDigitalPin( WL_S_LOW, true, true );
+                    if( digitalRead( WL_S_LOW ) == 1 ){
+                        Serial.println("\nWater Level above low in sump");
+                        waterStatus = 1;
+                        highDigitalPin( WL_S_LOW );
+                        caseBreakCheck = false;
+                    } else {
+                        waterStatus = -1;
+                    }
+                } else {
+                    waterStatus = -1;
+                }
+                
+                if( caseBreakCheck ){
+                        break;
+                }
+
+            case 1:
+                lowDigitalPin( WL_S_MID, true, true );
+                if( digitalRead( WL_S_MID ) == 1 ){
+
+                    lowDigitalPin( WL_S_MID, true, true );
+                    if( digitalRead( WL_S_MID ) == 1 ){
+                        Serial.println("\nWater Level above mid in sump");
+                        waterStatus = 2;
+                        highDigitalPin( WL_S_MID );
+                    } else {
+                        waterStatus = -1;
+                    }
+
+                } else {
+                    waterStatus = -1;
+                }
+
+            break;
+
+            default:
+                waterStatus = -1;
+                highDigitalPin( WL_S_LOW );
+                highDigitalPin( WL_S_MID );
+                break;
+            }
+        } 
+
+    public:
+        int waterLevelInSump( bool updateFromStart = false ){
+            updateSumpDetails( updateFromStart );
+            return waterStatus;
+        }
+};
+
+// ------------------ Class Instantiation -------------
+Sump sumpObj;
