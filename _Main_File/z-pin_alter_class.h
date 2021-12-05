@@ -24,4 +24,9 @@ class pinAlter{
                 delay(200);
             }
         }
+
+        static String checkValueInPin( int pin ){
+             lowDigitalPin( pin, true, true );
+             return String( digitalRead( pin ) );
+        }
 };

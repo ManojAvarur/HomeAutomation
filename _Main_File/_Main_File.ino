@@ -25,8 +25,8 @@ WiFiClient client;
 #define WL_T_HIGH D2 // HIGH
 
 // For Sump
-#define WL_S_LOW D3
-#define WL_S_MID D4
+#define WL_S_LOW D5
+#define WL_S_MID D6
 
 // ----------------- Json Libraies Settings ------------
 //#include <ArduinoJson.h>
@@ -45,8 +45,6 @@ unsigned long TARGET_TIME = 0L;
 
 // _________________ Function Declaration -----------
 void setup_wifi();
-void  highDigitalPin( int pin, bool changeToInput, bool delayRequired );
-void lowDigitalPin( int pin, bool changeToInput, bool delayRequired );
 
 // ------------------ Class Instantiation -------------
 
