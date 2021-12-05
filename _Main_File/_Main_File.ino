@@ -21,12 +21,12 @@ WiFiClient client;
 // ------------------ Water Level Sensor Settings ------
 // For Tank
 #define WL_T_LOW D0 // LOW
-#define WL_T_MID D3 // MID
-#define WL_T_HIGH D5 // HIGH
+#define WL_T_MID D1 // MID
+#define WL_T_HIGH D2 // HIGH
 
 // For Sump
-#define WL_S_LOW D8
-#define WL_S_MID D7
+#define WL_S_LOW D3
+#define WL_S_MID D4
 
 // ----------------- Json Libraies Settings ------------
 //#include <ArduinoJson.h>
@@ -51,5 +51,7 @@ void lowDigitalPin( int pin, bool changeToInput, bool delayRequired );
 // ------------------ Class Instantiation -------------
 
 #include "z-sump_class.h"
+#include "z-tank_class.h"
 
 Sump sumpObj = Sump( WL_S_LOW, WL_S_MID );
+Tank tankObj = Tank( WL_T_LOW, WL_T_MID, WL_T_HIGH );
