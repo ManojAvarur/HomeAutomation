@@ -25,8 +25,8 @@ WiFiClient client;
 #define WL_T_HIGH D2 // HIGH
 
 // For Sump
-#define WL_S_LOW D5
-#define WL_S_MID D6
+#define WL_S_LOW D5 // LOW
+#define WL_S_MID D6 // MID
 
 // ----------------- Json Libraies Settings ------------
 //#include <ArduinoJson.h>
@@ -45,6 +45,7 @@ unsigned long TARGET_TIME = 0L;
 
 // _________________ Function Declaration -----------
 void setup_wifi();
+void water_pump();
 
 // ------------------ Class Instantiation -------------
 
