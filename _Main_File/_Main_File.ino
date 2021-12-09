@@ -14,9 +14,9 @@ const char* PASSWORD = "";
 WiFiClient client;
 
 // ------------------ Relay Sensor Settings -----------
-#define RELAY_1 D6 // For Water Pump
-#define MOTOR_ON HIGH // Turing on the pump / relay
-#define MOTOR_OFF LOW // Turing off the pump / relay
+#define RELAY_1 D7 // For Water Pump
+#define MOTOR_ON LOW // Turing on the pump / relay
+#define MOTOR_OFF HIGH // Turing off the pump / relay
 
 // ------------------ Water Level Sensor Settings ------
 // For Tank
@@ -37,7 +37,7 @@ WiFiClient client;
 
 // ----------------- DEBUG CODE ---------------------
 bool DEBUG_CODE = false;
-int DEBUG_DELAY_TIME = 5000; // 1 sec
+int DEBUG_DELAY_TIME = 500; // 1 sec
 
 // ---------------- Execution Time Period -------------
 unsigned long PERIOD = 5 * 60 * 1000L; // Executes in every 5 mins
@@ -46,11 +46,12 @@ unsigned long TARGET_TIME = 0L;
 // _________________ Function Declaration -----------
 void setup_wifi();
 void water_pump();
+void motor_control( uint8_t value );
 
 // ------------------ Class Instantiation -------------
 
 #include "z-sump_class.h"
 #include "z-tank_class.h"
 
-Sump sumpObj = Sump( WL_S_LOW, WL_S_MID );
-Tank tankObj = Tank( WL_T_LOW, WL_T_MID, WL_T_HIGH );
+Sump sumpObj = Sump( WL_S_LOW, WL_S_MID, DEBUG_CODE, DEBUG_DELAY_TIME );
+Tank tankObj = Tank( WL_T_LOW, WL_T_MID, WL_T_HIGH, DEBUG_CODE, DEBUG_DELAY_TIME );

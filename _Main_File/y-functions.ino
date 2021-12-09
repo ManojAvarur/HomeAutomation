@@ -1,6 +1,23 @@
 void water_pump(){
 
-    if( tankObj.waterLevelInTank() != 3 )
+    if( tankObj.waterLevelInTank() != 3 ){
+        if( sumpObj.waterLevelInSump() > 1 ){
+            motor_control( MOTOR_ON );
+            Serial.println("\nTank level low turning on the pump");
+        } else {
+            motor_control( MOTOR_OFF );
+            Serial.println("\nTank level low turning off the pump because low water in summp");
+        }
+    } else {
+        motor_control( MOTOR_OFF );
+        Serial.println("\nTank level high turning off the pump");
+    }
+
+}
+
+
+void motor_control( uint8_t value ){
+    digitalWrite( RELAY_1, value );
 }
 
 

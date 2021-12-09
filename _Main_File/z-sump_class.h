@@ -4,8 +4,8 @@ class Sump{
     private:
         short waterStatus = -1;
         int SUMP_WL_LOW, SUMP_WL_MID;
-        bool DEBUG_CODE = true;
-        int DEBUG_DELAY_TIME = 5000;
+        bool CODE_DEBUG;
+        int DEBUG_DELAY_TIME;
 
 
         void updateSumpDetails( bool updateFromStart = false ){
@@ -65,7 +65,7 @@ class Sump{
                     break;
             }
 
-            if( DEBUG_CODE ){
+            if( CODE_DEBUG ){
                  Serial.println("\n\t\tDebug from sump class : ");
                  Serial.println("\n\t\t\t Water low sensor value : " + pinAlter().checkValueInPin( SUMP_WL_LOW ) );
                  Serial.println("\n\t\t\t Water mid sensor value : " + pinAlter().checkValueInPin( SUMP_WL_MID ) );
@@ -84,9 +84,10 @@ class Sump{
             return waterStatus;
         }
 
-        Sump( int low, int mid ){
+        Sump( int low, int mid, bool debug, int delay_time  ){
             SUMP_WL_LOW = low;
             SUMP_WL_MID = mid;
-            Serial.println("------Sump class instantiated------");
+            CODE_DEBUG = debug;
+            DEBUG_DELAY_TIME = delay_time;
         }
 };

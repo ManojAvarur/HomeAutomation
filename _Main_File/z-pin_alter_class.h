@@ -1,6 +1,6 @@
 class pinAlter{
 
-    public:
+    public: 
         static void lowDigitalPin( int pin, bool changeToInput = false, bool delayRequired = false ){
             pinMode( pin, OUTPUT );
             digitalWrite( pin, LOW );
