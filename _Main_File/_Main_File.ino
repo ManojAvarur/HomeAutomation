@@ -4,6 +4,7 @@ String URL = "http://iotproject.coolpage.biz/home_automation";
 String USER_ID = "0e7f970107b5e113284bbb706da47ba2";
 
 int INITIAL_PUMP_LOAD_TIME = 5000; // 5 Sec
+bool isMotorOn = false;
 
 // ------------------ Wi-Fi Settings ------------------
 #include <ESP8266WiFi.h>

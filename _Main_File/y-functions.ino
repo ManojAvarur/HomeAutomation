@@ -17,7 +17,11 @@ void water_pump(){
 
 
 void motor_control( uint8_t value ){
-    digitalWrite( RELAY_1, value );
+    if( ( value == MOTOR_ON ) && ( isMotorOn == false ) ){
+        digitalWrite( RELAY_1, MOTOR_ON );
+     } else if( ( value == MOTOR_OFF ) && ( isMotorOn == true ) ) {
+         digitalWrite( RELAY_1, MOTOR_OFF );
+     }
 }
 
 
