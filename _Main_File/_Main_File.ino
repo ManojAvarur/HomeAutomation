@@ -4,14 +4,13 @@ String URL = "http://iotproject.coolpage.biz/home_automation";
 String USER_ID = "0e7f970107b5e113284bbb706da47ba2";
 
 int INITIAL_PUMP_LOAD_TIME = 5000; // 5 Sec
-bool isMotorOn = false;
 
 // ------------------ Wi-Fi Settings ------------------
 #include <ESP8266WiFi.h>
 #include <ESP8266HTTPClient.h>
 
-const char* SSID = "";
-const char* PASSWORD = "";
+const char* SSID = "Manoj";
+const char* PASSWORD = "Hazelnut+-";
 WiFiClient client;
 
 // ------------------ Relay Sensor Settings -----------
@@ -37,15 +36,15 @@ WiFiClient client;
 // StaticJsonDocument<768> TimeStamp;
 
 // ----------------- DEBUG CODE ---------------------
-bool DEBUG_CODE = false;
-int DEBUG_DELAY_TIME = 500; // 1 sec
+bool DEBUG_CODE = true;
+int DEBUG_DELAY_TIME = 0; // 1 sec
 
 // ---------------- Execution Time Period -------------
 unsigned long PERIOD = 5 * 60 * 1000L; // Executes in every 5 mins
 unsigned long TARGET_TIME = 0L;
 
-// _________________ Function Declaration -----------
-void setup_wifi();
+// ---------------- Function Declaration -----------
+bool setup_wifi();
 void water_pump();
 void motor_control( uint8_t value );
 

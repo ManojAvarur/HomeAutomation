@@ -12,18 +12,19 @@ class Tank{
             int tempWaterLevelInTank = waterStatus;
             bool caseBreakCheck = true;
 
-            if( tempWaterLevelInTank == -1 || updateFromStart ){
-                tempWaterLevelInTank = 0;
+            if( tempWaterLevelInTank <= 0 || updateFromStart ){
+                tempWaterLevelInTank = 1;
             }
 
             switch( tempWaterLevelInTank ){
-                case 0 :
+
+                case 1 :
                     pinAlter().lowDigitalPin( TANK_WL_LOW, true, true );
                     if( digitalRead( TANK_WL_LOW ) == 1 ){
 
                         pinAlter().lowDigitalPin( TANK_WL_LOW, true, true );
                         if( digitalRead( TANK_WL_LOW ) == 1 ){
-                            waterStatus = 1;
+                            waterStatus = 2;
                             pinAlter().highDigitalPin( TANK_WL_LOW );
                             caseBreakCheck = false;
 
@@ -44,13 +45,13 @@ class Tank{
                         break;
                     }
 
-                case 1:
+                case 2 :
                     pinAlter().lowDigitalPin( TANK_WL_MID, true, true );
                     if( digitalRead( TANK_WL_MID ) == 1 ){
 
                         pinAlter().lowDigitalPin( TANK_WL_MID, true, true );
                         if( digitalRead( TANK_WL_MID ) == 1 ){
-                            waterStatus = 2;
+                            waterStatus = 3;
                             pinAlter().highDigitalPin( TANK_WL_MID );
                             caseBreakCheck = false;
                             if( CODE_DEBUG ){
@@ -62,21 +63,21 @@ class Tank{
                         }
 
                     } else {
-                        waterStatus = 0;
+                        waterStatus = 1;
                     }
 
                     if( caseBreakCheck ){
                         break;
                     }
 
-                case 2:
                 case 3:
+                case 4:
                     pinAlter().lowDigitalPin( TANK_WL_HIGH, true, true );
                     if( digitalRead( TANK_WL_HIGH ) == 1 ){
 
                         pinAlter().lowDigitalPin( TANK_WL_HIGH, true, true );
                         if( digitalRead( TANK_WL_HIGH ) == 1 ){
-                            waterStatus = 3;
+                            waterStatus = 4;
                             pinAlter().highDigitalPin( TANK_WL_HIGH );
                             if( CODE_DEBUG ){
                                 Serial.println("\n\n\tInside |-| Tank HIGH and tempWaterLevel in tank is : " + String( tempWaterLevelInTank ) );
@@ -87,7 +88,7 @@ class Tank{
                         }
 
                     } else {
-                        waterStatus = 1;
+                        waterStatus = 2;
                     }
 
 

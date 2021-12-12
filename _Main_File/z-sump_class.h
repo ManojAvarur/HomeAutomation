@@ -13,19 +13,19 @@ class Sump{
             int tempWaterLevelInSump = waterStatus;
             bool caseBreakCheck = true;
 
-            if( tempWaterLevelInSump == -1 || updateFromStart ){
-                tempWaterLevelInSump = 0;
+            if( tempWaterLevelInSump <= 0 || updateFromStart ){
+                tempWaterLevelInSump = 1;
             }
 
             switch( tempWaterLevelInSump ){
 
-                case 0 :
+                case 1 :
                     pinAlter().lowDigitalPin( SUMP_WL_LOW, true, true );
                     if( digitalRead( SUMP_WL_LOW ) == 1 ){
 
                         pinAlter().lowDigitalPin( SUMP_WL_LOW, true, true );
                         if( digitalRead( SUMP_WL_LOW ) == 1 ){
-                            waterStatus = 1;
+                            waterStatus = 2;
                             pinAlter().highDigitalPin( SUMP_WL_LOW );
                             caseBreakCheck = false;
                         } else {
@@ -39,21 +39,21 @@ class Sump{
                             break;
                     }
 
-                case 1:
-                case 2:
+                case 2 :
+                case 3 : 
                     pinAlter().lowDigitalPin( SUMP_WL_MID, true, true );
                     if( digitalRead( SUMP_WL_MID ) == 1 ){
 
                         pinAlter().lowDigitalPin( SUMP_WL_MID, true, true );
                         if( digitalRead( SUMP_WL_MID ) == 1 ){
-                            waterStatus = 2;
+                            waterStatus = 3;
                             pinAlter().highDigitalPin( SUMP_WL_MID );
                         } else {
                             waterStatus = -1;
                         }
 
                     } else {
-                        waterStatus = 0;
+                        waterStatus = 1;
                     }
 
                 break;
@@ -62,7 +62,7 @@ class Sump{
                     waterStatus = -1;
                     pinAlter().highDigitalPin( SUMP_WL_LOW );
                     pinAlter().highDigitalPin( SUMP_WL_MID );
-                    break;
+                break;
             }
 
             if( CODE_DEBUG ){
