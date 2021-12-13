@@ -32,19 +32,24 @@ void motor_control( uint8_t value ){
 
 bool setup_wifi(){
 
-    if( SSID == "" ){
-        return false;
-    }
     short while_counter = 0;
     short overall_wait_time = 5; //secs
     WiFi.begin(SSID, PASSWORD);
     Serial.println("Connecting");
-    while(WiFi.status() != WL_CONNECTED && ( while_counter != overall_wait_time )) {
-        delay(1000);
+    while( ( WiFi.status() != WL_CONNECTED ) && ( while_counter <= overall_wait_time )) {
         Serial.print(".");
         while_counter++;
+        delay(1000);
     }
     Serial.println("");
     Serial.print("Connected to WiFi network with IP Address: ");
     Serial.println(WiFi.localIP());
+    
+    if( WiFi.status() != WL_CONNECTED ){
+        return true;
+    } else {
+        return false;
+    }
+
+    
 }

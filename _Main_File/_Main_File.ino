@@ -9,8 +9,8 @@ int INITIAL_PUMP_LOAD_TIME = 5000; // 5 Sec
 #include <ESP8266WiFi.h>
 #include <ESP8266HTTPClient.h>
 
-const char* SSID = "Manoj";
-const char* PASSWORD = "Hazelnut+-";
+const char* SSID = "";
+const char* PASSWORD = "";
 WiFiClient client;
 
 // ------------------ Relay Sensor Settings -----------
