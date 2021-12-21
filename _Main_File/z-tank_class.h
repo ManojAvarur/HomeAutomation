@@ -2,14 +2,14 @@
 
 class Tank{
     private:
-        short waterStatus = -1;
+        short oldWaterStatus = -1, currentWaterStatus = -1;
         int TANK_WL_LOW, TANK_WL_MID, TANK_WL_HIGH;
         bool CODE_DEBUG;
         int DEBUG_DELAY_TIME;
 
         void updateTankDetails( bool updateFromStart = false ){
 
-            int tempWaterLevelInTank = waterStatus;
+            short tempWaterLevelInTank = currentWaterStatus;
             bool caseBreakCheck = true;
 
             if( tempWaterLevelInTank <= 0 || updateFromStart ){
@@ -24,7 +24,7 @@ class Tank{
 
                         pinAlter().lowDigitalPin( TANK_WL_LOW, true, true );
                         if( digitalRead( TANK_WL_LOW ) == 1 ){
-                            waterStatus = 2;
+                            currentWaterStatus = 2;
                             pinAlter().highDigitalPin( TANK_WL_LOW );
                             caseBreakCheck = false;
 
@@ -34,10 +34,10 @@ class Tank{
                             }
 
                         } else {
-                            waterStatus = -1;
+                            currentWaterStatus = -1;
                         }
                     } else {
-                        waterStatus = 0;
+                        currentWaterStatus = 0;
                     }
                     
                     if( caseBreakCheck ){
@@ -51,7 +51,7 @@ class Tank{
 
                         pinAlter().lowDigitalPin( TANK_WL_MID, true, true );
                         if( digitalRead( TANK_WL_MID ) == 1 ){
-                            waterStatus = 3;
+                            currentWaterStatus = 3;
                             pinAlter().highDigitalPin( TANK_WL_MID );
                             caseBreakCheck = false;
                             if( CODE_DEBUG ){
@@ -59,11 +59,11 @@ class Tank{
                                 delay( DEBUG_DELAY_TIME );
                             }
                         } else {
-                            waterStatus = -1;
+                            currentWaterStatus = -1;
                         }
 
                     } else {
-                        waterStatus = 1;
+                        currentWaterStatus = 1;
                     }
 
                     if( caseBreakCheck ){
@@ -77,18 +77,18 @@ class Tank{
 
                         pinAlter().lowDigitalPin( TANK_WL_HIGH, true, true );
                         if( digitalRead( TANK_WL_HIGH ) == 1 ){
-                            waterStatus = 4;
+                            currentWaterStatus = 4;
                             pinAlter().highDigitalPin( TANK_WL_HIGH );
                             if( CODE_DEBUG ){
                                 Serial.println("\n\n\tInside |-| Tank HIGH and tempWaterLevel in tank is : " + String( tempWaterLevelInTank ) );
                                 delay( DEBUG_DELAY_TIME );
                             }
                         } else {
-                            waterStatus = -1;
+                            currentWaterStatus = -1;
                         }
 
                     } else {
-                        waterStatus = 2;
+                        currentWaterStatus = 2;
                     }
 
 
@@ -96,7 +96,7 @@ class Tank{
                     
 
                 default:
-                    waterStatus = -1;
+                    currentWaterStatus = -1;
                     pinAlter().highDigitalPin( TANK_WL_LOW );
                     pinAlter().highDigitalPin( TANK_WL_MID );
                     pinAlter().highDigitalPin( TANK_WL_HIGH );
@@ -109,17 +109,29 @@ class Tank{
                  Serial.println("\n\t\t\t Water low sensor value : " + pinAlter().checkValueInPin( TANK_WL_LOW ) );
                  Serial.println("\n\t\t\t Water mid sensor value : " + pinAlter().checkValueInPin( TANK_WL_MID ) );
                  Serial.println("\n\t\t\t Water mid sensor value : " + pinAlter().checkValueInPin( TANK_WL_HIGH ) );
-                 Serial.println("\n\n\t\t\t Value in waterStatus : " + String( waterStatus ) );
+                 Serial.println("\n\n\t\t\t Value in currentWaterStatus : " + String( currentWaterStatus ) );
                  delay( DEBUG_DELAY_TIME );
             }
         } 
 
     public:
+        bool isChanged = true;
+
         int waterLevelInTank( bool updateFromStart = false ){
+
+            oldWaterStatus = currentWaterStatus;
+            
             do{
                 updateTankDetails( updateFromStart );
-            }while( waterStatus == -1 );
-            return waterStatus;
+            }while( currentWaterStatus == -1 );
+
+            if( currentWaterStatus === oldWaterStatus ){
+                isChanged = false;
+            } else {
+                isChanged = true;
+            }
+
+            return currentWaterStatus;
         }
 
         Tank( int low, int mid, int high, bool debug, int delay_time ){

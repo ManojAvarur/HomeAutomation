@@ -2,7 +2,7 @@
 
 class Sump{
     private:
-        short waterStatus = -1;
+        short oldWaterStatus = -1, currentWaterStatus = -1;
         int SUMP_WL_LOW, SUMP_WL_MID;
         bool CODE_DEBUG;
         int DEBUG_DELAY_TIME;
@@ -10,7 +10,7 @@ class Sump{
 
         void updateSumpDetails( bool updateFromStart = false ){
 
-            int tempWaterLevelInSump = waterStatus;
+            int tempWaterLevelInSump = currentWaterStatus;
             bool caseBreakCheck = true;
 
             if( tempWaterLevelInSump <= 0 || updateFromStart ){
@@ -25,14 +25,14 @@ class Sump{
 
                         pinAlter().lowDigitalPin( SUMP_WL_LOW, true, true );
                         if( digitalRead( SUMP_WL_LOW ) == 1 ){
-                            waterStatus = 2;
+                            currentWaterStatus = 2;
                             pinAlter().highDigitalPin( SUMP_WL_LOW );
                             caseBreakCheck = false;
                         } else {
-                            waterStatus = -1;
+                            currentWaterStatus = -1;
                         }
                     } else {
-                        waterStatus = 0;
+                        currentWaterStatus = 0;
                     }
                     
                     if( caseBreakCheck ){
@@ -46,20 +46,20 @@ class Sump{
 
                         pinAlter().lowDigitalPin( SUMP_WL_MID, true, true );
                         if( digitalRead( SUMP_WL_MID ) == 1 ){
-                            waterStatus = 3;
+                            currentWaterStatus = 3;
                             pinAlter().highDigitalPin( SUMP_WL_MID );
                         } else {
-                            waterStatus = -1;
+                            currentWaterStatus = -1;
                         }
 
                     } else {
-                        waterStatus = 1;
+                        currentWaterStatus = 1;
                     }
 
                 break;
 
                 default:
-                    waterStatus = -1;
+                    currentWaterStatus = -1;
                     pinAlter().highDigitalPin( SUMP_WL_LOW );
                     pinAlter().highDigitalPin( SUMP_WL_MID );
                 break;
@@ -69,7 +69,7 @@ class Sump{
                  Serial.println("\n\t\tDebug from sump class : ");
                  Serial.println("\n\t\t\t Water low sensor value : " + pinAlter().checkValueInPin( SUMP_WL_LOW ) );
                  Serial.println("\n\t\t\t Water mid sensor value : " + pinAlter().checkValueInPin( SUMP_WL_MID ) );
-                 Serial.println("\n\n\t\t\t Value in waterStatus : " + String( waterStatus ) );
+                 Serial.println("\n\n\t\t\t Value in currentWaterStatus : " + String( currentWaterStatus ) );
                  delay( DEBUG_DELAY_TIME );
             }
 
@@ -77,11 +77,22 @@ class Sump{
         } 
 
     public:
+        bool isChanged = true;
+
         int waterLevelInSump( bool updateFromStart = false ){
+            oldWaterStatus = currentWaterStatus;
+            
             do{
                 updateSumpDetails( updateFromStart );
-            }while( waterStatus == -1 );
-            return waterStatus;
+            }while( currentWaterStatus == -1 );
+
+            if( currentWaterStatus === oldWaterStatus ){
+                isChanged = false;
+            } else {
+                isChanged = true;
+            }
+
+            return currentWaterStatus;
         }
 
         Sump( int low, int mid, bool debug, int delay_time  ){

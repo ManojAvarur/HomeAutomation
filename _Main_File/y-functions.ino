@@ -29,8 +29,18 @@ void motor_control( uint8_t value ){
     //    digitalWrite( RELAY_1, value );
 }
 
+void update_server(){
+    Serial.println("Inside update server");
+    if( tankObj.isChanged || sumpObj.isChanged ){
+        Serial.prinln("\tUpdating server");
+    }
+}
 
-bool setup_wifi(){
+void check_requests_from_server(){
+    Serial.println("Inside update server");
+}
+
+void setup_wifi(){
    short while_counter = 0;
    short overall_wait_time = 5; //secs
    WiFi.begin(SSID, PASSWORD);
@@ -43,10 +53,4 @@ bool setup_wifi(){
    Serial.println("");
    Serial.print("Connected to WiFi network with IP Address: ");
    Serial.println(WiFi.localIP());
-   
-   if( WiFi.status() != WL_CONNECTED ){
-       return true;
-   } else {
-       return false;
-   }
 }
