@@ -962,7 +962,7 @@ section {
     color: black;
   }
 
-.black_circle,
+.gradient_circle,
 .red_circle,
 .yellow_circle,
 .orange_circle,
@@ -974,8 +974,15 @@ section {
     transition: ease-in;
  } 
 
-.black_circle{
-    background-color: rgb(0, 0, 0);
+.gradient_circle{
+    /* background-color: rgb(170, 170, 170); */
+    background:  linear-gradient( 217deg, rgba(255, 0, 0), rgba(0, 128, 0, .8) 70.71% ),
+                       linear-gradient( 127deg, rgba(255, 255, 0), rgba(255, 166, 0, .8) 70.71% ),
+                       linear-gradient( 336deg, rgba(255, 166, 0), rgba(255, 0, 0, .8) 70.71% );
+
+    /* background: linear-gradient(217deg, rgba(255,0,0,.8), rgba(255,0,0,0) 70.71%), linear-gradient(127deg, rgba(0,255,0,.8), rgba(0,255,0,0) 70.71%), linear-gradient(336deg, rgba(0,0,255,.8), rgba(0,0,255,0) 70.71%); */
+    /* background-color: linear-gradient( ); */
+    /* background-image: linear-gradient(217deg, rgba(255,0,0,.8), rgba(255,0,0,0) 70.71%), linear-gradient(127deg, rgba(0,255,0,.8), rgba(0,255,0,0) 70.71%), linear-gradient(336deg, rgba(0,0,255,.8), rgba(0,0,255,0) 70.71%); */
 }
 
 .red_circle{
@@ -1007,4 +1014,8 @@ section {
     opacity: 0.5;
     text-decoration: none;
     color: rgb(128, 128, 128);
+}
+
+ul li a{
+    margin-left: 10px;
 }
