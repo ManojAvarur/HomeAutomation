@@ -24,31 +24,6 @@
         <header id="header" class="fixed-top">
             <div class="container d-flex align-items-center justify-content-between">
                 <h1 class="logo"><a href="index.php">HOME<span>ATO</span></a></h1>
-                <nav class="nav-bar d-none d-lg-block">
-                    <ul>
-                        <li><a href="#information_main_home">Home</a></li>
-                        <li><a href="#sensor-datass">Sensor Data</a></li> 
-                        <li><a href="#graph">Graph</a></li>
-                        <li><a href="#footer">About Us</a></li>  
-                        <li class="unfreeze" style="display: none;"><a>|</a></li>  
-                        <li class="unfreeze" style="display: none;"><a href="javascript:void(0);">Un-Freeze NodeMCU</a></li>  
-                    </ul>
-                </nav>
-                <nav class="nav-bar d-lg-none d-sm-block">
-                    <ul>
-                        <li class="drop-down">
-                            <a></a>
-                            <ul>
-                                <li><a href="#information_main_home">Home</a></li>
-                                <li><a href="#sensor-datass">Sensor Data</a></li> 
-                                <li><a href="#graph">Graph</a></li>
-                                <li><a href="#footer">About Us</a></li>  
-                                <li class="unfreeze" style="display: none;"><a href="javascript:void(0);">Un-Freeze NodeMCU</a></li>    
-                            </ul>
-                        </li>
-                    </ul>
-                </nav>
-                
                 <a href="logout.php" class="login-btn">Log Out</a>
             </div>
         </header>
@@ -76,7 +51,7 @@
             </div>
         </section>
 
-        <section class="sensor-datas" id="sensor-datass" >
+        <section class="sensor-datas" id="sensorData" >
             <div class="container" data-aos="fade-down">
                 <div class="section-title">
                     <h2>Sensor</h2>
@@ -88,40 +63,44 @@
                     <strong>Error! : </strong><span id="alert-msg"></span>
                 </div> 
 
-                <div class="pump-box" id="pump">
+                <div class="data-container">
                     <p>
-                        <h4><strong>Irrigation Status : </strong><span id="pump-status">OFF</span></h4>
-                        <!-- <input class="btn-success" type="checkbox" checked data-toggle="toggle" data-width="100" > -->
+                        <h4><strong>Tank Status</strong></h4><span class="black_circle" id="tank-status"></span>
                     </p>
                 </div> 
 
-                <!-- <div class="pump-box" id="pump">
+                <div class="data-container">
                     <p>
-                        <h4 class="irrigation_manual_overide"><strong>Irrigation Manual Overide : </strong> </h4>
-                        <input class="btn-success irrigation_manual_overide" id="switch" onchange="irrigation_manual_overide()" type="checkbox" data-toggle="toggle" data-width="100" >
+                        <h4><strong>Sump Status</strong></h4><span class="black_circle" id="pump-status"></span>
                     </p>
-                </div>  -->
+                </div> 
 
-                <div class="pump-box" id="pump">
+                <div class="data-container" id="pump">
                     <p>
-                        <h4><strong>Irrigation Manual Overide : </strong> </h4>
+                        <h4>
+                            <strong>Pump Manual Overide&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;</strong> 
+                            <input type="checkbox" class="form-check-input" id="manual-overide" onchange="handelPumpManualOveride()">
+                        </h4>
+                    </p>
+
+                    
+
+                    <label class="switch">
+                        <input type="checkbox" id="togBtn" onchange="handelToggleButton()">
+                        <div class="slider round" id="togBtn-slider">
+                            <!--ADDED HTML -->
+                            <span class="on">ON</span>
+                            <span class="off">OFF</span>
+                            <!--END-->
+                        </div>
+                    </label>
                         
-                            <label class="switch">
-                                <input type="checkbox" id="togBtn" onclick="nodemcu_free_check(irrigation_manual_overide, true, 'irrigation')">
-                                <div class="slider round" id="togBtn-slider">
-                                    <!--ADDED HTML -->
-                                    <span class="on">ON</span>
-                                    <span class="off">OFF</span>
-                                    <!--END-->
-                                </div>
-                            </label>
                         
-                        </p>
                 </div>
 
-                <div class="row">
+                <!-- <div class="row">
 
-                    <div class="col-lg-6 d-flex align-items-stretch">
+                    <div class="col-lg-12 d-flex align-items-stretch">
                         <div class="icon-box">
                             <i class="icofont-thermometer icon"></i>
                             <h4><a class="temparature sensor_data_retrival" href="javascript:void(0);">Temprature</a></h4>
@@ -130,54 +109,10 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-6 d-flex align-items-stretch">
-                        <div class="icon-box">
-                            <i class="icofont-ui-weather icon"></i>
-                            <h4><a class="humidity sensor_data_retrival" href="javascript:void(0);">Humidity</a></h4>
-                            <h4><a class="humidity sensor_data_retrival sensor_data_display" href="javascript:void(0);">20%</a></h4>
-                            <p>Humidity is the amount of water vapor present in air.</p>
-                        </div>
-                    </div>
-
-                </div>
+                </div> -->
     
             </div>
         </section>
-
-        <footer id="footer">
-            <div class="footer-top">
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-3 col-md-6 footer-links">
-                            <h4>Services</h4>
-                            <ul>
-                                <li><i class="bx bx-wifi-1"></i> <a href="#">Return Policy</a></li>
-                                <li><i class="bx bx-wifi-1"></i> <a href="#">Security</a></li>
-                                <li><i class="bx bx-wifi-1"></i> <a href="#">Term of Use</a></li>
-                                <li><i class="bx bx-wifi-1"></i> <a href="#">Privacy policy</a></li>
-                            </ul>
-                        </div>
-    
-                        <div class="col-lg-3 col-md-6 footer-links">
-                            <h4>About</h4>
-                            <ul>
-                                <li><i class="bx bx-wifi-1"></i> <a href="#">Company</a></li>
-                                <li><i class="bx bx-wifi-1"></i> <a href="#">Team</a></li>
-                            </ul>
-                        </div>
-    
-                        <div class="col-lg-3 col-md-12 footer-links">
-                            <h4>Contact Us</h4>
-                            <ul>
-                                <li><i class="bx bx-wifi-1"></i> <a href="mailto:farmato.dontreply@gmail.com">Via Email</a></li>
-                                <li><i class="bx bx-wifi-1"></i> <a href="tel:+919123456780">Via Phone Call</a></li>
-                            </ul>
-                        </div>
-    
-                    </div>
-                </div>
-            </div>
-        </footer>
     
         <a href="#" class="back-to-top"><i class="ri-arrow-up-line"></i></a>
         <div id="preloader"></div>
@@ -191,14 +126,44 @@
         <script src="../Assets/vendor/counterup/counterup.min.js"></script>
         <script src="../Assets/vendor/aos/aos.js"></script>
         <script src="../Assets/js/main.js"></script>
-        <script src="../Assets/vendor/google-charts/loader.js"></script>  
-        <script src="../Assets/js/information.js"></script>
         <script>
-            function user_id(){
-                return "secret";
+            let switchOnColor = "#689F38";
+            let switchOffColor = "#aa2e2e";
+            let disabledColor = "#808080";
+            let manualOverideCheckBox = document.getElementById("manual-overide");
+            let toggleButtonContainer = document.getElementById("togBtn-slider");
+            let toggleButton = document.getElementById("togBtn");
+
+            function handelToggleButton(){
+                setToggleSwitchColor();
             }
+
+            function setToggleSwitchColor(){
+                if( ! toggleButton.disabled ){
+                    if( toggleButton.checked ){
+                        toggleButtonContainer.style.backgroundColor = switchOnColor;
+                    } else{
+                        toggleButtonContainer.style.backgroundColor = switchOffColor;
+                    }
+                    toggleButtonContainer.classList.remove("isDisabled");
+                } else {
+                    toggleButtonContainer.style.backgroundColor = disabledColor;
+                    toggleButtonContainer.classList.add("isDisabled");
+                }
+            }
+
+            function handelPumpManualOveride(){
+                if( manualOverideCheckBox.checked ){
+                    toggleButton.disabled = false;
+                } else {
+                    toggleButton.checked = false;
+                    toggleButton.disabled = true;
+                }
+                setToggleSwitchColor();
+            }
+
+            window.onload = handelPumpManualOveride;
         </script>
-        <script src="../Assets/js/google-charts.js"></script>
     </body>
 </html>
 
