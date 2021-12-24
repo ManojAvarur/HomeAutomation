@@ -1,8 +1,8 @@
 -- Check out json data type in mysql
 
 CREATE TABLE registered_node_mcu (
-  node_mcu_unique_id varchar(100) PRIMARY KEY,
-)
+  node_mcu_unique_id varchar(100) PRIMARY KEY
+);
 
 CREATE TABLE user_login (
   user_unique_id varchar(100) PRIMARY KEY,
@@ -12,27 +12,34 @@ CREATE TABLE user_login (
   user_email_id varchar(100) NOT NULL,
   user_is_admin boolean NOT NULL,
   FOREIGN KEY (user_node_mcu_reference) REFERENCES registered_node_mcu(node_mcu_unique_id)
-)
+);
 
 CREATE TABLE cookie_data (
     cookie_user_unique_id varchar(100) NOT NULL,
     token_id_1 varchar(50) NOT NULL,
     token_id_2 varchar(50) NOT NULL,
     FOREIGN KEY (cookie_user_unique_id) REFERENCES user_login(user_unique_id)
-)
+);
 
 
 CREATE TABLE user_nodemcu_com (
-  unc_node_mcu_unique_id varchar(100) NOT NULL,
   time_stamp datetime DEFAULT current_timestamp(),
+  unc_node_mcu_unique_id varchar(100) NOT NULL,
+
   sump_status tinyint NOT NULL,
   tank_status tinyint NOT NULL,
   motor_status boolean NOT NULL,
+
   debug_log varchar(200),
+
   pump_manual_overide_request BOOLEAN,
-  pump_manual_overide_status BOOLEAN,
+  pump_on_off_status BOOLEAN,
+  pump_take_over_complete_control boolean,
+
+  node_mcu_is_controled_by_user_id varchar(100),
+  FOREIGN KEY (node_mcu_is_controled_by_user_id) REFERENCES user_login(user_unique_id),
   FOREIGN KEY (unc_node_mcu_unique_id) REFERENCES registered_node_mcu(node_mcu_unique_id)
-)
+);
 
 
 

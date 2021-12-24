@@ -2,7 +2,7 @@
     ini_set('display_errors', '1');
     include 'PHPMailer/PHPMailerAutoload.php';
     include "db_connection.php";
-    $file = fopen( "_headers/credentials.txt", "r" );
+    // $file = fopen( "_headers/credentials.txt", "r" );
 
     function generate_cookie_token( $email, $uid ){
         $cookie_id = hash('sha256', $email.$uid );
@@ -13,7 +13,7 @@
 
     function cookie_check($location='index.php', $redirect = true){
 
-        if( isset( $_COOKIE["token_id_1"] ) &&  isset( $_COOKIE["token_id_2"] )  && !empty( $_COOKIE["token_id_1"] ) && !empty( $_COOKIE["token_id_2"] ) ){
+        if( isset( $_COOKIE["hato-token_id_1"] ) &&  isset( $_COOKIE["hato-token_id_2"] )  && !empty( $_COOKIE["hato-token_id_1"] ) && !empty( $_COOKIE["hato-token_id_2"] ) ){
     
             global $connection;
 
@@ -22,21 +22,18 @@
             $query = "SELECT user_full_name, user_unique_id FROM user_login ";
             $query .= "WHERE user_unique_id in ( ";
             $query .= "SELECT cookie_user_unique_id FROM cookie_data ";
-            $query .= "WHERE token_id_1  = '".mysqli_escape_string( $connection, $_COOKIE["token_id_1"] )."' ";
-            $query .= "AND token_id_2 = '".mysqli_escape_string( $connection, $_COOKIE["token_id_2"] )."' ); ";
+            $query .= "WHERE token_id_1  = '".mysqli_escape_string( $connection, $_COOKIE["hato-token_id_1"] )."' ";
+            $query .= "AND token_id_2 = '".mysqli_escape_string( $connection, $_COOKIE["hato-token_id_2"] )."' ); ";
 
             $result = mysqli_query($connection, $query);
     
             if( mysqli_num_rows( $result ) > 0 ){
                 $result = mysqli_fetch_assoc($result);
-                $_SESSION['token-id'] = $result['user_unique_id'];
-                $_SESSION["user_name"] = $result["user_full_name"];
+                $_SESSION['hato-token-id'] = $result['user_unique_id'];
+                $_SESSION["hato-user_name"] = $result["user_full_name"];
                 if( $redirect ){
                     header('location:'.$location);
-                } else {
-                    return false;
                 }
-                // die(/);
             } 
     
         } else {
@@ -45,20 +42,20 @@
     
     }
 
-    function mail_to( $email_id, $message, $subject ){
+    function mail_to( $email_id, $subject, $message ){
         global $file;
 
         $mail = new PHPMailer;
-        // $mail->SMTPDebug = SMTP::DEBUG_SERVER;  
+        $mail->SMTPDebug = SMTP::DEBUG_SERVER;  
         $mail->isSMTP();                                       
         $mail->Host       = 'smtp.gmail.com';                    
         $mail->SMTPAuth   = true;                              
-        $mail->Username   = fgets($file);                     
-        $mail->Password   = fgets($file); 
+        $mail->Username   = "";                     
+        $mail->Password   = ""; 
         $mail->SMTPSecure = 'tls';           //Enable implicit TLS encryption
         $mail->Port       = 587;   
         //Sender
-        $mail->setFrom('farmato.dontreplay@gmail.com', 'FARMATO');
+        $mail->setFrom('homeato.dontreplay@gmail.com', 'HOMEATO');
         //Recipient
         $mail->addAddress($email_id);    
         $mail->isHTML(true);                                  //Set email format to HTML

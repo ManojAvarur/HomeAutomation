@@ -57,10 +57,15 @@
                     <h2>Sensor</h2>
                     <p>Sensor Data</p>
                 </div>
-             
-                <div class="alert" id="alert-container">
+
+                <div class="warning" id="warning-container">
+                    <span class="closebtn"  onclick="this.parentElement.style.display='none';">&times;</span> 
+                    <strong id="warning-type">Note! : </strong><span id="warning-msg">Madhura has taken control over the pump.</span>
+                </div> 
+
+                <div class="error" id="error-container">
                     <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-                    <strong>Error! : </strong><span id="alert-msg"></span>
+                    <strong>Error! : </strong><span id="error-msg"></span>
                 </div> 
 
                 <div class="data-container">
@@ -103,7 +108,7 @@
                     </p>
 
                 </div>
-                <div class="data-container">
+                <div class="data-container debug-log">
                     <p>
                         <h4><strong>Debug Log</strong></h4><span id="debug-log">No Log To Display</span>
                     </p>
@@ -160,13 +165,18 @@
         <script src="../Assets/vendor/counterup/counterup.min.js"></script>
         <script src="../Assets/vendor/aos/aos.js"></script>
         <script src="../Assets/js/main.js"></script>
+        <script src="../Assets/js/homeautomation_information.js"></script>
         <script>
             let switchOnColor = "#689F38";
             let switchOffColor = "#aa2e2e";
             let disabledColor = "#808080";
 
-            let displayAlertContainer = document.getElementById("alert-container");
-            let displayAlertMessage = document.getElementById("alert-msg");
+            let displayWarningContainer = document.getElementById("warning-container");
+            let displayWarningType = document.getElementById("warning-type");
+            let displayWarningMessage = document.getElementById("warning-msg");
+
+            let displayErrorContainer = document.getElementById("error-container");
+            let displayErrorMessage = document.getElementById("error-msg");
 
             let manualOverideCheckBox = document.getElementById("manual-overide");
 
@@ -175,53 +185,8 @@
 
             let completeControl = document.getElementById("complete-control");
 
-            function showAlert( alertMsg ){
-                displayAlertMessage.innerText = alertMsg;
-                displayAlertContainer.style.display = "block";
-                document.getElementById("information_main_home").scrollIntoView();
-            }
-
-            function performToggleSwitchAndControlOP(){
-                if( ! toggleButton.disabled ){
-                    if( toggleButton.checked ){
-                        toggleButtonContainer.style.backgroundColor = switchOnColor;
-                    } else{
-                        toggleButtonContainer.style.backgroundColor = switchOffColor;
-                    }
-                    toggleButtonContainer.classList.remove("isDisabled");
-                } else {
-                    toggleButtonContainer.style.backgroundColor = disabledColor;
-                    toggleButtonContainer.classList.add("isDisabled");
-                }
-            }
-
-            function handelToggleButton(){
-                performToggleSwitchAndControlOP();
-            }
-
-        
-            function handelPumpManualOveride(){
-                if( manualOverideCheckBox.checked ){
-                    toggleButton.disabled = false;
-                    completeControl.disabled = false;
-                    completeControl.classList.remove("isDisabled");
-                } else {
-                    toggleButton.checked = false;
-                    toggleButton.disabled = true;
-                    completeControl.disabled = true;
-                    completeControl.checked = false;
-                    completeControl.classList.add("isDisabled");
-                }
-                performToggleSwitchAndControlOP();
-            }
-
-            function elementDisabledError(){
-                if( completeControl.disabled || toggleButton.disabled ){
-                    showAlert("Selected option is disabled because ' Pump Manual Overide ' is not checked.");
-                }
-            };
-
             window.onload = handelPumpManualOveride;
+            window.on
         </script>
     </body>
 </html>

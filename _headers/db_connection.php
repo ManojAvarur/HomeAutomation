@@ -1,8 +1,3 @@
 <?php
-    $connection = mysqli_connect( "localhost", "root", "", "farmato");
-
-    if ( !$connection ) {
-        die("Connection failed!");
-    }
-
+    $connection = mysqli_connect( "localhost", "root", "", "homeautomation") or die("Connection failed!");
 ?>
