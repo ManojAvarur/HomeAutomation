@@ -1,7 +1,8 @@
 function showWarning({ type="Warning!", message }){
     displayWarningType.innerText = type;
-    displayErrorMessage.innerText = message;
+    displayWarningMessage.innerText = message;
     displayWarningContainer.style.display = "block";
+    scrollToSensorDataViewPoint.scrollIntoView();
 }
 
 function closeShowWarning(){
@@ -13,7 +14,7 @@ function closeShowWarning(){
 function showError( errorMsg ){
     displayErrorMessage.innerText = errorMsg;
     displayErrorContainer.style.display = "block";
-    document.getElementById("sensorData").scrollIntoView();
+    scrollToSensorDataViewPoint.scrollIntoView();
 }
 
 function performToggleSwitchAndControlOP(){

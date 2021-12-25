@@ -6,7 +6,8 @@
     include "_headers/db_connection.php";
     include "_headers/functions.php";
 
-    $span_check = false;  
+    $span_email_check = false;  
+    $span_nodemcu_check = false;
     global $connection;
 
     if ( isset( $_SESSION["hato-token-id"] ) && !empty( $_SESSION["hato-token-id"] ) ){
@@ -17,48 +18,62 @@
 
     if( isset( $_POST['submit'] ) && isset( $_POST['email'] ) && isset( $_POST['password'] ) && !empty( $_POST['email'] ) && !empty( $_POST['password'] ) ) {
 
-        $email = mysqli_escape_string( $connection, $_POST['email']);
+        $node_mcu = mysqli_escape_string( $connection, $_POST['nodeMCUCode']);
+        $query = "SELECT * FROM registered_node_mcu WHERE node_mcu_unique_id = '".$node_mcu."'";
 
-        $emailCheck = "SELECT * FROM user_login WHERE user_email_id = '$email'; ";
+        if( mysqli_num_rows( mysqli_query( $connection, $query ) ) > 0 ){
 
-        $qemailCheck = mysqli_query( $connection, $emailCheck);
+            $email = mysqli_escape_string( $connection, $_POST['email']);
 
-        if(mysqli_num_rows($qemailCheck) > 0) {
+            $emailCheck = "SELECT * FROM user_login WHERE user_email_id = '$email'; ";
 
-            $span_check = true;
+            $qemailCheck = mysqli_query( $connection, $emailCheck);
 
-            //echo "<script> alert('"  . $email . " Mail already exists! '); </script>";
+            if(mysqli_num_rows($qemailCheck) > 0) {
 
-            echo "<script> if( window.history.replaceState ){
-                window.history.replaceState( null, null, location.href='#' );
+                $span_email_check = true;
+
+                echo "<script> if( window.history.replaceState ){
+                                    window.history.replaceState( null, null, location.href='#' );
+                                }
+                    </script>";     
+
+                
+
+            } else {
+
+                $_SESSION['hato-postdata'] = $_POST;   
+
+                $verification = rand(1000000,9999999);
+                
+                $_SESSION['hato-postdata']['verification'] = $verification;
+
+                $subject = "Verification Code For HOMEATO";
+
+                $message = "<h1>Hello <strong>" . $_POST["fname"] . "</strong>.</h1>";
+                $message .= "<br>Welcome to HOMEATO.";
+                $message .= "<br><br>Verfication Code is : <strong>" . $verification . "</strong>";
+                $message .= "<br><br>Please enter the above code in our verification site.";
+                $message .= "<br><br>Thank You.<br>HOMEATO";
+
+
+                if( mail_to($email, $subject, $message) ){
+                    echo "<script> if( window.history.replaceState ){
+                                        window.history.replaceState( null, null, location.href='registration_confirmation.php' );
+                                    }
+                        </script>";
+                } else {
+                        echo "<script>
+                                    alert('Couldn\'t send the mail.\\nPlease contact admin.!');
+                                    window.location.href='login.php';
+                        </script>";
+                }
+
+                
+
             }
-                </script>";     
-
-            
-
         } else {
-
-            $_SESSION['hato-postdata'] = $_POST;   
-
-            $verification = rand(1000000,9999999);
-            
-            $_SESSION['hato-postdata']['verification'] = $verification;
-
-            $subject = "Verification Code For HOMEATO";
-
-            $message = "<h1>Hello<strong>" . $_POST["fname"] . "</strong>.</h1>";
-            $message .= "<br>Welcome to HOMEATO.";
-            $message .= "<br><br>Verfication Code is : <strong>" . $verification . "</strong>";
-            $message .= "<br><br>Please enter the above code in our verification site.";
-            $message .= "<br><br>Thank You.<br>HOMEATO";
-
-            mail_to($email, $subject, $message);
-
-            // echo "<script> if( window.history.replaceState ){
-            //                 window.history.replaceState( null, null, location.href='registration_confirmation.php' );
-            //                 }
-            //     </script>";
-
+            $span_nodemcu_check = true;
         }
     }   
  
@@ -83,6 +98,7 @@
         <link href="Assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
         <link href="Assets/vendor/aos/aos.css" rel="stylesheet">
         <link href="Assets/css/style.css" rel="stylesheet">
+        <script src="Assets/js/browser_check.js"></script>
     </head>
 
     <body>
@@ -105,8 +121,15 @@
                                 <form class="form-signin" name="signupform" method="POST" action="signup.php" onSubmit="return checkPassword(this)">
                                     
                                     <?php
-                                        if( $span_check ){
-                                            echo "<h6 class='text-center' id='error' style='color: red;'><strong>' " . $email ." ' already exists!</strong></h6>
+                                        if( $span_email_check ){
+                                            echo "<h6 class='text-center' style='color: red;'><strong>' " . $email ." ' already exists!</strong></h6>
+                                                <br>";
+                                        }
+                                    ?>
+
+                                    <?php
+                                        if( $span_nodemcu_check ){
+                                            echo "<h6 class='text-center' style='color: red;'><strong>Previously entered ' Node MCU Code ' was incorrect!</strong></h6>
                                                 <br>";
                                         }
                                     ?>
@@ -125,7 +148,7 @@
                                     </div>
 
                                     <div class="form-label-group">
-                                        <input type="tel" name="phone" id="inputNodeMcuCode" class="form-control" placeholder="Node MCU Code" required autofocus onKeyup="checkform()">
+                                        <input type="tel" name="nodeMCUCode" id="inputNodeMcuCode" class="form-control" placeholder="Node MCU Code" required autofocus onKeyup="checkform()">
                                         <label for="inputNodeMcuCode">Node MCU Code</label>
                                     </div>
 

@@ -31,11 +31,15 @@
                 $result = mysqli_fetch_assoc($result);
                 $_SESSION['hato-token-id'] = $result['user_unique_id'];
                 $_SESSION["hato-user_name"] = $result["user_full_name"];
+                
                 if( $redirect ){
                     header('location:'.$location);
                 }
-            } 
-    
+
+                return true;
+            } else {
+                return false;
+            }
         } else {
             return false;
         }
@@ -46,7 +50,7 @@
         global $file;
 
         $mail = new PHPMailer;
-        $mail->SMTPDebug = SMTP::DEBUG_SERVER;  
+        // $mail->SMTPDebug = SMTP::DEBUG_SERVER;  
         $mail->isSMTP();                                       
         $mail->Host       = 'smtp.gmail.com';                    
         $mail->SMTPAuth   = true;                              
