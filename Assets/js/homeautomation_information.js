@@ -1,3 +1,82 @@
+function loadSensorData(){
+    if( Object.keys( sensorData ).length > 1 ){
+
+        switch( parseInt( sensorData.tank_status ) ){
+            case -1 :
+            default : 
+                tankStatusDisplay.classList.remove( tankStatusDisplay.classList[0] );
+                tankStatusDisplay.classList.add( "gradient_circle") ;
+            break;
+
+            case 0 :
+                tankStatusDisplay.classList.remove( tankStatusDisplay.classList[0] );
+                tankStatusDisplay.classList.add( "red_circle") ;
+            break;
+
+            case 1 :
+                tankStatusDisplay.classList.remove( tankStatusDisplay.classList[0] );
+                tankStatusDisplay.classList.add( "yellow_circle") ;
+            break;
+
+            case 2 :
+                tankStatusDisplay.classList.remove( tankStatusDisplay.classList[0] );
+                tankStatusDisplay.classList.add( "orange_circle") ;
+            break;
+
+            case 3 :
+            case 4 :
+                tankStatusDisplay.classList.remove( tankStatusDisplay.classList[0] );
+                tankStatusDisplay.classList.add( "green_circle") ;
+            break;
+            
+        }
+
+        switch( sensorData.sump_status ){
+            case -1 :
+            default : 
+                sumpStatusDisplay.classList.remove( sumpStatusDisplay.classList[0] );
+                sumpStatusDisplay.classList.add( "gradient_circle") ;
+            break;
+
+            case 0 :
+                sumpStatusDisplay.classList.remove( sumpStatusDisplay.classList[0] );
+                sumpStatusDisplay.classList.add( "red_circle") ;
+            break;
+
+            case 1 :
+                sumpStatusDisplay.classList.remove( sumpStatusDisplay.classList[0] );
+                sumpStatusDisplay.classList.add( "yellow_circle") ;
+            break;  
+
+            case 2 :
+            case 3 :
+                sumpStatusDisplay.classList.remove( sumpStatusDisplay.classList[0] );
+                sumpStatusDisplay.classList.add( "orange_circle") ;
+            break;
+        }
+
+        switch( sensorData.motor_status ){
+            case -1 :
+            default : 
+                motorStatusDisplay.classList.remove( motorStatusDisplay.classList[0] );
+                motorStatusDisplay.classList.add( "gradient_circle") ;
+            break;
+
+            case 0 :
+                motorStatusDisplay.classList.remove( motorStatusDisplay.classList[0] );
+                motorStatusDisplay.classList.add( "red_circle") ;
+            break;
+
+            case 1 :
+                motorStatusDisplay.classList.remove( motorStatusDisplay.classList[0] );
+                motorStatusDisplay.classList.add( "green_circle") ;
+            break;  
+        }
+    } else {
+        showWarning({ type:"Note!", message:"Couldn't load the data.\nPlease wait for 5 seconds, we will try to retrive your data" });
+    }
+}
+
 function showWarning({ type="Warning!", message }){
     displayWarningType.innerText = type;
     displayWarningMessage.innerText = message;

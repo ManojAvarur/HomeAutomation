@@ -19,19 +19,20 @@
 
             //SELECT cookie_user_unique_id FROM cookie_data WHERE token_id_1 = 'f48a18ff4d1b6bfea59e832981ebc0d3' AND token_id_2 = '9764028e1b3a4592ff3f8dca1dd8f296');"
     
-            $query = "SELECT user_full_name, user_unique_id FROM user_login ";
+            $query = "SELECT user_full_name, user_unique_id, user_is_admin, user_node_mcu_reference FROM user_login ";
             $query .= "WHERE user_unique_id in ( ";
             $query .= "SELECT cookie_user_unique_id FROM cookie_data ";
             $query .= "WHERE token_id_1  = '".mysqli_escape_string( $connection, $_COOKIE["hato-token_id_1"] )."' ";
             $query .= "AND token_id_2 = '".mysqli_escape_string( $connection, $_COOKIE["hato-token_id_2"] )."' ); ";
 
-            $result = mysqli_query($connection, $query);
+            $result = mysqli_query( $connection, $query );
     
             if( mysqli_num_rows( $result ) > 0 ){
                 $result = mysqli_fetch_assoc($result);
                 $_SESSION['hato-token-id'] = $result['user_unique_id'];
                 $_SESSION["hato-user_name"] = $result["user_full_name"];
-                
+                $_SESSION["hato-is_admin"] = $result["user_is_admin"];
+                $_SESSION["hato-nodemcu_id"] = $result["user_node_mcu_reference"];
                 if( $redirect ){
                     header('location:'.$location);
                 }

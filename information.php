@@ -6,11 +6,23 @@
     include "_headers/db_connection.php";
     include "_headers/functions.php";
     global $connection;
+    $span_check = false;
 
-    if ( !isset( $_SESSION["hato-token-id"] ) && empty( $_SESSION["hato-token-id"] ) && !isset( $_SESSION["hato-user_name"] ) && empty( $_SESSION["hato-user_name"] ) ){
+    if ( !isset( $_SESSION["hato-token-id"] ) && empty( $_SESSION["hato-token-id"] ) && !isset( $_SESSION["hato-user_name"] ) && empty( $_SESSION["hato-user_name"] ) && !isset( $_SESSION["hato-is_admin"] ) && empty( $_SESSION["hato-is_admin" ] ) ){
         if( ! cookie_check() ){
             header("location:login.php");
         }
+    }
+
+    if( $_SESSION["hato-is_admin" ] ){
+
+    }
+    
+    $result = mysqli_query( $connection, $query );
+    if( mysqli_num_rows( $result ) > 0 ){
+        $result = mysqli_fetch_assoc( $result );
+    } else {
+        $span_check  = true;
     }
         
 
@@ -40,7 +52,7 @@
     </head>
     <body>
         <noscript>
-            <meta http-equiv = "refresh" content = "0; url = " />
+            <meta http-equiv = "refresh" content = "0; url = noscript.html" />
         </noscript>
         <header id="header" class="fixed-top">
             <div class="container d-flex align-items-center justify-content-between">
@@ -79,9 +91,17 @@
                     <p>Sensor Data</p>
                 </div>
 
+                <?php
+                    if( $span_check ){
+                        echo "<div class='error'>
+                                <span class='closebtn' onclick='this.parentElement.style.display='none';'>&times;</span> 
+                                <strong>Error! : </strong><span>Couldn't load the data.<br>Please wait for 5 seconds</span>
+                            </div>"; 
+                    }
+                ?>
                 <div class="warning" id="warning-container">
                     <span class="closebtn"  onclick="this.parentElement.style.display='none';">&times;</span> 
-                    <strong id="warning-type">Note! : </strong>&nbsp;<span id="warning-msg">Madhura has taken control over the pump.</span>
+                    <strong id="warning-type"></strong><strong> : </strong><span id="warning-msg"></span>
                 </div> 
 
                 <div class="error" id="error-container">
@@ -97,7 +117,7 @@
 
                 <div class="data-container">
                     <p>
-                        <h4><strong>Sump Status</strong></h4><span class="gradient_circle" id="pump-status"></span>
+                        <h4><strong>Sump Status</strong></h4><span class="gradient_circle" id="sump-status"></span>
                     </p>
                 </div> 
 
@@ -129,6 +149,7 @@
                     </p>
 
                 </div>
+
                 <div class="data-container debug-log">
                     <p>
                         <h4><strong>Debug Log</strong></h4><span id="debug-log">No Log To Display</span>
@@ -192,6 +213,18 @@
             let switchOffColor = "#aa2e2e";
             let disabledColor = "#808080";
 
+            <?php
+                if( ! $span_check ){
+                    echo "var sensorData = " . JSON_encode( $result ) . ";\n\n";
+                } else {
+                    echo "var sensorData;\n\n";
+                }
+            ?>
+
+            let tankStatusDisplay = document.getElementById("tank-status");
+            let sumpStatusDisplay = document.getElementById("sump-status");
+            let motorStatusDisplay = document.getElementById("motor-status");
+
             let displayWarningContainer = document.getElementById("warning-container");
             let displayWarningType = document.getElementById("warning-type");
             let displayWarningMessage = document.getElementById("warning-msg");
@@ -210,6 +243,7 @@
 
             window.onload = () => {
                 handelPumpManualOveride();
+                loadSensorData();
             }
 
             window.onoffline = () => {

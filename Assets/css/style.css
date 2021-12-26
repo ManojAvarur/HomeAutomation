@@ -951,7 +951,7 @@ section {
     width: 90%;
     margin: 0 auto;
     border-radius: 10px;
-    /* display: none; */
+    display: none;
     margin-bottom: 10px;
     text-align: center;
     padding: 20px;

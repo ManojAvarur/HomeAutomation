@@ -29,10 +29,10 @@ CREATE TABLE node_mcu_data (
   motor_status boolean NOT NULL,
   debug_log varchar(200),
   FOREIGN KEY (unc_node_mcu_unique_id) REFERENCES registered_node_mcu(node_mcu_unique_id)
-)
+);
 
 CREATE TABLE user_requests (
-  time_stamp datetime DEFAULT current_timestamp(),
+  time_stamp datetime,
   unc_node_mcu_unique_id varchar(100) NOT NULL,
   pump_manual_overide_request BOOLEAN,
   pump_on_off_status BOOLEAN,
@@ -40,7 +40,7 @@ CREATE TABLE user_requests (
   node_mcu_is_controled_by_user_id varchar(100),
   FOREIGN KEY (node_mcu_is_controled_by_user_id) REFERENCES user_login(user_unique_id),
   FOREIGN KEY (unc_node_mcu_unique_id) REFERENCES registered_node_mcu(node_mcu_unique_id)
-)
+);
 
 -- CREATE TABLE user_nodemcu_com (
 --   time_stamp datetime DEFAULT current_timestamp(),
@@ -61,13 +61,17 @@ CREATE TABLE user_requests (
 --   FOREIGN KEY (unc_node_mcu_unique_id) REFERENCES registered_node_mcu(node_mcu_unique_id)
 -- );
 
+-- ALTER TABLE user_nodemcu_com
+--     CHANGE time_stamp 
+--         time_stamp TIMESTAMP NOT NULL
+--                     DEFAULT CURRENT_TIMESTAMP
+--                     ON UPDATE CURRENT_TIMESTAMP;
 
-
-ALTER TABLE user_requests
-    CHANGE time_stamp 
-        time_stamp TIMESTAMP NOT NULL
-                    DEFAULT CURRENT_TIMESTAMP
-                    ON UPDATE CURRENT_TIMESTAMP;
+-- ALTER TABLE user_requests
+--     CHANGE time_stamp 
+--         time_stamp TIMESTAMP NOT NULL
+--                     DEFAULT CURRENT_TIMESTAMP
+--                     ON UPDATE CURRENT_TIMESTAMP;
 
 ALTER TABLE node_mcu_data
     CHANGE time_stamp 
@@ -77,4 +81,5 @@ ALTER TABLE node_mcu_data
 
 
 
-
+INSERT INTO node_mcu_data ( unc_node_mcu_unique_id, sump_status, tank_status, motor_status, debug_log  ) 
+VALUES ( "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b", -1, -1, -1, -1, "Nothing to display" );

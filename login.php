@@ -20,7 +20,7 @@
         $username = mysqli_escape_string( $connection, $_POST['email-id'] );                        
         $password = mysqli_escape_string( $connection, hash('sha256', $_POST['password'] ) );
 
-        $query = "SELECT user_unique_id , user_full_name FROM user_login ";
+        $query = "SELECT user_unique_id , user_full_name, user_is_admin, user_node_mcu_reference FROM user_login ";
         $query .= "WHERE user_email_id = '".$username."' AND user_password = '".$password."'";
 
         $result = mysqli_query( $connection, $query );
@@ -30,7 +30,8 @@
             $result = mysqli_fetch_assoc( $result );
             $_SESSION["hato-token-id"] = $result["user_unique_id"];
             $_SESSION["hato-user_name"] = $result["user_full_name"];
-
+            $_SESSION["hato-is_admin"] = $result["user_is_admin"];
+            $_SESSION["hato-nodemcu_id"] = $result["user_node_mcu_reference"];
             if( isset( $_POST["remember-me"] ) ){
                 $cookie_value = generate_cookie_token( $_POST['email-id'], $result["user_unique_id"] );
                 $expire = time() + 91 * 24 * 60 * 60;
@@ -90,6 +91,9 @@
     </head>
 
     <body>
+        <noscript>
+            <meta http-equiv = "refresh" content = "0; url = noscript.html" />
+        </noscript>
 
         <header id="header" class="fixed-top">
             <div class="container d-flex align-items-center justify-content-between">

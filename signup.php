@@ -102,6 +102,9 @@
     </head>
 
     <body>
+        <noscript>
+            <meta http-equiv = "refresh" content = "0; url = noscript.html" />
+        </noscript>
 
         <header id="header" class="fixed-top header-pannel">
             <div class="container d-flex align-items-center justify-content-between">
