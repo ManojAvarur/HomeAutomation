@@ -82,4 +82,4 @@ ALTER TABLE node_mcu_data
 
 
 INSERT INTO node_mcu_data ( unc_node_mcu_unique_id, sump_status, tank_status, motor_status, debug_log  ) 
-VALUES ( "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b", -1, -1, -1, -1, "Nothing to display" );
+VALUES ( "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b", -1, -1, -1, "Nothing to display" );

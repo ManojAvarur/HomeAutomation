@@ -2,7 +2,7 @@
     ini_set('display_errors', '1');
     include 'PHPMailer/PHPMailerAutoload.php';
     include "db_connection.php";
-    // $file = fopen( "_headers/credentials.txt", "r" );
+
 
     function generate_cookie_token( $email, $uid ){
         $cookie_id = hash('sha256', $email.$uid );
@@ -48,15 +48,14 @@
     }
 
     function mail_to( $email_id, $subject, $message ){
-        global $file;
-
+        $file = fopen( "../cred.txt", "r" );
         $mail = new PHPMailer;
         // $mail->SMTPDebug = SMTP::DEBUG_SERVER;  
         $mail->isSMTP();                                       
         $mail->Host       = 'smtp.gmail.com';                    
         $mail->SMTPAuth   = true;                              
-        $mail->Username   = "";                     
-        $mail->Password   = ""; 
+        $mail->Username   = fgets($file);                       
+        $mail->Password   = fgets($file);  
         $mail->SMTPSecure = 'tls';           //Enable implicit TLS encryption
         $mail->Port       = 587;   
         //Sender

@@ -1,5 +1,7 @@
 function loadSensorData(){
-    if( Object.keys( sensorData ).length > 1 ){
+    fetch("handel_request/user/retrive_sensor_data.php")
+    .then( result => result.json() )
+    .then( sensorData => {
 
         switch( parseInt( sensorData.tank_status ) ){
             case -1 :
@@ -72,12 +74,24 @@ function loadSensorData(){
                 motorStatusDisplay.classList.add( "green_circle") ;
             break;  
         }
-    } else {
+
+        if( sensorData.debug_log !== undefined ){
+            debugLogDisplay.innerText = sensorData.debug_log;
+        }
+
+        if( displayWarningContainer.style.display === "block" && displayWarningMessage.innerText === "Couldn't load the data.\nPlease wait for 5 seconds, we will try to retrive your data" ){
+            closeShowWarning();
+        }
+    }) 
+    .catch( error => {
+  
         showWarning({ type:"Note!", message:"Couldn't load the data.\nPlease wait for 5 seconds, we will try to retrive your data" });
-    }
+        
+    })
 }
 
 function showWarning({ type="Warning!", message }){
+    // closeShowWarning();
     displayWarningType.innerText = type;
     displayWarningMessage.innerText = message;
     displayWarningContainer.style.display = "block";

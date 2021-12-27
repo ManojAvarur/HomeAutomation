@@ -14,8 +14,11 @@
         }
     }
 
+    $query = "";
     if( $_SESSION["hato-is_admin" ] ){
-
+        $query = "SELECT * FROM node_mcu_data;";
+    } else {
+        $query = "SELECT time_stamp, sump_status, tank_status, motor_status FROM node_mcu_data;";
     }
     
     $result = mysqli_query( $connection, $query );
@@ -150,11 +153,18 @@
 
                 </div>
 
-                <div class="data-container debug-log">
-                    <p>
-                        <h4><strong>Debug Log</strong></h4><span id="debug-log">No Log To Display</span>
-                    </p>
-                </div> 
+                <?php
+                    if( $_SESSION["hato-is_admin"] ){
+                        echo " 
+                            <div class='data-container debug-log'>
+                                <p>
+                                    <h4><strong>Debug Log</strong></h4><span id='debug-log'>No Log To Display</span>
+                                </p>
+                            </div> 
+                        ";
+                    }
+                ?>
+
             </div>
         </section>
 
@@ -212,18 +222,27 @@
             let switchOnColor = "#689F38";
             let switchOffColor = "#aa2e2e";
             let disabledColor = "#808080";
+            let sensorDataLoadIntervalTime = 500;  
 
             <?php
                 if( ! $span_check ){
-                    echo "var sensorData = " . JSON_encode( $result ) . ";\n\n";
+                    echo "//var sensorData = " . JSON_encode( $result ) . ";\n\n";
                 } else {
-                    echo "var sensorData;\n\n";
+                    echo "//var sensorData;\n\n";
                 }
             ?>
+            // USER : Sensor Data request every 10 secs
+            // NODE MCU : Sesnsor data update only when changes
+            // USER : Manual over ride request only when changed
+            // NODE MCU : user request check and Manual pump overside status check with full control  every 2 secs
+            // USER : online update only under manual pump overide is set for every 5 secs
 
+            // USER : as soon as user check manual over ride wait 5 secs before updating server
+            
             let tankStatusDisplay = document.getElementById("tank-status");
             let sumpStatusDisplay = document.getElementById("sump-status");
             let motorStatusDisplay = document.getElementById("motor-status");
+            let debugLogDisplay = document.getElementById("debug-log");
 
             let displayWarningContainer = document.getElementById("warning-container");
             let displayWarningType = document.getElementById("warning-type");
@@ -241,23 +260,39 @@
 
             let scrollToSensorDataViewPoint = document.getElementById("sensorData");
 
+            let loadSensorDataInterval = setInterval( loadSensorData, sensorDataLoadIntervalTime );
+
             window.onload = () => {
                 handelPumpManualOveride();
                 loadSensorData();
             }
 
             window.onoffline = () => {
-                showWarning({ message: "Connection to our servers has been lost.\nDon't worry you're ' Pump Manual Overide ' will be disabled."});
+                showWarning({ 
+                    message: "Connection to our servers has been lost.\nDon't worry you're ' Pump Manual Overide ' will be disabled."
+                });
                 manualOverideCheckBox.checked = false;
                 manualOverideCheckBox.disabled = true;
                 manualOverideCheckBox.classList.add("isDisabled");
             }
+
             window.ononline = () => {
-                showWarning({ message: "You're back online!\nWebpage will be refreshed in 5 seconds"});
+                showWarning({ 
+                    message: "You're back online!\nWebpage will be refreshed in 5 seconds"
+                });
                 setTimeout(() => {
                     location.reload();
                 }, 5000);
             }
+
+            document.addEventListener("visibilitychange", event => {
+                if ( document.visibilityState == "visible") {
+                    loadSensorData();
+                    loadSensorDataInterval = setInterval( loadSensorData, sensorDataLoadIntervalTime );
+                } else {
+                    clearInterval( loadSensorDataInterval );
+                }
+            });
         </script>
     </body>
 </html>
