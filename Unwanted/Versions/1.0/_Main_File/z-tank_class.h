@@ -108,7 +108,7 @@ class Tank{
                  Serial.println("\n\t\tDebug from tank class : ");
                  Serial.println("\n\t\t\t Water low sensor value : " + pinAlter().checkValueInPin( TANK_WL_LOW ) );
                  Serial.println("\n\t\t\t Water mid sensor value : " + pinAlter().checkValueInPin( TANK_WL_MID ) );
-                 Serial.println("\n\t\t\t Water mid sensor value : " + pinAlter().checkValueInPin( TANK_WL_HIGH ) );
+                 Serial.println("\n\t\t\t Water high sensor value : " + pinAlter().checkValueInPin( TANK_WL_HIGH ) );
                  Serial.println("\n\n\t\t\t Value in currentWaterStatus : " + String( currentWaterStatus ) );
                  delay( DEBUG_DELAY_TIME );
             }
