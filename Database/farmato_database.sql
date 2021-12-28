@@ -33,7 +33,7 @@ CREATE TABLE node_mcu_data (
 
 CREATE TABLE user_requests (
   time_stamp datetime,
-  unc_node_mcu_unique_id varchar(100) NOT NULL,
+  unc_node_mcu_unique_id varchar(100) PRIMARY KEY,
   pump_manual_overide_request BOOLEAN,
   pump_on_off_status BOOLEAN,
   pump_take_over_complete_control boolean,

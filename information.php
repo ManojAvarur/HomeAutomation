@@ -13,22 +13,7 @@
             header("location:login.php");
         }
     }
-
-    $query = "";
-    if( $_SESSION["hato-is_admin" ] ){
-        $query = "SELECT * FROM node_mcu_data;";
-    } else {
-        $query = "SELECT time_stamp, sump_status, tank_status, motor_status FROM node_mcu_data;";
-    }
-    
-    $result = mysqli_query( $connection, $query );
-    if( mysqli_num_rows( $result ) > 0 ){
-        $result = mysqli_fetch_assoc( $result );
-    } else {
-        $span_check  = true;
-    }
         
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -92,6 +77,7 @@
                 <div class="section-title">
                     <h2>Sensor</h2>
                     <p>Sensor Data</p>
+                    <h6>Last Updated : <span id="last-updated"></span></h6>
                 </div>
 
                 <?php
@@ -130,13 +116,35 @@
                     </p>
                 </div> 
 
-                <div class="data-container" id="pump" style='position:relative'>
-                    <p>
+                
+
+                <?php
+                    if( $_SESSION["hato-is_admin"] ){
+                        echo " 
+                            <div class='data-container debug-log'>
+                                <p>
+                                    <h4><strong>Debug Log</strong></h4><span id='debug-log'>No Log To Display</span>
+                                </p>
+                            </div> 
+                        ";
+                    }
+                ?>
+
+            </div>
+        </section>
+
+        <section class="sensor-datas">
+            <div class="container" data-aos="fade-down">
+                <div class="section-title">
+                    <h2>Pump</h2>
+                    <p>Pump Control</p>
+                </div>
+                <div class="data-container" id="pump" >
                         <h4>
-                            <label for="manual-overide" ><strong>Pump Manual Overide&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;</strong></label>
-                            <input type="checkbox" class="form-check-input" id="manual-overide" onchange="handelPumpManualOveride()">
+                            <label for="manual-overide" ><strong>Pump Manual Overide&nbsp;:&nbsp;</strong></label>
+                            <input type="checkbox" class="check-input" id="manual-overide" onchange="handelPumpManualOveride()">
                         </h4>
-                    </p>
+                    
 
                     <label class="switch" onclick="elementDisabledError()">
                         <input type="checkbox" id="togBtn" onchange="handelToggleButton()">
@@ -152,19 +160,6 @@
                     </p>
 
                 </div>
-
-                <?php
-                    if( $_SESSION["hato-is_admin"] ){
-                        echo " 
-                            <div class='data-container debug-log'>
-                                <p>
-                                    <h4><strong>Debug Log</strong></h4><span id='debug-log'>No Log To Display</span>
-                                </p>
-                            </div> 
-                        ";
-                    }
-                ?>
-
             </div>
         </section>
 
@@ -222,15 +217,8 @@
             let switchOnColor = "#689F38";
             let switchOffColor = "#aa2e2e";
             let disabledColor = "#808080";
-            let sensorDataLoadIntervalTime = 500;  
-
-            <?php
-                if( ! $span_check ){
-                    echo "//var sensorData = " . JSON_encode( $result ) . ";\n\n";
-                } else {
-                    echo "//var sensorData;\n\n";
-                }
-            ?>
+            let sensorDataLoadIntervalTime = 10000;  
+            let operationCount = 0;
             // USER : Sensor Data request every 10 secs
             // NODE MCU : Sesnsor data update only when changes
             // USER : Manual over ride request only when changed
@@ -238,6 +226,8 @@
             // USER : online update only under manual pump overide is set for every 5 secs
 
             // USER : as soon as user check manual over ride wait 5 secs before updating server
+
+            let timeStampDisplay = document.getElementById("last-updated");
             
             let tankStatusDisplay = document.getElementById("tank-status");
             let sumpStatusDisplay = document.getElementById("sump-status");
@@ -263,7 +253,8 @@
             let loadSensorDataInterval = setInterval( loadSensorData, sensorDataLoadIntervalTime );
 
             window.onload = () => {
-                handelPumpManualOveride();
+                // handelPumpManualOveride( false );    
+                performToggleSwitchAndControlOP();
                 loadSensorData();
             }
 

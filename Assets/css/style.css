@@ -435,7 +435,7 @@ h1, h2, h3, h4, h5, h6 {
 } */
 
 section {
-    padding: 60px 0;
+    padding-top: 60px;
     overflow: hidden;
 }
 
@@ -443,12 +443,13 @@ section {
     padding-bottom: 40px;
 }
 
+.section-title h6,
 .section-title h2 {
     font-size: 14px;
     font-weight: 500;
     padding: 0;
     line-height: 1px;
-    margin: 0 0 5px 0;
+    margin: 5px 0 5px 0;
     letter-spacing: 2px;
     text-transform: uppercase;
     color: #aaaaaa;
@@ -974,6 +975,15 @@ section {
     color: black;
   }
 
+  @keyframes rotate-s-loader {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
 .gradient_circle,
 .red_circle,
 .yellow_circle,
@@ -984,6 +994,11 @@ section {
     border-radius: 50%;
     display: inline-block;
     transition: ease-in;
+
+    animation-name: rotate-s-loader;
+    animation-iteration-count: infinite;
+    animation-duration: 1s;
+    animation-timing-function: linear;
  } 
 
 .gradient_circle{
@@ -1013,11 +1028,11 @@ section {
     background-color: rgb(0, 128, 0);
 }
 
-.form-check-input{
-    width: 18px;
-    height: 18px;
-    display: inline-block;
-    margin-top: 5px
+.check-input{
+    width: 15px;
+    height: 16px;
+    /* display: inline-block; */
+    /* margin-top: 5px */
 }
 
 .isDisabled {

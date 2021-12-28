@@ -18,7 +18,7 @@
         }
                 
         $result = mysqli_query( $connection, $query );
-        if( mysqli_num_rows( $result ) < 0 ){
+        if( mysqli_num_rows( $result ) > 0 ){
             echo json_encode( mysqli_fetch_assoc( $result ) );
         } else {
             http_response_code(400);
