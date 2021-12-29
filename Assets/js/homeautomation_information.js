@@ -1,3 +1,40 @@
+let switchOnColor = "#689F38";
+let switchOffColor = "#aa2e2e";
+let disabledColor = "#808080";
+let sensorDataLoadIntervalTime = 10000;
+let updateTimeToServerIntervalTime = 10000;  
+let lastUpdatedTime;
+let operationCount = 0;
+
+let timeStampDisplay = document.getElementById("last-updated");
+
+let tankStatusDisplay = document.getElementById("tank-status");
+let sumpStatusDisplay = document.getElementById("sump-status");
+let motorStatusDisplay = document.getElementById("motor-status");
+let debugLogDisplay = document.getElementById("debug-log");
+
+let displayWarningContainer = document.getElementById("warning-container");
+let displayWarningType = document.getElementById("warning-type");
+let displayWarningMessage = document.getElementById("warning-msg");
+
+let displayErrorContainer = document.getElementById("error-container");
+let displayErrorMessage = document.getElementById("error-msg");
+
+let manualOverideCheckBox = document.getElementById("manual-overide");
+
+let toggleButtonContainer = document.getElementById("togBtn-slider");
+let toggleButton = document.getElementById("togBtn");
+
+let completeControl = document.getElementById("complete-control");
+
+let scrollToSensorDataViewPoint = document.getElementById("sensorData");
+
+let loadSensorDataInterval = setInterval( () => {
+    loadSensorData();
+}, sensorDataLoadIntervalTime );
+
+let updateTimeToServerInterval;
+
 function loadSensorData(){
     fetch("handel_request/user/retrive_sensor_data.php")
     .then( result => result.json() )
@@ -110,7 +147,7 @@ function loadSensorData(){
 }
 
 // Check for succesfull delete query
-async function pumpRelatedOperations(){
+async function pumpRelatedOperations( overRideOperationCount = operationCount ){
 
     let timeStamp = new Date();
     timeStamp = timeStamp.toISOString().split('T')[0] + ' ' + timeStamp.toTimeString().split(' ')[0];
@@ -120,7 +157,7 @@ async function pumpRelatedOperations(){
         pump_on_off_status : ( toggleButton.checked )? 1 : 0,
         pump_take_over_complete_control : ( completeControl.checked )? 1 : 0,
         time_stamp : timeStamp,
-        operation_count : operationCount
+        operation_count : overRideOperationCount
     };
     
     let response = await fetch("handel_request/user/moto_control.php", { 
@@ -133,14 +170,10 @@ async function pumpRelatedOperations(){
 
     let result = await response.json();
 
-    console.log( result );
+    // console.log( result );
 
-    if( result["success"] ){
-        if( operationCount == -1 ){
-            operationCount = 0;
-        } else {
-            operationCount = 1;
-        }
+    if( result["success"] && result["affected_rows"] > 0 ){
+        operationCount = ( overRideOperationCount == -1 ) ? 0 : 1;
         return true;
     } else {
         if( result["usedby"] ){
@@ -151,25 +184,53 @@ async function pumpRelatedOperations(){
 
 }
 
+async function updateTimeToServer(){
+    let timeStamp = new Date();
+    
+    timeStamp = timeStamp.toISOString().split('T')[0] + ' ' + timeStamp.toTimeString().split(' ')[0];
+
+    let response = await fetch( "handel_request/user/update_time.php", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ timeStamp : timeStamp }),
+    });
+
+    if( response.status === 200 ){
+        lastUpdatedTime = timeStamp;
+    }
+
+    // console.log( await response.json() );
+}
+
 async function handelCompleteControl(){
     if( completeControl.checked ){
         if( confirm("Are you sure want to take over the automatic execution?") ){
             if( ! await pumpRelatedOperations() ){
-                completeControl.checked = !completeControl.checked;
+                manualOverideCheckBox.checked = false;
+                operationCount = 0;
+                showWarning({ message : "' Pump Manual Overide ' is turned off because of an internal server error.\nPlease try again."});
+                performToggleSwitchAndControlOP();
             }
         } else {
             completeControl.checked = false;
         }
     } else {
         if( ! await pumpRelatedOperations() ){
-            completeControl.checked = !completeControl.checked;
+            manualOverideCheckBox.checked = false;
+            operationCount = 0;
+            showWarning({ message : "' Pump Manual Overide ' is turned off because of an internal server error.\nPlease try again."});
+            performToggleSwitchAndControlOP();
         }
     }
 }
 
 async function handelToggleButton(){
     if( ! await pumpRelatedOperations() ){
-        toggleButton.checked = !toggleButton.checked;
+        manualOverideCheckBox.checked = false;
+        operationCount = 0;
+        showWarning({ message : "' Pump Manual Overide ' is turned off because of an internal server error.\nPlease try again."});  
     }
     performToggleSwitchAndControlOP();
 }
@@ -183,12 +244,18 @@ async function handelPumpManualOveride(){
                 toggleButton.disabled = false;
                 completeControl.disabled = false;
                 completeControl.classList.remove("isDisabled");
+
+                updateTimeToServerInterval = setInterval(() => {
+                    updateTimeToServer();
+                }, updateTimeToServerIntervalTime );
+
             } else {
                 manualOverideCheckBox.checked = false;
                 toggleButton.disabled = true;
                 completeControl.disabled = true;
                 completeControl.classList.add("isDisabled");
             }
+
         } else {
             manualOverideCheckBox.checked = false;
         }
@@ -200,6 +267,12 @@ async function handelPumpManualOveride(){
             completeControl.disabled = true;
             completeControl.checked = false;
             completeControl.classList.add("isDisabled"); 
+
+            clearInterval( updateTimeToServerInterval );
+        } else {
+            manualOverideCheckBox.checked = false;
+            operationCount = 0;
+            showWarning({ message : "' Pump Manual Overide ' is turned off because of an internal server error.\nPlease try again."});
         }
     }
     performToggleSwitchAndControlOP();
@@ -252,3 +325,80 @@ function elementDisabledError(){
         showError("Selected option is disabled because ' Pump Manual Overide ' is not checked.");
     }
 }
+
+function logout(){
+    if( manualOverideCheckBox.checked ){
+        if( confirm("On logout ' Pump Manual Overide ' will be turned off.") ){
+            location.href = "_headers/logout.php";
+        } 
+    } else {
+        location.href = "_headers/logout.php";
+    }
+}
+
+
+window.onload = () => {
+    performToggleSwitchAndControlOP();
+    loadSensorData();
+}
+
+window.onbeforeunload = function(){
+    if( manualOverideCheckBox.checked ){
+        manualOverideCheckBox.checked = false;
+        performToggleSwitchAndControlOP();
+        showWarning({
+            type : "Note!",
+            message : "' Pump Manual Overide ' turned off."
+        });
+        pumpRelatedOperations( -1 );
+        return 'Are you sure you want to leave?';
+    }  
+};
+
+window.onoffline = () => {
+    showWarning({ 
+        message: "Connection to our servers has been lost.\nDon't worry you're ' Pump Manual Overide ' will be disabled."
+    });
+    manualOverideCheckBox.checked = false;
+    manualOverideCheckBox.disabled = true;
+    manualOverideCheckBox.classList.add("isDisabled");
+}
+
+window.ononline = () => {
+    showWarning({ 
+        message: "You're back online!\nWebpage will be refreshed in 5 seconds"
+    });
+    setTimeout(() => {
+        location.reload();
+    }, 5000);
+}
+
+document.addEventListener("visibilitychange", ( event )=> {
+    if ( document.visibilityState == "visible") {
+        loadSensorData();
+
+        loadSensorDataInterval = setInterval( () => {
+            loadSensorData();
+        }, sensorDataLoadIntervalTime );
+
+    } else {
+        clearInterval( loadSensorDataInterval );
+        if( ( completeControl.checked ) || ( new Date() - lastUpdatedTime ) > updateTimeToServerIntervalTime ){
+            pumpRelatedOperations( -1 );
+            manualOverideCheckBox.checked = false;
+            performToggleSwitchAndControlOP();
+            showWarning({ message : "Pump overide turned off because of inactive tab."});
+            clearInterval( updateTimeToServerInterval );
+        }
+    }
+});
+
+
+
+// USER : Sensor Data request every 10 secs
+// NODE MCU : Sesnsor data update only when changes
+// USER : Manual over ride request only when changed
+// NODE MCU : user request check and Manual pump overside status check with full control  every 2 secs
+// USER : online update only under manual pump overide is set for every 5 secs
+
+// USER : as soon as user check manual over ride wait 5 secs before updating server

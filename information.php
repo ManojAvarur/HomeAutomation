@@ -45,7 +45,7 @@
         <header id="header" class="fixed-top">
             <div class="container d-flex align-items-center justify-content-between">
                 <h1 class="logo"><a href="index.php">HOME<span>ATO</span></a></h1>
-                <a href="_headers/logout.php" class="login-btn">Log Out</a>
+                <a href="javascript:void(0);" onclick="logout()" class="login-btn">Log Out</a>
             </div>
         </header>
 
@@ -190,8 +190,8 @@
                         <div class="col-lg-3 col-md-12 footer-links">
                             <h4>Data Load Information</h4>
                             <ul>
-                                <li><i class="bx bx-wifi-1"></i> <a href="#">Data is refreshed every 5 seconds</a></li>
-                                <li><i class="bx bx-wifi-1"></i> <a href="#">Under complete control data is loaded instantaneously</a></li>
+                                <li><i class="bx bx-wifi-1"></i> <a href="#">Data is refreshed every 10 seconds</a></li>
+                                <li><i class="bx bx-wifi-1"></i> <a href="#">Under complete control you should not switch the tab/window. In case of switch the ' Pump Manual Overide ' will turned off.</a></li>
                             </ul>
                         </div>
     
@@ -213,77 +213,5 @@
         <script src="Assets/vendor/aos/aos.js"></script>
         <script src="Assets/js/main.js"></script>
         <script src="Assets/js/homeautomation_information.js"></script>
-        <script>
-            let switchOnColor = "#689F38";
-            let switchOffColor = "#aa2e2e";
-            let disabledColor = "#808080";
-            let sensorDataLoadIntervalTime = 10000;  
-            let operationCount = 0;
-            // USER : Sensor Data request every 10 secs
-            // NODE MCU : Sesnsor data update only when changes
-            // USER : Manual over ride request only when changed
-            // NODE MCU : user request check and Manual pump overside status check with full control  every 2 secs
-            // USER : online update only under manual pump overide is set for every 5 secs
-
-            // USER : as soon as user check manual over ride wait 5 secs before updating server
-
-            let timeStampDisplay = document.getElementById("last-updated");
-            
-            let tankStatusDisplay = document.getElementById("tank-status");
-            let sumpStatusDisplay = document.getElementById("sump-status");
-            let motorStatusDisplay = document.getElementById("motor-status");
-            let debugLogDisplay = document.getElementById("debug-log");
-
-            let displayWarningContainer = document.getElementById("warning-container");
-            let displayWarningType = document.getElementById("warning-type");
-            let displayWarningMessage = document.getElementById("warning-msg");
-
-            let displayErrorContainer = document.getElementById("error-container");
-            let displayErrorMessage = document.getElementById("error-msg");
-
-            let manualOverideCheckBox = document.getElementById("manual-overide");
-
-            let toggleButtonContainer = document.getElementById("togBtn-slider");
-            let toggleButton = document.getElementById("togBtn");
-
-            let completeControl = document.getElementById("complete-control");
-
-            let scrollToSensorDataViewPoint = document.getElementById("sensorData");
-
-            let loadSensorDataInterval = setInterval( loadSensorData, sensorDataLoadIntervalTime );
-
-            window.onload = () => {
-                // handelPumpManualOveride( false );    
-                performToggleSwitchAndControlOP();
-                loadSensorData();
-            }
-
-            window.onoffline = () => {
-                showWarning({ 
-                    message: "Connection to our servers has been lost.\nDon't worry you're ' Pump Manual Overide ' will be disabled."
-                });
-                manualOverideCheckBox.checked = false;
-                manualOverideCheckBox.disabled = true;
-                manualOverideCheckBox.classList.add("isDisabled");
-            }
-
-            window.ononline = () => {
-                showWarning({ 
-                    message: "You're back online!\nWebpage will be refreshed in 5 seconds"
-                });
-                setTimeout(() => {
-                    location.reload();
-                }, 5000);
-            }
-
-            document.addEventListener("visibilitychange", event => {
-                if ( document.visibilityState == "visible") {
-                    loadSensorData();
-                    loadSensorDataInterval = setInterval( loadSensorData, sensorDataLoadIntervalTime );
-                } else {
-                    clearInterval( loadSensorDataInterval );
-                }
-            });
-        </script>
     </body>
 </html>

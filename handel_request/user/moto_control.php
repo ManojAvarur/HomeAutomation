@@ -1,5 +1,5 @@
 <?php
-    ini_set('display_errors', '1');
+    // ini_set('display_errors', '1');
     session_start();
 
     include "../../_headers/db_connection.php";
@@ -10,15 +10,24 @@
         global $connection;
         
         $query = "UPDATE user_requests SET ";
+        $query .= "time_stamp = '".$rawdata["time_stamp"]."', ";
         $query .= "pump_manual_overide_request = '" . $rawdata["pump_manual_overide_request"] . "', "; 
         $query .= "pump_on_off_status = '" . $rawdata["pump_on_off_status"] . "', ";
         $query .= "pump_take_over_complete_control = '" . $rawdata["pump_take_over_complete_control"] . "' ";
-        $query .= "WHERE unc_node_mcu_unique_id = '" . $_SESSION["hato-nodemcu_id"] . "';";
+        $query .= "WHERE node_mcu_is_controled_by_user_id = '" . $_SESSION["hato-token-id"] . "';";
 
         if( mysqli_query( $connection, $query ) ){
-            echo json_encode( [ "success" => true, "query" => $query ] );
+            echo json_encode( [
+                    "success" => true, 
+                    "affected_rows" => mysqli_affected_rows( $connection ),
+                    "query" => $query 
+                ]);
         } else {
-            echo json_encode( [ "success" => false, "query" => $query ] );
+            echo json_encode( [ 
+                "success" => false, 
+                "affected_rows" => mysqli_affected_rows( $connection ),
+                "query" => $query 
+            ]);
         }
     }
 
@@ -30,8 +39,8 @@
         $query;
 
         if( $rawdata["operation_count"] == -1 ){
-
-            $query = "DELETE FROM user_requests WHERE unc_node_mcu_unique_id = '" . $_SESSION["hato-nodemcu_id"] . "'";
+            
+            $query = "DELETE FROM user_requests WHERE node_mcu_is_controled_by_user_id = '" . $_SESSION["hato-token-id"] . "'";
 
         } else if( $rawdata["operation_count"] == 0 ){
 
@@ -49,14 +58,18 @@
             $query .= "pump_manual_overide_request = '" . $rawdata["pump_manual_overide_request"] . "', "; 
             $query .= "pump_on_off_status = '" . $rawdata["pump_on_off_status"] . "', ";
             $query .= "pump_take_over_complete_control = '" . $rawdata["pump_take_over_complete_control"] . "' ";
-            $query .= "WHERE unc_node_mcu_unique_id = '" . $_SESSION["hato-nodemcu_id"] . "';";
+            $query .= "WHERE node_mcu_is_controled_by_user_id = '" . $_SESSION["hato-token-id"] . "';";
 
         }
 
         if( mysqli_query( $connection, $query ) ){
-            echo json_encode( [ "success" => true, "query" => $query ] );
+            echo json_encode( [
+                    "success" => true, 
+                    "affected_rows" => mysqli_affected_rows( $connection ),
+                    "query" => $query 
+                ]);
         } else {
-            if( substr( $query, 0, 1 ) === "I" ){
+            if( $rawdata["operation_count"] == 0 ){
 
                 $query = "SELECT user_full_name, user_unique_id FROM user_login WHERE user_unique_id = ";
                 $query .= "( SELECT node_mcu_is_controled_by_user_id FROM user_requests ";
@@ -72,12 +85,24 @@
                         echo json_encode( [ "success" => false, "usedby" => $result["user_full_name"] ] );
                     }
                 } else {
-                    echo json_encode( [ "success" => false, "query" => $query ] );
+                    echo json_encode( [ 
+                        "success" => false, 
+                        "affected_rows" => mysqli_affected_rows( $connection ),
+                        "query" => $query 
+                    ]);
                 }
             } else {
-                echo json_encode( [ "success" => false, "query" => $query ] );
+                echo json_encode( [ 
+                    "success" => false, 
+                    "affected_rows" => mysqli_affected_rows( $connection ),
+                    "query" => $query 
+                ]);
             }
         }
     } else {
-        echo json_encode( [ "success" => false, "query" => $query ] );
+        echo json_encode( [ 
+            "success" => false, 
+            "affected_rows" => mysqli_affected_rows( $connection ),
+            "query" => $query 
+        ]);
     }
