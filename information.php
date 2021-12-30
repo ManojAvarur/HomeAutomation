@@ -77,7 +77,7 @@
                 <div class="section-title">
                     <h2>Sensor</h2>
                     <p>Sensor Data</p>
-                    <h6>Last Updated : <span id="last-updated"></span></h6>
+                    <h6>Last Updated : <span id="last-updated">Loading Data</span></h6>
                 </div>
 
                 <?php
@@ -190,7 +190,7 @@
                         <div class="col-lg-3 col-md-12 footer-links">
                             <h4>Data Load Information</h4>
                             <ul>
-                                <li><i class="bx bx-wifi-1"></i> <a href="#">Data is refreshed every 10 seconds</a></li>
+                                <li><i class="bx bx-wifi-1"></i> <a href="#">Data is refreshed every 40 seconds</a></li>
                                 <li><i class="bx bx-wifi-1"></i> <a href="#">Under complete control you should not switch the tab/window. In case of switch the ' Pump Manual Overide ' will turned off.</a></li>
                             </ul>
                         </div>

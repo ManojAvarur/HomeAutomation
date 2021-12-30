@@ -20,13 +20,13 @@
             echo json_encode( [
                     "success" => true, 
                     "affected_rows" => mysqli_affected_rows( $connection ),
-                    "query" => $query 
+                    // "query" => $query 
                 ]);
         } else {
             echo json_encode( [ 
                 "success" => false, 
                 "affected_rows" => mysqli_affected_rows( $connection ),
-                "query" => $query 
+                // "query" => $query 
             ]);
         }
     }
@@ -66,7 +66,7 @@
             echo json_encode( [
                     "success" => true, 
                     "affected_rows" => mysqli_affected_rows( $connection ),
-                    "query" => $query 
+                    // "query" => $query 
                 ]);
         } else {
             if( $rawdata["operation_count"] == 0 ){
@@ -88,14 +88,14 @@
                     echo json_encode( [ 
                         "success" => false, 
                         "affected_rows" => mysqli_affected_rows( $connection ),
-                        "query" => $query 
+                        // "query" => $query 
                     ]);
                 }
             } else {
                 echo json_encode( [ 
                     "success" => false, 
                     "affected_rows" => mysqli_affected_rows( $connection ),
-                    "query" => $query 
+                    // "query" => $query 
                 ]);
             }
         }
@@ -103,6 +103,6 @@
         echo json_encode( [ 
             "success" => false, 
             "affected_rows" => mysqli_affected_rows( $connection ),
-            "query" => $query 
+            // "query" => $query 
         ]);
     }

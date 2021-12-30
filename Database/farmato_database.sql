@@ -28,6 +28,7 @@ CREATE TABLE node_mcu_data (
   tank_status tinyint NOT NULL,
   motor_status boolean NOT NULL,
   debug_log varchar(200),
+  pump_manual_overide_data_flag tinyint,
   FOREIGN KEY (unc_node_mcu_unique_id) REFERENCES registered_node_mcu(node_mcu_unique_id)
 );
 

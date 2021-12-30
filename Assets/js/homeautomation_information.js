@@ -1,7 +1,7 @@
 let switchOnColor = "#689F38";
 let switchOffColor = "#aa2e2e";
 let disabledColor = "#808080";
-let sensorDataLoadIntervalTime = 10000;
+let sensorDataLoadIntervalTime = 40000;
 let updateTimeToServerIntervalTime = 10000;  
 let lastUpdatedTime;
 let operationCount = 0;
@@ -40,6 +40,12 @@ function loadSensorData(){
     .then( result => result.json() )
     .then( sensorData => {
 
+        if( manualOverideCheckBox.checked ){
+            if( parseInt( sensorData.pump_manual_overide_data_flag ) != 1 ){
+                return true;
+            }
+        }
+
         switch( parseInt( sensorData.tank_status ) ){
             case -1 :
             default : 
@@ -55,7 +61,7 @@ function loadSensorData(){
             case 1 :
                 tankStatusDisplay.classList.remove( tankStatusDisplay.classList[0] );
                 tankStatusDisplay.classList.add( "yellow_circle") ;
-            break;
+            break;  
 
             case 2 :
                 tankStatusDisplay.classList.remove( tankStatusDisplay.classList[0] );
@@ -70,7 +76,7 @@ function loadSensorData(){
             
         }
 
-        switch( sensorData.sump_status ){
+        switch( parseInt( sensorData.sump_status ) ){
             case -1 :
             default : 
                 sumpStatusDisplay.classList.remove( sumpStatusDisplay.classList[0] );
@@ -94,7 +100,7 @@ function loadSensorData(){
             break;
         }
 
-        switch( sensorData.motor_status ){
+        switch( parseInt( sensorData.motor_status ) ){
             case -1 :
             default : 
                 motorStatusDisplay.classList.remove( motorStatusDisplay.classList[0] );
@@ -220,6 +226,7 @@ async function handelCompleteControl(){
         if( ! await pumpRelatedOperations() ){
             manualOverideCheckBox.checked = false;
             operationCount = 0;
+            clearInterval( updateTimeToServerInterval ); 
             showWarning({ message : "' Pump Manual Overide ' is turned off because of an internal server error.\nPlease try again."});
             performToggleSwitchAndControlOP();
         }
@@ -230,6 +237,7 @@ async function handelToggleButton(){
     if( ! await pumpRelatedOperations() ){
         manualOverideCheckBox.checked = false;
         operationCount = 0;
+        clearInterval( updateTimeToServerInterval );
         showWarning({ message : "' Pump Manual Overide ' is turned off because of an internal server error.\nPlease try again."});  
     }
     performToggleSwitchAndControlOP();
@@ -241,6 +249,21 @@ async function handelPumpManualOveride(){
         if( confirm("Are you sure want to control the pump?") ){
             
             if( await pumpRelatedOperations() ){
+
+                tankStatusDisplay.classList.remove( tankStatusDisplay.classList[0] );
+                tankStatusDisplay.classList.add( "gradient_circle") ;
+
+                sumpStatusDisplay.classList.remove( sumpStatusDisplay.classList[0] );
+                sumpStatusDisplay.classList.add( "gradient_circle") ;
+
+                motorStatusDisplay.classList.remove( motorStatusDisplay.classList[0] ) ;
+                motorStatusDisplay.classList.add( "gradient_circle") ;
+
+                timeStampDisplay.innerText = "Loading New Data";
+                if( debugLogDisplay !== undefined ){
+                    debugLogDisplay.innerText = "Loading New Data"
+                }
+
                 toggleButton.disabled = false;
                 completeControl.disabled = false;
                 completeControl.classList.remove("isDisabled");
@@ -272,6 +295,7 @@ async function handelPumpManualOveride(){
         } else {
             manualOverideCheckBox.checked = false;
             operationCount = 0;
+            clearInterval( updateTimeToServerInterval );
             showWarning({ message : "' Pump Manual Overide ' is turned off because of an internal server error.\nPlease try again."});
         }
     }
@@ -309,6 +333,14 @@ function performToggleSwitchAndControlOP(){
         completeControl.disabled = false;
         completeControl.classList.remove("isDisabled");
         toggleButtonContainer.classList.remove("isDisabled");
+
+        if( sensorDataLoadIntervalTime !== 10000 ){
+            clearInterval( loadSensorDataInterval );
+            sensorDataLoadIntervalTime = 10000;
+            loadSensorDataInterval = setInterval( () => {
+                loadSensorData();
+            }, sensorDataLoadIntervalTime );
+        }
     } else {
         toggleButton.checked = false;
         completeControl.checked = false;
@@ -317,6 +349,14 @@ function performToggleSwitchAndControlOP(){
         toggleButtonContainer.style.backgroundColor = disabledColor;
         toggleButtonContainer.classList.add("isDisabled");
         toggleButton.classList.add("isDisabled");
+
+        if( sensorDataLoadIntervalTime !== 40000 ){
+            clearInterval( loadSensorDataInterval );
+            sensorDataLoadIntervalTime = 40000;
+            loadSensorDataInterval = setInterval( () => {
+                loadSensorData();
+            }, sensorDataLoadIntervalTime );
+        }
     }
 }
 
@@ -375,8 +415,6 @@ window.ononline = () => {
 
 document.addEventListener("visibilitychange", ( event )=> {
     if ( document.visibilityState == "visible") {
-        loadSensorData();
-
         loadSensorDataInterval = setInterval( () => {
             loadSensorData();
         }, sensorDataLoadIntervalTime );
