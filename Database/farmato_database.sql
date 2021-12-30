@@ -22,8 +22,8 @@ CREATE TABLE cookie_data (
 );
 
 CREATE TABLE node_mcu_data (
-  time_stamp datetime DEFAULT current_timestamp(),
-  unc_node_mcu_unique_id varchar(100) NOT NULL,
+  time_stamp datetime not null,
+  unc_node_mcu_unique_id varchar(100) PRIMARY KEY,
   sump_status tinyint NOT NULL,
   tank_status tinyint NOT NULL,
   motor_status boolean NOT NULL,
@@ -74,11 +74,11 @@ CREATE TABLE user_requests (
 --                     DEFAULT CURRENT_TIMESTAMP
 --                     ON UPDATE CURRENT_TIMESTAMP;
 
-ALTER TABLE node_mcu_data
-    CHANGE time_stamp 
-        time_stamp TIMESTAMP NOT NULL
-                    DEFAULT CURRENT_TIMESTAMP
-                    ON UPDATE CURRENT_TIMESTAMP;
+-- ALTER TABLE node_mcu_data
+--     CHANGE time_stamp 
+--         time_stamp TIMESTAMP NOT NULL
+--                     DEFAULT CURRENT_TIMESTAMP
+--                     ON UPDATE CURRENT_TIMESTAMP;
 
 
 
