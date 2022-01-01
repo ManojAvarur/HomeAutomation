@@ -419,6 +419,14 @@ document.addEventListener("visibilitychange", ( event )=> {
             loadSensorData();
         }, sensorDataLoadIntervalTime );
 
+        if( ( completeControl.checked ) || ( new Date() - lastUpdatedTime ) > updateTimeToServerIntervalTime ){
+            pumpRelatedOperations( -1 );
+            manualOverideCheckBox.checked = false;
+            performToggleSwitchAndControlOP();
+            showWarning({ message : "Pump overide turned off because of inactive tab."});
+            clearInterval( updateTimeToServerInterval );
+        }
+
     } else {
         clearInterval( loadSensorDataInterval );
         if( ( completeControl.checked ) || ( new Date() - lastUpdatedTime ) > updateTimeToServerIntervalTime ){
