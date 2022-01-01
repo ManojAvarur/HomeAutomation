@@ -23,7 +23,7 @@ void update_server( int pump_manual_override_data ){
         
         json_sensor_data_update["nodemcu_id"] = UNIQUE_ID;
         json_sensor_data_update["tank_status"] = tankObj.waterLevelInTank();
-        json_sensor_data_update["sump_status"] = sumpObj.waterLevelInTank();
+        json_sensor_data_update["sump_status"] = sumpObj.waterLevelInSump();
         json_sensor_data_update["motor_status"] = digitalRead( RELAY_1 );
         json_sensor_data_update["debug_log"] = DEBUG_LOG;
 
@@ -34,10 +34,10 @@ void update_server( int pump_manual_override_data ){
 
         do{
             HTTPClient http;
-            http.begin(client, URL+"/update_sensor_data.php?data_ready=true&pump_manual_override_data=" + ( pump_manual_override_data >= 1 )? "true" : "false" );
+            http.begin( client, URL+"/update_sensor_data.php?data_ready=true&pump_manual_override_data=" + ( pump_manual_override_data >= 1 )? "true" : "false" );
             http.addHeader("Content-Type", "application/json");
 
-            httpCode = http.get( jsonData );
+            httpCode = http.POST( jsonData );
 
             http.end();
 
@@ -108,10 +108,10 @@ bool get_user_requests_from_server(){
 
     do{
         HTTPClient http;
-        http.begin(client, URL+"/get_user_requests.php?" );
+        http.begin( client, URL+"/get_user_requests.php?nodemcut_id=" + UNIQUE_ID  );
         http.addHeader("Content-Type", "application/x-www-form-urlencoded");
         
-        httpCode = http.get("nodemcut_id=" + UNIQUE_ID );
+        httpCode = http.GET();
 
         http.end();
 
