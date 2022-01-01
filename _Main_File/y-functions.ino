@@ -24,24 +24,34 @@ void update_server( int pump_manual_override_data ){
         json_sensor_data_update["nodemcu_id"] = UNIQUE_ID;
         json_sensor_data_update["tank_status"] = tankObj.waterLevelInTank();
         json_sensor_data_update["sump_status"] = sumpObj.waterLevelInSump();
-        json_sensor_data_update["motor_status"] = digitalRead( RELAY_1 );
+        json_sensor_data_update["motor_status"] = ! digitalRead( RELAY_1 );
         json_sensor_data_update["debug_log"] = DEBUG_LOG;
 
         int httpCode;
         int repeatCount = 5, count = 0;
         String jsonData;
         serializeJson( json_sensor_data_update, jsonData );
-
+        String href = URL+"/update_sensor_data.php?data_ready=true&pump_manual_override_data=" + String( ( pump_manual_override_data >= 1 )? "true" : "false" );
         do{
             HTTPClient http;
-            http.begin( client, URL+"/update_sensor_data.php?data_ready=true&pump_manual_override_data=" + ( pump_manual_override_data >= 1 )? "true" : "false" );
+            http.begin( client, href );
+            
             http.addHeader("Content-Type", "application/json");
 
             httpCode = http.POST( jsonData );
 
             http.end();
 
-            Serial.println("Inside Send update server. Responce Code : " + String( httpCode ) );  
+            if( DEBUG_CODE ){
+                Serial.println("\n\t\t Inside Send update server to : "+href+" .\n\t\t Responce Code : " + String( httpCode ) ); 
+                Serial.println("\n\t\t\t tankObj.isChanged : " + String( tankObj.isChanged ) );
+                Serial.println("\n\t\t\t sumpObj.isChanged : " + String( sumpObj.isChanged ) );
+                Serial.println("\n\t\t\t motor_status_changed : " + String( motor_status_changed ) );
+                Serial.println("\n\t\t\t ( pump_manual_override_data == 1 ) ? true : false : " + String( ( pump_manual_override_data == 1 ) ? true : false ) );
+                
+                delay( DEBUG_DELAY_TIME );
+            }
+
         
             if( httpCode != 200 ){
                 delay( 500 );
@@ -64,23 +74,53 @@ void check_requests_from_server(){
 
         if( get_user_requests_from_server() ){
 
-
             USER_REQUEST_CHECK_INTERVAL = 10000;
             USER_REQUEST_CHECK_INTERVAL_TARGET_TIME = millis();
             unsigned long counter = 0L;
 
-            while( json_user_request["pump_manual_overide_request"].as<String>().equals("1") && json_user_request["execute_status"] ){
+            if( DEBUG_CODE ){
+                Serial.println("\n\tInside user related operations umanual overide is set to true." );  
+                Serial.println("\n\t\t pump_manual_overide_request : " + String( json_user_request["pump_manual_overide_request"].as<String>().toInt() ) );  
+                Serial.println("\n\t\t pump_take_over_complete_control : " + String( json_user_request["pump_take_over_complete_control"].as<String>().toInt() ) );  
+                Serial.println("\n\t\t pump_on_off_status : " + String( json_user_request["pump_on_off_status"].as<String>().toInt() ) );  
+                Serial.println("\n\t\t time_in_hours : " + String( json_user_request["time_in_hours"].as<String>().toInt() ) );  
+                Serial.println("\n\t\t execute_status : " + String( json_user_request["execute_status"].as<String>().toInt() ));  
+//                Serial.print( json_user_request["execute_status"] );
+                delay( DEBUG_DELAY_TIME );
+            }
 
-                if( json_user_request["pump_take_over_complete_control"].as<String>().equals("1") ) {
-                    motor_control( ( json_user_request["pump_on_off_status"].as<String>().equals("1") )? MOTOR_ON : MOTOR_OFF );
+
+            while( json_user_request["pump_manual_overide_request"].as<String>().toInt() == 1  && json_user_request["execute_status"].as<String>().toInt() == 1 ){
+
+                if( json_user_request["pump_take_over_complete_control"].as<String>().toInt() == 1 ) {
+                    
+                    motor_control( ( json_user_request["pump_on_off_status"].as<String>().toInt() == 1 )? MOTOR_ON : MOTOR_OFF );
                     update_server( ++counter );
                 } else {
-                    if( json_user_request["pump_on_off_status"].as<String>().equals("0") && json_user_request["time_in_hours"].as<String>().toInt() >= 7 ){
+                    if( json_user_request["pump_on_off_status"].as<String>().toInt() == 0 && json_user_request["time_in_hours"].as<String>().toInt() >= 7 ){
                         water_pump();
-                    } else if(json_user_request["pump_on_off_status"].as<String>().equals("1") ){
+
+                        if( DEBUG_CODE ){
+                            Serial.println("\n\tInside manual overide and under water_pump() as it is grater than 7");  
+                            delay( DEBUG_DELAY_TIME );
+                        }
+
+                    } else if(json_user_request["pump_on_off_status"].as<String>().toInt() == 1 ){
+
                         water_pump();
+
+                        if( DEBUG_CODE ){
+                            Serial.println("\n\tInside manual overide and under water_pump() as pump_on_off_status = 1");  
+                            delay( DEBUG_DELAY_TIME );
+                        }
+
                     } else {
                         motor_control( MOTOR_OFF );
+
+                        if( DEBUG_CODE ){
+                            Serial.println("\n\tInside manual overide and under water_pump() as pump_on_off_status =  0");  
+                            delay( DEBUG_DELAY_TIME );
+                        }
                     }
 
                     update_server( ++counter );
@@ -105,18 +145,23 @@ bool get_user_requests_from_server(){
     int httpCode;
     int repeatCount = 5, count = 0;
     String result;
+    String href = URL+"/get_user_requests.php?nodemcut_id=" + UNIQUE_ID;
 
     do{
         HTTPClient http;
-        http.begin( client, URL+"/get_user_requests.php?nodemcut_id=" + UNIQUE_ID  );
+        http.begin( client, href  );
         http.addHeader("Content-Type", "application/x-www-form-urlencoded");
         
         httpCode = http.GET();
 
         http.end();
 
-        Serial.println("Inside Send update server. Responce Code : " + String( httpCode ) );  
-    
+        if( DEBUG_CODE ){
+            Serial.println("\n\tInside user related operations. Checked after " + String( millis() - USER_REQUEST_CHECK_INTERVAL_TARGET_TIME ) );  
+            Serial.println("\n\tInside get user request from server : "+href+". Responce Code : " + String( httpCode ) );  
+            delay( DEBUG_DELAY_TIME );
+        }
+        
         if( httpCode == 404 ){
             return false;
         } else if( httpCode != 200 ){

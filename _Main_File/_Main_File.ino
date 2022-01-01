@@ -29,14 +29,15 @@ WiFiClient client;
 // ----------------- Json Libraies Settings ------------
 #include "z-ArduinoJson-v6.18.5.h"
 StaticJsonDocument<512> json_sensor_data_update;
-StaticJsonDocument<256> json_user_request;
+StaticJsonDocument<384> json_user_request;
 
 // StaticJsonDocument<192> DB_update;
 // StaticJsonDocument<768> TimeStamp;
 
 // ----------------- DEBUG CODE ---------------------
 bool DEBUG_CODE = true;
-int DEBUG_DELAY_TIME = 0; // 1 sec
+bool DEBUG_CLASS_CODE = false;
+int DEBUG_DELAY_TIME = 3000; // 1 sec
 
 // ---------------- Execution Time Period -------------
 // unsigned long PERIOD = 5 * 60 * 1000L; // Executes in every 5 mins
@@ -50,8 +51,8 @@ unsigned long USER_REQUEST_CHECK_INTERVAL_TARGET_TIME = 0L;
 #include "z-sump_class.h"
 #include "z-tank_class.h"
 
-Sump sumpObj = Sump( WL_S_LOW, WL_S_MID, DEBUG_CODE, DEBUG_DELAY_TIME );
-Tank tankObj = Tank( WL_T_LOW, WL_T_MID, WL_T_HIGH, DEBUG_CODE, DEBUG_DELAY_TIME );
+Sump sumpObj = Sump( WL_S_LOW, WL_S_MID, DEBUG_CLASS_CODE, DEBUG_DELAY_TIME );
+Tank tankObj = Tank( WL_T_LOW, WL_T_MID, WL_T_HIGH, DEBUG_CLASS_CODE, DEBUG_DELAY_TIME );
 
 // ------------------ Extras --------------------------
 String DEBUG_LOG = "";
