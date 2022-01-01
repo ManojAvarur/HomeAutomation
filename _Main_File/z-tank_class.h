@@ -125,7 +125,7 @@ class Tank{
                 updateTankDetails( updateFromStart );
             }while( currentWaterStatus == -1 );
 
-            if( currentWaterStatus === oldWaterStatus ){
+            if( currentWaterStatus == oldWaterStatus ){
                 isChanged = false;
             } else {
                 isChanged = true;

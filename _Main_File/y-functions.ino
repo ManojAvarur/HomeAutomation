@@ -16,22 +16,10 @@ void water_pump(){
 
 }
 
-
-void motor_control( uint8_t value ){
-   Serial.println("\n\n\t Inside Motor control : ");
-   if( ( value == MOTOR_ON ) && ( digitalRead( RELAY_1 ) != MOTOR_ON ) ){
-       Serial.println("\n\t\tMOTOR_ON ");
-       digitalWrite( RELAY_1, MOTOR_ON );
-    } else if( ( value == MOTOR_OFF ) && ( digitalRead( RELAY_1 ) != MOTOR_OFF ) ) {
-        Serial.println("\n\t\tMOTOR_OFF ");
-        digitalWrite( RELAY_1, MOTOR_OFF );
-    }
-    //    digitalWrite( RELAY_1, value );
-}
-
-void update_server( pump_manual_override_data = false ){
+void update_server( int pump_manual_override_data ){
     Serial.println("Inside update server");
-    if( tankObj.isChanged || sumpObj.isChanged ){
+
+    if( tankObj.isChanged || sumpObj.isChanged || motor_status_changed || ( pump_manual_override_data == 1 ) ? true : false ){
         
         json_sensor_data_update["nodemcu_id"] = UNIQUE_ID;
         json_sensor_data_update["tank_status"] = tankObj.waterLevelInTank();
@@ -40,16 +28,16 @@ void update_server( pump_manual_override_data = false ){
         json_sensor_data_update["debug_log"] = DEBUG_LOG;
 
         int httpCode;
-        int repeatCount = 5; count = 0;
+        int repeatCount = 5, count = 0;
         String jsonData;
         serializeJson( json_sensor_data_update, jsonData );
 
         do{
             HTTPClient http;
-            http.begin(client, URL+"/update_sensor_data.php?data_ready=true&pump_manual_override_data=" + String( pump_manual_override_data ) );
+            http.begin(client, URL+"/update_sensor_data.php?data_ready=true&pump_manual_override_data=" + ( pump_manual_override_data >= 1 )? "true" : "false" );
             http.addHeader("Content-Type", "application/json");
 
-            httpCode = http.GET( jsonData );
+            httpCode = http.get( jsonData );
 
             http.end();
 
@@ -61,54 +49,110 @@ void update_server( pump_manual_override_data = false ){
             }
 
         } while( httpCode != 200 && count <= repeatCount );
+
+        if( httpCode == 200 ){  
+            motor_status_changed = false;
+            tankObj.isChanged = false;
+            sumpObj.isChanged = false;
+        }
     }
 }
 
-bool check_requests_from_server(){
+void check_requests_from_server(){
     if( ( millis() - USER_REQUEST_CHECK_INTERVAL_TARGET_TIME ) >= USER_REQUEST_CHECK_INTERVAL ){
-
         USER_REQUEST_CHECK_INTERVAL_TARGET_TIME += USER_REQUEST_CHECK_INTERVAL;
-        
-        int httpCode;
-        int repeatCount = 5; count = 0;
-        String result;
-        serializeJson( json_sensor_data_update, jsonData );
 
-        do{
-            HTTPClient http;
-            http.begin(client, URL+"/get_user_requests.php?" );
-            // http.addHeader("Content-Type", "application/x-www-form-urlencoded");
-            httpCode = http.GET("nodemcut_id=" + UNIQUE_ID );
+        if( get_user_requests_from_server() ){
 
-            http.end();
 
-            Serial.println("Inside Send update server. Responce Code : " + String( httpCode ) );  
-        
-            if( httpCode == 404 ){
-                return false;
-            } else if( httpCode != 200 ){
-                delay( 500 );
-                count += 1;
-            } else {
-                result = http.getString();
+            USER_REQUEST_CHECK_INTERVAL = 10000;
+            USER_REQUEST_CHECK_INTERVAL_TARGET_TIME = millis();
+            unsigned long counter = 0L;
+
+            while( json_user_request["pump_manual_overide_request"].as<String>().equals("1") && json_user_request["execute_status"] ){
+
+                if( json_user_request["pump_take_over_complete_control"].as<String>().equals("1") ) {
+                    motor_control( ( json_user_request["pump_on_off_status"].as<String>().equals("1") )? MOTOR_ON : MOTOR_OFF );
+                    update_server( ++counter );
+                } else {
+                    if( json_user_request["pump_on_off_status"].as<String>().equals("0") && json_user_request["time_in_hours"].as<String>().toInt() >= 7 ){
+                        water_pump();
+                    } else if(json_user_request["pump_on_off_status"].as<String>().equals("1") ){
+                        water_pump();
+                    } else {
+                        motor_control( MOTOR_OFF );
+                    }
+
+                    update_server( ++counter );
+                }
+
+                if( ( millis() - USER_REQUEST_CHECK_INTERVAL_TARGET_TIME ) >= USER_REQUEST_CHECK_INTERVAL ){
+                    USER_REQUEST_CHECK_INTERVAL_TARGET_TIME += USER_REQUEST_CHECK_INTERVAL;
+                    if( ! get_user_requests_from_server() ){
+                        break;
+                    }
+                }
             }
+            USER_REQUEST_CHECK_INTERVAL = 30000;
+            USER_REQUEST_CHECK_INTERVAL_TARGET_TIME = millis();
+        }
+    }
+}
 
-        } while( httpCode != 200 && count <= repeatCount );
 
-        if( count <= repeatCount ){
-            deserializeJson( json_user_request, result );
-            if( json_user_request["pump_manual_overide_request"].equals("1") ){
-                
-            }
+bool get_user_requests_from_server(){
+     
+    int httpCode;
+    int repeatCount = 5, count = 0;
+    String result;
+
+    do{
+        HTTPClient http;
+        http.begin(client, URL+"/get_user_requests.php?" );
+        http.addHeader("Content-Type", "application/x-www-form-urlencoded");
+        
+        httpCode = http.get("nodemcut_id=" + UNIQUE_ID );
+
+        http.end();
+
+        Serial.println("Inside Send update server. Responce Code : " + String( httpCode ) );  
+    
+        if( httpCode == 404 ){
+            return false;
+        } else if( httpCode != 200 ){
+            delay( 500 );
+            count += 1;
+        } else {
+            result = http.getString();
         }
 
+    } while( httpCode != 200 && count <= repeatCount );
 
+    if( httpCode == 200 ){
+        deserializeJson( json_user_request, result );
+        return true;
+    } else {
+        return false;
     }
 }
 
 void debug_log( String value ){
-    Serial.prinln( value );
+    Serial.println( value );
     DEBUG_LOG = value;
+}
+
+void motor_control( uint8_t value ){
+   Serial.println("\n\n\t Inside Motor control : ");
+   if( ( value == MOTOR_ON ) && ( digitalRead( RELAY_1 ) != MOTOR_ON ) ){
+       Serial.println("\n\t\tMOTOR_ON ");
+       digitalWrite( RELAY_1, MOTOR_ON );
+       motor_status_changed = true;
+    } else if( ( value == MOTOR_OFF ) && ( digitalRead( RELAY_1 ) != MOTOR_OFF ) ) {
+        Serial.println("\n\t\tMOTOR_OFF ");
+        digitalWrite( RELAY_1, MOTOR_OFF );
+        motor_status_changed = true;
+    }
+    //    digitalWrite( RELAY_1, value );
 }
 
 void setup_wifi(){

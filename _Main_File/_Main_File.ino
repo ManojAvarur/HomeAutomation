@@ -1,6 +1,6 @@
 // ------------------ Main Declaration --------------
 // String URL = "http://iotproject.coolpage.biz/home_automation";
-String URL = "http://192.168.2.3/HomeAutomation-website/handel_request/nodemcu"
+String URL = "http://192.168.2.3/HomeAutomation-website/handel_request/nodemcu";
 String UNIQUE_ID = "4bb7abf6d3782611339eb6fe6326b96b6b4fca3d6f7e16f33367268806c5512c";
 
 // ------------------ Wi-Fi Settings ------------------
@@ -55,10 +55,12 @@ Tank tankObj = Tank( WL_T_LOW, WL_T_MID, WL_T_HIGH, DEBUG_CODE, DEBUG_DELAY_TIME
 
 // ------------------ Extras --------------------------
 String DEBUG_LOG = "";
+bool motor_status_changed = false;
 
 // ---------------- Function Declaration -----------
 void water_pump();
 void motor_control( uint8_t value );
-void update_server(  pump_manual_override_data = false );
-bool check_requests_from_server();
+void update_server( int pump_manual_override_data );
+void check_requests_from_server();
+bool get_user_requests_from_server();
 void setup_wifi();
