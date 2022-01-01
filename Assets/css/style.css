@@ -682,7 +682,7 @@ section {
 }
 
 .log_main {
-    padding-top: 3rem;
+    padding-top: 3em;
     width: 100%;
     height: 99vh;
     background: linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)) , url("../Images/warren.jpeg");
@@ -698,7 +698,7 @@ section {
 }
 */
 .sign_main {
-    padding-top: .7rem;
+    padding-top: 3em;
     width: 100%;
     height: 130vh;
     background: linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)) , url("../Images/warren.jpeg");

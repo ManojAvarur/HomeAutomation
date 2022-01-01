@@ -17,7 +17,7 @@
         if( $result ){
             if( mysqli_num_rows( $result ) > 0 ){
                 $result = mysqli_fetch_assoc( $result );
-                $result["execute_status"] = ( ( strtotime( date("Y-m-d H:i:s") ) - strtotime( "2022-01-01 00:34:30" ) ) <= 10 )? true : false;       
+                $result["execute_status"] = ( ( strtotime( date("Y-m-d H:i:s") ) - strtotime( $result["time_stamp"] ) ) <= 10 )? "1" : "0";       
                 $result["time_in_hours"] = date("H"); 
                 echo json_encode( $result );
             } else {

@@ -260,8 +260,9 @@ async function handelPumpManualOveride(){
                 motorStatusDisplay.classList.add( "gradient_circle") ;
 
                 timeStampDisplay.innerText = "Loading New Data";
-                if( debugLogDisplay !== undefined ){
-                    debugLogDisplay.innerText = "Loading New Data"
+                
+                if( debugLogDisplay !== undefined && debugLogDisplay !== null ){
+                    debugLogDisplay.innerText = "Loading New Data";
                 }
 
                 toggleButton.disabled = false;
