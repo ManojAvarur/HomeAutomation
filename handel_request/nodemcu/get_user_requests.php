@@ -7,11 +7,11 @@
 
     global $connection;
     
-    if( isset( $_GET["nodemcut_id"] ) && !empty( $_GET["nodemcut_id"] ) ){
+    if( isset( $_GET["nodemcu_id"] ) && !empty( $_GET["nodemcu_id"] ) ){
 
         $query = "SELECT time_stamp, pump_manual_overide_request, pump_on_off_status, pump_take_over_complete_control ";
         $query .= "FROM user_requests WHERE ";
-        $query .= "unc_node_mcu_unique_id = '".mysqli_escape_string( $connection, $_GET["nodemcut_id"] )."'; ";
+        $query .= "unc_node_mcu_unique_id = '".mysqli_escape_string( $connection, $_GET["nodemcu_id"] )."'; ";
 
         $result = mysqli_query( $connection, $query );
         if( $result ){
