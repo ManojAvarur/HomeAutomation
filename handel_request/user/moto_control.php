@@ -36,6 +36,12 @@
             && isset( $_SESSION["hato-nodemcu_id"] ) && !empty( $_SESSION["hato-nodemcu_id"] ) 
     ){
         $rawdata = json_decode( file_get_contents('php://input'), true );
+
+        $rawdata["time_stamp"] = mysqli_escape_string( $connection, $rawdata["time_stamp"] );
+        $rawdata["pump_manual_overide_request"] = mysqli_escape_string( $connection, $rawdata["pump_manual_overide_request"] );
+        $rawdata["pump_on_off_status"] = mysqli_escape_string( $connection, $rawdata["pump_on_off_status"] );
+        $rawdata["pump_take_over_complete_control"] = mysqli_escape_string( $connection, $rawdata["pump_take_over_complete_control"] );
+
         $query;
 
         if( $rawdata["operation_count"] == -1 ){
