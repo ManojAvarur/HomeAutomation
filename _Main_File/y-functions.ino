@@ -145,7 +145,7 @@ bool get_user_requests_from_server(){
     int httpCode;
     int repeatCount = 5, count = 0;
     String result;
-    String href = URL+"/get_user_requests.php?nodemcut_id=" + UNIQUE_ID;
+    String href = URL+"/get_user_requests.php?nodemcu_id=" + UNIQUE_ID;
 
     do{
         HTTPClient http;
@@ -154,8 +154,6 @@ bool get_user_requests_from_server(){
         
         httpCode = http.GET();
 
-        http.end();
-
         if( DEBUG_CODE ){
             Serial.println("\n\tInside user related operations. Checked after " + String( millis() - USER_REQUEST_CHECK_INTERVAL_TARGET_TIME ) );  
             Serial.println("\n\tInside get user request from server : "+href+". Responce Code : " + String( httpCode ) );  
@@ -163,6 +161,7 @@ bool get_user_requests_from_server(){
         }
         
         if( httpCode == 404 ){
+            http.end();
             return false;
         } else if( httpCode != 200 ){
             delay( 500 );
@@ -170,6 +169,8 @@ bool get_user_requests_from_server(){
         } else {
             result = http.getString();
         }
+
+        http.end();
 
     } while( httpCode != 200 && count <= repeatCount );
 
