@@ -6,6 +6,7 @@ class Sump{
         int SUMP_WL_LOW, SUMP_WL_MID;
         bool CODE_DEBUG;
         int DEBUG_DELAY_TIME;
+        bool isChanged = true;
 
 
         void updateSumpDetails( bool updateFromStart = false ){
@@ -77,22 +78,28 @@ class Sump{
         } 
 
     public:
-        bool isChanged = true;
+        
 
         int waterLevelInSump( bool updateFromStart = false ){
-            oldWaterStatus = currentWaterStatus;
             
             do{
                 updateSumpDetails( updateFromStart );
             }while( currentWaterStatus == -1 );
 
-            if( currentWaterStatus == oldWaterStatus ){
-                isChanged = false;
-            } else {
+            if( currentWaterStatus != oldWaterStatus ){
                 isChanged = true;
+                oldWaterStatus = currentWaterStatus;
             }
 
             return currentWaterStatus;
+        }
+
+        bool isDataChanged(){
+            return isChanged;
+        }
+
+        void setIsChangedToFalse(){
+            isChanged = false;
         }
 
         Sump( int low, int mid, bool debug, int delay_time  ){

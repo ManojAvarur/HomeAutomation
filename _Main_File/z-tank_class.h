@@ -6,6 +6,7 @@ class Tank{
         int TANK_WL_LOW, TANK_WL_MID, TANK_WL_HIGH;
         bool CODE_DEBUG;
         int DEBUG_DELAY_TIME;
+        bool isChanged = true;
 
         void updateTankDetails( bool updateFromStart = false ){
 
@@ -41,7 +42,6 @@ class Tank{
                     }
                     
                     if( caseBreakCheck ){
-                        caseBreakCheck = true;
                         break;
                     }
 
@@ -105,33 +105,44 @@ class Tank{
             }
 
             if( CODE_DEBUG ){
-                 Serial.println("\n\t\tDebug from tank class : ");
-                 Serial.println("\n\t\t\t Water low sensor value : " + pinAlter().checkValueInPin( TANK_WL_LOW ) );
-                 Serial.println("\n\t\t\t Water mid sensor value : " + pinAlter().checkValueInPin( TANK_WL_MID ) );
-                 Serial.println("\n\t\t\t Water mid sensor value : " + pinAlter().checkValueInPin( TANK_WL_HIGH ) );
-                 Serial.println("\n\n\t\t\t Value in currentWaterStatus : " + String( currentWaterStatus ) );
-                 delay( DEBUG_DELAY_TIME );
+                Serial.println("\n\t\tDebug from tank class : ");
+                Serial.println("\n\t\t\t Water low sensor value : " + pinAlter().checkValueInPin( TANK_WL_LOW ) );
+                Serial.println("\n\t\t\t Water mid sensor value : " + pinAlter().checkValueInPin( TANK_WL_MID ) );
+                Serial.println("\n\t\t\t Water mid sensor value : " + pinAlter().checkValueInPin( TANK_WL_HIGH ) );
+                Serial.println("\n\n\t\t\t Value in currentWaterStatus : " + String( currentWaterStatus ) );
+                delay( DEBUG_DELAY_TIME );
             }
         } 
 
     public:
-        bool isChanged = true;
 
         int waterLevelInTank( bool updateFromStart = false ){
-
-            oldWaterStatus = currentWaterStatus;
             
             do{
                 updateTankDetails( updateFromStart );
             }while( currentWaterStatus == -1 );
 
-            if( currentWaterStatus == oldWaterStatus ){
-                isChanged = false;
-            } else {
+            if( currentWaterStatus != oldWaterStatus ){
                 isChanged = true;
+
+                if( CODE_DEBUG ){
+                    Serial.println("\n\t\tDebug from tank class oldWaterStatus : " + String( oldWaterStatus ));
+                    Serial.println("\n\t\tDebug from tank class currentWaterStatus : " + String( currentWaterStatus ));
+                    delay( DEBUG_DELAY_TIME );
+                }
+
+                oldWaterStatus = currentWaterStatus;
             }
 
             return currentWaterStatus;
+        }
+
+        bool isDataChanged(){
+            return isChanged;
+        }
+
+        void setIsChangedToFalse(){
+            isChanged = false;
         }
 
         Tank( int low, int mid, int high, bool debug, int delay_time ){

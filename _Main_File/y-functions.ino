@@ -2,7 +2,7 @@ void water_pump(){
     if( tankObj.waterLevelInTank() != 4 ){
         if ( sumpObj.waterLevelInSump() <= 0) {
             motor_control( MOTOR_OFF );
-            debug_log("\nTank level low turning off the pump because low water in summp");
+            debug_log("\nTank level low turning off the pump because low water in sump");
         } else if( sumpObj.waterLevelInSump() == 3 ){
             motor_control( MOTOR_ON );
             debug_log("\nTank level low turning on the pump");
@@ -19,7 +19,7 @@ void water_pump(){
 void update_server( int pump_manual_override_data ){
     Serial.println("Inside update server");
 
-    if( tankObj.isChanged || sumpObj.isChanged || motor_status_changed || ( pump_manual_override_data == 1 ) ? true : false ){
+    if( tankObj.isDataChanged() || sumpObj.isDataChanged() || motor_status_changed || ( pump_manual_override_data == 1 ) ? true : false ){
         
         json_sensor_data_update["nodemcu_id"] = UNIQUE_ID;
         json_sensor_data_update["tank_status"] = tankObj.waterLevelInTank();
@@ -43,13 +43,14 @@ void update_server( int pump_manual_override_data ){
             http.end();
 
             if( DEBUG_CODE ){
-                Serial.println("\n\t\t Inside Send update server to : "+href+" .\n\t\t Responce Code : " + String( httpCode ) ); 
-                Serial.println("\n\t\t\t tankObj.isChanged : " + String( tankObj.isChanged ) );
-                Serial.println("\n\t\t\t sumpObj.isChanged : " + String( sumpObj.isChanged ) );
+                Serial.println("\n\t\t Inside Send update server .\n\t Responce Code : " + String( httpCode ) ); 
+                Serial.println("\n\t\t\t tankObj.isDataChanged() : " + String( tankObj.isDataChanged() ) );
+                Serial.println("\n\t\t\t sumpObj.isDataChanged() : " + String( sumpObj.isDataChanged() ) );
                 Serial.println("\n\t\t\t motor_status_changed : " + String( motor_status_changed ) );
                 Serial.println("\n\t\t\t ( pump_manual_override_data == 1 ) ? true : false : " + String( ( pump_manual_override_data == 1 ) ? true : false ) );
                 
                 delay( DEBUG_DELAY_TIME );
+
             }
 
         
@@ -62,8 +63,9 @@ void update_server( int pump_manual_override_data ){
 
         if( httpCode == 200 ){  
             motor_status_changed = false;
-            tankObj.isChanged = false;
-            sumpObj.isChanged = false;
+            tankObj.setIsChangedToFalse();
+            sumpObj.setIsChangedToFalse();
+            Serial.println("\n\t\t\t tankObj.isDataChanged() : " + String( tankObj.isDataChanged() ) );
         }
     }
 }
@@ -75,7 +77,6 @@ void check_requests_from_server(){
         if( get_user_requests_from_server() ){
 
             USER_REQUEST_CHECK_INTERVAL = 10000;
-            USER_REQUEST_CHECK_INTERVAL_TARGET_TIME = millis();
             unsigned long counter = 0L;
 
             if( DEBUG_CODE ){
@@ -85,19 +86,26 @@ void check_requests_from_server(){
                 Serial.println("\n\t\t pump_on_off_status : " + String( json_user_request["pump_on_off_status"].as<String>().toInt() ) );  
                 Serial.println("\n\t\t time_in_hours : " + String( json_user_request["time_in_hours"].as<String>().toInt() ) );  
                 Serial.println("\n\t\t execute_status : " + String( json_user_request["execute_status"].as<String>().toInt() ));  
-//                Serial.print( json_user_request["execute_status"] );
                 delay( DEBUG_DELAY_TIME );
             }
 
-
             while( json_user_request["pump_manual_overide_request"].as<String>().toInt() == 1  && json_user_request["execute_status"].as<String>().toInt() == 1 ){
+
+                Serial.println("\n\nMillis : " + String( millis() ) + "\n USER_REQUEST_CHECK_INTERVAL_TARGET_TIME =" + String( USER_REQUEST_CHECK_INTERVAL_TARGET_TIME ) );
 
                 if( json_user_request["pump_take_over_complete_control"].as<String>().toInt() == 1 ) {
                     
                     motor_control( ( json_user_request["pump_on_off_status"].as<String>().toInt() == 1 )? MOTOR_ON : MOTOR_OFF );
                     update_server( ++counter );
+
+                    if( DEBUG_CODE ){
+                        Serial.println("\n\nInside Manual Overide Complete Control");
+                        Serial.println("\n\t\t pump_on_off_status : " + String( json_user_request["pump_on_off_status"].as<String>().toInt() ));  
+                        delay( DEBUG_DELAY_TIME );
+                    }
+
                 } else {
-                    if( json_user_request["pump_on_off_status"].as<String>().toInt() == 0 && json_user_request["time_in_hours"].as<String>().toInt() >= 7 ){
+                    if( json_user_request["pump_on_off_status"].as<String>().toInt() == 0 && json_user_request["time_in_hours"].as<String>().toInt() >= 19 ){
                         water_pump();
 
                         if( DEBUG_CODE ){
@@ -132,9 +140,10 @@ void check_requests_from_server(){
                         break;
                     }
                 }
+
             }
+
             USER_REQUEST_CHECK_INTERVAL = 30000;
-            USER_REQUEST_CHECK_INTERVAL_TARGET_TIME = millis();
         }
     }
 }
@@ -154,9 +163,8 @@ bool get_user_requests_from_server(){
         
         httpCode = http.GET();
 
-        if( DEBUG_CODE ){
-            Serial.println("\n\tInside user related operations. Checked after " + String( millis() - USER_REQUEST_CHECK_INTERVAL_TARGET_TIME ) );  
-            Serial.println("\n\tInside get user request from server : "+href+". Responce Code : " + String( httpCode ) );  
+        if( DEBUG_CODE ){  
+            Serial.println("\n\tInside get user request from server . Responce Code : " + String( httpCode ) );  
             delay( DEBUG_DELAY_TIME );
         }
         
@@ -185,6 +193,9 @@ bool get_user_requests_from_server(){
 void debug_log( String value ){
     Serial.println( value );
     DEBUG_LOG = value;
+    if( DEBUG_CODE ){
+        delay( DEBUG_DELAY_TIME );
+    }
 }
 
 void motor_control( uint8_t value ){
