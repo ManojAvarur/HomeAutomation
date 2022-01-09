@@ -1,5 +1,7 @@
 void water_pump(){
+
     if( tankObj.waterLevelInTank() != 4 ){
+
         if ( sumpObj.waterLevelInSump() <= 0) {
             motor_control( MOTOR_OFF );
             debug_log("\nTank level low turning off the pump because low water in sump");
@@ -9,6 +11,7 @@ void water_pump(){
         } else {
             debug_log("\nWater Level low in sump");
         }
+
     } else {
         motor_control( MOTOR_OFF );
         debug_log("\nTank level high turning off the pump");
@@ -71,8 +74,8 @@ void update_server( int pump_manual_override_data ){
 }
 
 void check_requests_from_server(){
-    if( ( millis() - USER_REQUEST_CHECK_INTERVAL_TARGET_TIME ) >= USER_REQUEST_CHECK_INTERVAL ){
-        USER_REQUEST_CHECK_INTERVAL_TARGET_TIME += USER_REQUEST_CHECK_INTERVAL;
+    if( ( millis() - USER_REQUEST_CHECK_INTERVAL_ELAPSED_TIME ) >= USER_REQUEST_CHECK_INTERVAL ){
+        USER_REQUEST_CHECK_INTERVAL_ELAPSED_TIME += USER_REQUEST_CHECK_INTERVAL;
 
         if( get_user_requests_from_server() ){
 
@@ -91,11 +94,13 @@ void check_requests_from_server(){
 
             while( json_user_request["pump_manual_overide_request"].as<String>().toInt() == 1  && json_user_request["execute_status"].as<String>().toInt() == 1 ){
 
-                Serial.println("\n\nMillis : " + String( millis() ) + "\n USER_REQUEST_CHECK_INTERVAL_TARGET_TIME =" + String( USER_REQUEST_CHECK_INTERVAL_TARGET_TIME ) );
+                Serial.println("\n\nMillis : " + String( millis() ) + "\n USER_REQUEST_CHECK_INTERVAL_ELAPSED_TIME =" + String( USER_REQUEST_CHECK_INTERVAL_ELAPSED_TIME ) );
 
                 if( json_user_request["pump_take_over_complete_control"].as<String>().toInt() == 1 ) {
                     
                     motor_control( ( json_user_request["pump_on_off_status"].as<String>().toInt() == 1 )? MOTOR_ON : MOTOR_OFF );
+                    tankObj.waterLevelInTank();
+                    sumpObj.waterLevelInSump();
                     update_server( ++counter );
 
                     if( DEBUG_CODE ){
@@ -134,11 +139,12 @@ void check_requests_from_server(){
                     update_server( ++counter );
                 }
 
-                if( ( millis() - USER_REQUEST_CHECK_INTERVAL_TARGET_TIME ) >= USER_REQUEST_CHECK_INTERVAL ){
-                    USER_REQUEST_CHECK_INTERVAL_TARGET_TIME += USER_REQUEST_CHECK_INTERVAL;
+                if( ( millis() - USER_REQUEST_CHECK_INTERVAL_ELAPSED_TIME ) >= USER_REQUEST_CHECK_INTERVAL ){
+                    USER_REQUEST_CHECK_INTERVAL_ELAPSED_TIME += USER_REQUEST_CHECK_INTERVAL;
                     if( ! get_user_requests_from_server() ){
                         break;
                     }
+
                 }
 
             }

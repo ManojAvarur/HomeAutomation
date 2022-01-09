@@ -6,7 +6,9 @@ class Tank{
         int TANK_WL_LOW, TANK_WL_MID, TANK_WL_HIGH;
         bool CODE_DEBUG;
         int DEBUG_DELAY_TIME;
-        bool isChanged = true;
+        bool isChanged = true, firstTimeLoad = false;
+        int WATER_CHECK_INTERVAL;
+        unsigned long WATER_CHECK_INTERVAL_ELAPSED_TIME = 0L;
 
         void updateTankDetails( bool updateFromStart = false ){
 
@@ -118,29 +120,8 @@ class Tank{
             }
         } 
 
+
     public:
-
-        int waterLevelInTank( bool updateFromStart = false ){
-            
-            do{
-                updateTankDetails( updateFromStart );
-            }while( currentWaterStatus == -1 );
-
-            if( currentWaterStatus != oldWaterStatus ){
-                isChanged = true;
-
-                if( CODE_DEBUG ){
-                    Serial.println("\n\t\tDebug from tank class oldWaterStatus : " + String( oldWaterStatus ));
-                    Serial.println("\n\t\tDebug from tank class currentWaterStatus : " + String( currentWaterStatus ));
-                    delay( DEBUG_DELAY_TIME );
-                }
-
-                oldWaterStatus = currentWaterStatus;
-            }
-
-            return currentWaterStatus;
-        }
-
         bool isDataChanged(){
             return isChanged;
         }
@@ -149,11 +130,41 @@ class Tank{
             isChanged = false;
         }
 
-        Tank( int low, int mid, int high, bool debug, int delay_time ){
+        int waterLevelInTank( bool updateFromStart = false ){
+
+            if( ( ( millis() - WATER_CHECK_INTERVAL_ELAPSED_TIME ) >= WATER_CHECK_INTERVAL ) || firstTimeLoad ){
+
+                ( firstTimeLoad )? NULL : WATER_CHECK_INTERVAL_ELAPSED_TIME += WATER_CHECK_INTERVAL;
+
+                do{
+                    updateTankDetails( updateFromStart );
+                }while( currentWaterStatus == -1 );
+
+                if( currentWaterStatus != oldWaterStatus ){
+                    isChanged = true;
+                    oldWaterStatus = currentWaterStatus;
+                }
+
+                firstTimeLoad = false;
+
+            }
+            
+            // Serial.println("\n\tReturning Tank after : " + String( ( millis() - WATER_CHECK_INTERVAL_ELAPSED_TIME ) ) + " >= " + String( WATER_CHECK_INTERVAL )  );
+            // Serial.println("\n\t WATER_CHECK_INTERVAL_ELAPSED_TIME : " + String( WATER_CHECK_INTERVAL_ELAPSED_TIME ) );
+            // delay( DEBUG_DELAY_TIME );
+            Serial.println("\n\tReturning Tank currentWaterStatus : " + String( currentWaterStatus ) );
+            return currentWaterStatus;
+            
+            
+        }
+
+        Tank( int low, int mid, int high, int checkInterval,  bool debug, int delay_time ){
             TANK_WL_LOW = low;
             TANK_WL_MID = mid;
             TANK_WL_HIGH = high;
+            WATER_CHECK_INTERVAL = checkInterval;
             CODE_DEBUG = debug;
             DEBUG_DELAY_TIME = delay_time;
+            firstTimeLoad = true;
         }
 };

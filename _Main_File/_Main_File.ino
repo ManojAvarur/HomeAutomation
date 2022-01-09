@@ -32,11 +32,11 @@ StaticJsonDocument<512> json_sensor_data_update;
 StaticJsonDocument<384> json_user_request;
 
 // ----------------- DEBUG CODE ---------------------
-bool DEBUG_CODE = true;
-int DEBUG_DELAY_TIME = 5000; // 1 sec
+bool DEBUG_CODE = false;
+int DEBUG_DELAY_TIME = 0; // 1 sec
 
-bool DEBUG_CLASS_CODE = false;
-int DEBUG_CLASS_DELAY_TIME = 3000; // 1 sec
+bool DEBUG_CLASS_CODE = true;
+int DEBUG_CLASS_DELAY_TIME = 0; // 1 sec
 
 
 // ---------------- Execution Time Period -------------
@@ -44,15 +44,17 @@ int DEBUG_CLASS_DELAY_TIME = 3000; // 1 sec
 // int INITIAL_PUMP_LOAD_TIME = 5000; // 5 Sec
 
 int USER_REQUEST_CHECK_INTERVAL = 30000;
-unsigned long USER_REQUEST_CHECK_INTERVAL_TARGET_TIME = 0L; 
+unsigned long USER_REQUEST_CHECK_INTERVAL_ELAPSED_TIME = 0L;
+
+int TANK_SUMP_WATER_LEVEL_UPDATE_INTERVAL = 20000; 
 
 // ------------------ Class Instantiation -------------
 
 #include "z-sump_class.h"
 #include "z-tank_class.h"
 
-Sump sumpObj = Sump( WL_S_LOW, WL_S_MID, DEBUG_CLASS_CODE, DEBUG_CLASS_DELAY_TIME );
-Tank tankObj = Tank( WL_T_LOW, WL_T_MID, WL_T_HIGH, DEBUG_CLASS_CODE, DEBUG_CLASS_DELAY_TIME );
+Sump sumpObj = Sump( WL_S_LOW, WL_S_MID, TANK_SUMP_WATER_LEVEL_UPDATE_INTERVAL, DEBUG_CLASS_CODE, DEBUG_CLASS_DELAY_TIME );
+Tank tankObj = Tank( WL_T_LOW, WL_T_MID, WL_T_HIGH, TANK_SUMP_WATER_LEVEL_UPDATE_INTERVAL, DEBUG_CLASS_CODE, DEBUG_CLASS_DELAY_TIME );
 
 // ------------------ Extras --------------------------
 String DEBUG_LOG = "";

@@ -4,9 +4,11 @@ class Sump{
     private:
         short oldWaterStatus = -1, currentWaterStatus = -1;
         int SUMP_WL_LOW, SUMP_WL_MID;
-        bool CODE_DEBUG;
+        bool CODE_DEBUG, firstTimeLoad = false;
         int DEBUG_DELAY_TIME;
         bool isChanged = true;
+        int WATER_CHECK_INTERVAL;
+        unsigned long WATER_CHECK_INTERVAL_ELAPSED_TIME = 0L;
 
 
         void updateSumpDetails( bool updateFromStart = false ){
@@ -79,23 +81,8 @@ class Sump{
 
         } 
 
+
     public:
-        
-
-        int waterLevelInSump( bool updateFromStart = false ){
-            
-            do{
-                updateSumpDetails( updateFromStart );
-            }while( currentWaterStatus == -1 );
-
-            if( currentWaterStatus != oldWaterStatus ){
-                isChanged = true;
-                oldWaterStatus = currentWaterStatus;
-            }
-
-            return currentWaterStatus;
-        }
-
         bool isDataChanged(){
             return isChanged;
         }
@@ -104,10 +91,36 @@ class Sump{
             isChanged = false;
         }
 
-        Sump( int low, int mid, bool debug, int delay_time  ){
+        int waterLevelInSump( bool updateFromStart = false ){
+
+            if( ( ( millis() - WATER_CHECK_INTERVAL_ELAPSED_TIME ) >= WATER_CHECK_INTERVAL ) || firstTimeLoad ){
+
+                ( firstTimeLoad )? NULL : WATER_CHECK_INTERVAL_ELAPSED_TIME += WATER_CHECK_INTERVAL;
+            
+                do{
+                    updateSumpDetails( updateFromStart );
+                }while( currentWaterStatus == -1 );
+
+                if( currentWaterStatus != oldWaterStatus ){
+                    isChanged = true;
+                    oldWaterStatus = currentWaterStatus;
+                }
+
+                firstTimeLoad = false;
+
+            }
+
+            Serial.println("\n\tReturning Sump currentWaterStatus : " + String( currentWaterStatus ) );
+            return currentWaterStatus;
+
+        }
+
+        Sump( int low, int mid, int checkInterval, bool debug, int delay_time  ){
             SUMP_WL_LOW = low;
             SUMP_WL_MID = mid;
+            WATER_CHECK_INTERVAL = checkInterval;
             CODE_DEBUG = debug;
             DEBUG_DELAY_TIME = delay_time;
+            firstTimeLoad = true;
         }
 };
