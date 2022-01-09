@@ -7,8 +7,8 @@ String UNIQUE_ID = "4bb7abf6d3782611339eb6fe6326b96b6b4fca3d6f7e16f33367268806c5
 #include <ESP8266WiFi.h>
 #include <ESP8266HTTPClient.h>
 
-const char* SSID = "Manoj";
-const char* PASSWORD = "Hazelnut+-";
+const char* SSID = "";
+const char* PASSWORD = "";
 WiFiClient client;
 
 // ------------------ Relay Sensor Settings -----------
