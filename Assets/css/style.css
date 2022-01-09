@@ -1054,3 +1054,7 @@ ul li a{
 .header-pannel{
     position: absolute;
 }
+
+div a img {
+    display: none;  
+}

@@ -56,6 +56,14 @@
                 $message .= "<br><br>Please enter the above code in our verification site.";
                 $message .= "<br><br>Thank You.<br>HOMEATO";
 
+                $_SESSION["mail"] = Array(
+                    "emailid" => $_POST['email'],
+                    "subject" => $subject,
+                    "body" => $message
+                );
+                // $_SESSION["mail"]["emailid"] = $_POST['email'];
+                // $_SESSION["mail"]["subject"] = $subject;
+                // $_SESSION["mail"]["body"] = $message;
 
                 if( mail_to($email, $subject, $message) ){
                     echo "<script> if( window.history.replaceState ){
@@ -63,6 +71,8 @@
                                     }
                         </script>";
                 } else {
+                    session_destroy();
+
                         echo "<script>
                                     alert('Couldn\'t send the mail.\\nPlease contact admin.!');
                                     window.location.href='login.php';

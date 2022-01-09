@@ -121,9 +121,9 @@
                                 </div>
 
                                 <button class="btn btn-lg btn-block text-uppercase" style="background-color: #000; color: #fff;" name="submit" type="submit">Submit</button>
-                                <p style="padding-top: 3%; text-align: right; margin-right: 2%;">Didn't receive a mail? 
+                                <p style="padding-top: 3%; text-align: right; margin-right: 2%;" >Didn't receive a mail? 
                                     <span>
-                                        <a href="" id="linkRef">Try Again</a>
+                                        <a href="javascript:void(0);" id="linkRef" onclick="resend_mail()">Try Again</a>
                                     </span>
                                 </p>
                                 <p style='padding-top: 3%; text-align: right; margin-right: 2%;'>Incorrect Mail?
@@ -177,41 +177,58 @@
 
     <a href="#" class="back-to-top"><i class="ri-arrow-up-line"></i></a>
     <div id="preloader"></div>
-    <script src="assets/vendor/jquery/jquery.min.js"></script>
-    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/vendor/jquery.easing/jquery.easing.min.js"></script>
-    <script src="assets/vendor/php-email-form/validate.js"></script>
-    <script src="assets/vendor/owl.carousel/owl.carousel.min.js"></script>
-    <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-    <script src="assets/vendor/venobox/venobox.min.js"></script>
-    <script src="assets/vendor/waypoints/jquery.waypoints.min.js"></script>
-    <script src="assets/vendor/counterup/counterup.min.js"></script>
-    <script src="assets/vendor/aos/aos.js"></script>
-    <script src="assets/js/main.js"></script>
+    <script src="Assets/vendor/jquery/jquery.min.js"></script>
+    <script src="Assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="Assets/vendor/jquery.easing/jquery.easing.min.js"></script>
+    <!-- <script src="Assets/vendor/php-email-form/validate.js"></script> -->
+    <script src="Assets/vendor/owl.carousel/owl.carousel.min.js"></script>
+    <script src="Assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="Assets/vendor/venobox/venobox.min.js"></script>
+    <script src="Assets/vendor/waypoints/jquery.waypoints.min.js"></script>
+    <script src="Assets/vendor/counterup/counterup.min.js"></script>
+    <script src="Assets/vendor/aos/aos.js"></script>
+    <script src="Assets/js/main.js"></script>
  <?php
     if(!$spanCheck){
  ?>
     <script type = "text/javascript"> 
 
         var myvar = setInterval(myTimer, 1000);
-        var timerSec = 30; 
+        var timerSec = 1; 
         var counter = timerSec;
         var Link = document.getElementById("linkRef");
-        Link.href = "javascript:void(0)";
         Link.classList.add("disabled-link");
 
         function myTimer() {
-            Link.innerHTML = " Try After : "+counter+"sec";
-            
-            counter = counter - 1;
+            Link.innerText = " Try After : "+counter+"s";
+            Link.disabled = true;
+            --counter;
 
-            if(counter<0){
+            if( counter < 0 ){
                 clearInterval(myvar);
-                counter = timerSec;
-                Link.href = "_headers/resendmail.php";   
-                Link.innerHTML = " Try Again";
+                counter = timerSec; 
+                Link.innerText = " Try Again";
                 Link.classList.remove("disabled-link");
+                Link.disabled = false;
             }
+
+        }
+
+        async function resend_mail(){
+            fetch("_headers/resend_mail.php")
+            .then( respose => {
+                console.log( respose.text() );
+                Link.classList.add("disabled-link");
+                counter = 3;
+                myvar = setInterval(myTimer, 1000);
+            })
+            .catch( error => {
+                // alert("Error");
+                console.log( error );
+                Link.classList.add("disabled-link");    
+                counter = 1;
+                myvar = setInterval(myTimer, 1000);
+            })
         }
 
     </script> 
