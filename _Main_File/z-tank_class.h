@@ -43,6 +43,8 @@ class Tank{
                     
                     if( caseBreakCheck ){
                         break;
+                    } else {
+                        caseBreakCheck = true;
                     }
 
                 case 2 :
@@ -68,6 +70,8 @@ class Tank{
 
                     if( caseBreakCheck ){
                         break;
+                    } else {
+                        caseBreakCheck = true;
                     }
 
                 case 3:

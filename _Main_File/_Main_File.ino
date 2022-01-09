@@ -31,14 +31,11 @@ WiFiClient client;
 StaticJsonDocument<512> json_sensor_data_update;
 StaticJsonDocument<384> json_user_request;
 
-// StaticJsonDocument<192> DB_update;
-// StaticJsonDocument<768> TimeStamp;
-
 // ----------------- DEBUG CODE ---------------------
 bool DEBUG_CODE = true;
 int DEBUG_DELAY_TIME = 5000; // 1 sec
 
-bool DEBUG_CLASS_CODE = true;
+bool DEBUG_CLASS_CODE = false;
 int DEBUG_CLASS_DELAY_TIME = 3000; // 1 sec
 
 

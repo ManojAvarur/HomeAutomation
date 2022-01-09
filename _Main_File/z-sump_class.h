@@ -38,6 +38,8 @@ class Sump{
                     
                     if( caseBreakCheck ){
                             break;
+                    } else {
+                        caseBreakCheck = true;
                     }
 
                 case 2 :
