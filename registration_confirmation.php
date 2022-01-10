@@ -160,7 +160,7 @@
     <script type = "text/javascript"> 
 
         let tryAgainCounter = setInterval(resend_mail_counter, 1000);
-        var counter = 1;
+        var counter = 30;
         var resend_mail_element = document.getElementById("linkRef");
         resend_mail_element.classList.add("disabled-link");
 

@@ -158,7 +158,7 @@
                                     </div>
 
                                     <div class="form-label-group">
-                                        <input type="tel" name="nodeMCUCode" id="inputNodeMcuCode" class="form-control" placeholder="Node MCU Code" required autofocus onKeyup="checkform()">
+                                        <input type="tel" name="nodeMCUCode" id="inputNodeMcuCode" <?= ( isset( $_GET["nodemcuid"] ) && !empty( $_GET["nodemcuid"] ) )? "value='".$_GET["nodemcuid"]."' disabled": "value=''" ?> class="form-control" placeholder="Node MCU Code" required autofocus onKeyup="checkform()">
                                         <label for="inputNodeMcuCode">Node MCU Code</label>
                                     </div>
 
