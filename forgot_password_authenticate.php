@@ -16,51 +16,22 @@
 
 
 
-    if( isset( $_SESSION['hato-postdata'] ) )
-    {
+    if( isset( $_SESSION["hato-forgot_password"] ) && !isset( $_SESSION["hato-forgot_password"]["authenticated"]  )
+            && !empty( $_SESSION["hato-forgot_password"]["authentication_code"] )
+            && !empty( $_SESSION["hato-forgot_password"]["email_id"] ) 
+            && !empty( $_SESSION["hato-forgot_password"]["user_unique_id"] )  
+    ){
         //------------------------------------------------ Values initialisation ----------------------------------------------------------- 
 
         if( isset( $_POST['submit'] )) {
-
             
-            if( $_POST['passcode'] == $_SESSION['hato-postdata']['verification'] ){
-
-                $fname = mysqli_escape_string( $connection, $_SESSION['hato-postdata']['fname'] );
-
-                $email = mysqli_escape_string( $connection, $_SESSION['hato-postdata']['email']);
-            
-                $node_mcu = mysqli_escape_string( $connection, $_SESSION['hato-postdata']['nodeMCUCode']);
-            
-                $password = mysqli_escape_string( $connection, hash( 'sha256' , $_SESSION['hato-postdata']['password'] ) );
-            
-                $ID = mysqli_escape_string($connection, ( md5( $email . microtime() . $node_mcu . $password ) ) );
-            
-                $insert  = "INSERT INTO user_login VALUES ('$ID', '$node_mcu', '$fname', '$password', '$email', false ); ";
-                        
-                $qinsert = mysqli_query( $connection, $insert );
-            
-                if (!$qinsert) {
-                    session_destroy();
-                    echo "<script>
-                                    alert('Error Occured While Creating Account.\\nContact Admin.');
-                                    window.location.href='login.php';
-                        </script>";
-                } else {
-
-                    session_destroy();
-                    echo "<script>
-                                    alert('Account has been successfully created!');
-                                    window.location.href='login.php';
-                        </script>";
-                }
-            
-
+            if( $_POST['passcode'] == $_SESSION["hato-forgot_password"]["authentication_code"] ){
+                // $_SESSION["hato-forgot_password"]["authentication_code"] = null;
+                $_SESSION["hato-forgot_password"]["authenticated"] = true;
+                // die("completed");
+                header('location:forgot_password_new_password.php');
             } else {
-
-            // echo '<script> alert("Incorrect Verification Code.\nPlease Try Again!"); </script>';
-            $spanCheck = true;
-                
-
+                $spanCheck = true;            
             }
 
         }
@@ -109,7 +80,7 @@
                     <div class="card card-signin my-5">
                         <div class="card-body">
                             <h5 class="card-title text-center">Email Verification!</h5>
-                            <p style="margin-top: -8%;padding-bottom: 2%;text-align: center;">Check your mail <br>'&nbsp;<strong><?php echo $_SESSION['hato-postdata']['email'] ?></strong>&nbsp;'<br> for activation passcode</p>
+                            <p style="margin-top: -8%;padding-bottom: 5%;text-align: center;">Check your mail <br>'&nbsp;<strong><?php echo $_SESSION["hato-forgot_password"]["email_id"] ?></strong>&nbsp;'<br> for activation passcode</p>
 
                        <?php
 
@@ -118,7 +89,7 @@
                        
                        ?>
                             
-                            <form class="form-signin" action="registration_confirmation.php" method="post">
+                            <form class="form-signin" action="forgot_password_authenticate.php" method="post">
                                 <div class="form-label-group">
                                     <input type="text" name="passcode" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
                                     <label for="inputEmail">Enter the Passcode</label>
@@ -144,6 +115,8 @@
         </div>
     </div>
 
+
+
     <a href="#" class="back-to-top"><i class="ri-arrow-up-line"></i></a>
     <div id="preloader"></div>
     <script src="Assets/vendor/jquery/jquery.min.js"></script>
@@ -160,7 +133,7 @@
     <script type = "text/javascript"> 
 
         let tryAgainCounter = setInterval(resend_mail_counter, 1000);
-        var counter = 1;
+        var counter = 30;
         var resend_mail_element = document.getElementById("linkRef");
         resend_mail_element.classList.add("disabled-link");
 
@@ -179,13 +152,14 @@
         }
 
         function resend_mail(){
-            resend_mail_element.classList.add("disabled-link");
             resend_mail_element.disabled = true;
+            resend_mail_element.classList.add("disabled-link");
             tryAgainCounter = setInterval(resend_mail_counter, 1000);
             fetch("_headers/resend_mail.php");
         }
 
     </script> 
+
 </body>
 
 
@@ -194,10 +168,10 @@
 
 <?php
 
+} else if( isset( $_SESSION["hato-forgot_password"]["authenticated"] ) && $_SESSION["hato-forgot_password"]["authenticated"] == true ) {
+    header('location:forgot_password_new_password.php');
 } else {
-
-    header('location:signup.php');
-
+    header('location:login.php');
 }
 
 ?>

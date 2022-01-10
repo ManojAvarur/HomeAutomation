@@ -18,7 +18,7 @@
     if ( isset( $_POST["email-id"] ) && isset( $_POST["password"] ) && isset($_POST['submit']) && !empty( $_POST["email-id"] ) ) {
 
         $username = mysqli_escape_string( $connection, $_POST['email-id'] );                        
-        $password = mysqli_escape_string( $connection, hash('sha256', $_POST['password'] ) );
+        $password = hash('sha256', $_POST['password'] );
 
         $query = "SELECT user_unique_id , user_full_name, user_is_admin, user_node_mcu_reference FROM user_login ";
         $query .= "WHERE user_email_id = '".$username."' AND user_password = '".$password."'";
@@ -113,10 +113,10 @@
 
                                 <?php
                                     if( $span_check  ){
-                                ?>
-                                        <h6 class="text-center" style="color: red;"><strong>Incorrect Username (or) Password</strong></h6>
-                                        <br>
-                                <?php
+                                        echo '
+                                            <h6 class="text-center" style="color: red;"><strong>Incorrect Username (or) Password</strong></h6>
+                                            <br>
+                                        ';
                                     }
                                 ?>
 

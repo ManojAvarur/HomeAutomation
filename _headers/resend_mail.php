@@ -1,22 +1,22 @@
 <?php
-
+    session_start();
     include "functions.php";
 
-    if( !empty( $_SESSION["mail"]["subject"] ) 
-            && !empty( $_SESSION["mail"]["body"] ) 
-            && !empty( $_SESSION["mail"]["emailid"] ) ){
+    if( isset( $_SESSION["hato-mail"] )
+            && !empty( $_SESSION["hato-mail"]["subject"] ) 
+            && !empty( $_SESSION["hato-mail"]["body"] ) 
+            && !empty( $_SESSION["hato-mail"]["emailid"] ) ){
 
-        if( mail_to( $_SESSION["mail"]["emailid"], $_SESSION["mail"]["subject"], $_SESSION["mail"]["body"] ) ){
+        if( mail_to( $_SESSION["hato-mail"]["emailid"], $_SESSION["hato-mail"]["subject"], $_SESSION["hato-mail"]["body"] ) ){
             http_response_code(200);
         } else {
             http_response_code(401);
         }
         
     } else {
-        // echo json_encode( $_SESSION["mail"] );
         http_response_code(417);
     }
-
-    print_r( $_SESSION["hato-postdata"] );
+    // echo empty( $_SESSION["hato-mail"]["body"] ) ;
+    // print_r($_SESSION["hato-mail"] );
 
 ?>

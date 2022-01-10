@@ -13,26 +13,51 @@
         cookie_check( 'information.php' , $redirect = true );
     }
 
-    if(  isset( $_POST["email-id"] ) && isset( $_POST["submit"]) ){
-        $query = "SELECT user_unique_id FROM user_login ";
-        $query .= "WHERE user_email_id = '" . mysqli_escape_string( $connection, $_POST["email-id"] ) . "'; ";
+    session_destroy();
+
+    if(  isset( $_POST["hato-email-id"] ) && isset( $_POST["submit"] )  ){
+        $query = "SELECT user_unique_id, user_full_name FROM user_login ";
+        $query .= "WHERE user_email_id = '" . mysqli_escape_string( $connection, $_POST["hato-email-id"] ) . "'; ";
 
         $result = mysqli_query( $connection, $query );
         if( mysqli_num_rows( $result ) > 0 ){
             $verfication_code = rand( 100000, 1000000 );
 
-            $message = "Hello, <br>";
-            $message .= "This is your verification code for reseting your password : ";
-            $message .= "<strong><u>".$verfication_code."</u></strong>";
-            $subject = "Password Reset Code.";
+            $result = mysqli_fetch_assoc( $result );
 
-            $_SESSION["authenticate"] = $verfication_code;
-            $_SESSION["email-id"] = $_POST["email-id"];
-            $_SESSION["mail"]["message"] = $message;
-            $_SESSION["mail"]["subject"] = $subject;
+            $subject = "Forgot Password Reset Code";
 
-            mail_to( $_POST["email-id"], $message, $subject);
-            header("location:authenticate.php");
+            $message = "<h1>Hello <strong>" . $result["user_full_name"] . "</strong>.</h1>";
+            $message .= "<br><br>Verfication Code is : <strong>" . $verfication_code . "</strong>";
+            $message .= "<br><br>Please enter the above code in our verification site.";
+            $message .= "<br><br>Thank You.<br>HOMEATO";
+
+            $_SESSION["hato-forgot_password"] = Array(
+                "authentication_code" => $verfication_code,
+                "email_id" => $_POST["hato-email-id"],
+                "user_unique_id" => $result["user_unique_id"]
+            );
+
+            $_SESSION["hato-mail"] = Array(
+                "emailid" => $_POST['hato-email-id'],
+                "subject" => $subject,
+                "body" => $message
+            );
+
+            if( mail_to( $_POST["hato-email-id"], $subject, $message ) ){
+                echo "<script> if( window.history.replaceState ){
+                                    window.history.replaceState( null, null, location.href='forgot_password_authenticate.php' );
+                                }
+                    </script>";
+            } else {
+                session_destroy();
+
+                    echo "<script>
+                                alert('Couldn\'t send the mail.\\nPlease contact admin.!');
+                                window.location.href='login.php';
+                    </script>";
+            }
+
         } else {
             $span_check = true;
         }
@@ -92,7 +117,7 @@
 
                                 <form class='form-signin' method='post' action='forgot_password.php'>
                                     <div class='form-label-group'>
-                                        <input type='email' id='inputEmail' name='email-id' class='form-control' placeholder='Email address' included autofocus>
+                                        <input type='email' id='inputEmail' name='hato-email-id' class='form-control' placeholder='Email address' included autofocus>
                                         <label for='inputEmail'>Enter the Email</label>
                                     </div>
 
@@ -108,40 +133,6 @@
             </div>
         </div>
 
-        <footer id="footer">
-            <div class="footer-top">
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-3 col-md-6 footer-links">
-                            <h4>Services</h4>
-                            <ul>
-                                <li><i class="bx bx-wifi-1"></i> <a href="#">Return Policy</a></li>
-                                <li><i class="bx bx-wifi-1"></i> <a href="#">Security</a></li>
-                                <li><i class="bx bx-wifi-1"></i> <a href="#">Term of Use</a></li>
-                                <li><i class="bx bx-wifi-1"></i> <a href="#">Privacy policy</a></li>
-                            </ul>
-                        </div>
-    
-                        <div class="col-lg-3 col-md-6 footer-links">
-                            <h4>About</h4>
-                            <ul>
-                                <li><i class="bx bx-wifi-1"></i> <a href="#">Company</a></li>
-                                <li><i class="bx bx-wifi-1"></i> <a href="#">Team</a></li>
-                            </ul>
-                        </div>
-    
-                        <div class="col-lg-3 col-md-12 footer-links">
-                            <h4>Contact Us</h4>
-                            <ul>
-                                <li><i class="bx bx-wifi-1"></i> <a href="mailto:farmato.dontreply@gmail.com">Via Email</a></li>
-                                <li><i class="bx bx-wifi-1"></i> <a href="tel:+919123456780">Via Phone Call</a></li>
-                            </ul>
-                        </div>
-    
-                    </div>
-                </div>
-            </div>
-        </footer>
 
     <a href="#" class="back-to-top"><i class="ri-arrow-up-line"></i></a>
     <div id="preloader"></div>
@@ -157,40 +148,6 @@
     <script src="Assets/vendor/aos/aos.js"></script>
     <script src="Assets/js/main.js"></script>
 
-    <script type = "text/javascript"> 
-
-        var myvar = setInterval(myTimer, 1000);
-        var timerSec = 30; 
-        var counter = timerSec;
-        var Link = document.getElementById("linkRef");
-        Link.href = "javascript:void(0)";
-        Link.classList.add("disabled-link");
-
-        function myTimer() {
-            Link.innerHTML = " Try After : "+counter+"sec";
-            
-            counter = counter - 1;
-
-            if(counter<0){
-                clearInterval(myvar);
-                counter = timerSec;
-                Link.href = "_headers/resendmail.php";   
-                Link.innerHTML = " Try Again";
-                Link.classList.remove("disabled-link");
-            }
-        }
-
-        function checkPassword(form) {
-        var password = form.password.value;
-        var conf_password = form.conf_password.value;
-        if (password != conf_password) {
-            alert("PASSWORDS DO NOT MATCH: \nPlease try again...");
-            document.getElementById('inputPassword1').value = ""; 
-            return false;
-        }    
-    }
-
-    </script> 
 </body>
 
 </html>
