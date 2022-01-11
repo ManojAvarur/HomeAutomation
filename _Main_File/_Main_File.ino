@@ -1,6 +1,6 @@
 // ------------------ Main Declaration --------------
-// String URL = "http://iotproject.coolpage.biz/home_automation";
-String URL = "http://192.168.2.2/HomeAutomation-website/handel_request/nodemcu";
+String URL = "http://iotproject.coolpage.biz/home_automation/handel_request/nodemcu";
+//String URL = "http://192.168.2.2/HomeAutomation-website/handel_request/nodemcu";
 String UNIQUE_ID = "4bb7abf6d3782611339eb6fe6326b96b6b4fca3d6f7e16f33367268806c5512c";
 
 // ------------------ Wi-Fi Settings ------------------
@@ -32,7 +32,7 @@ StaticJsonDocument<512> json_sensor_data_update;
 StaticJsonDocument<384> json_user_request;
 
 // ----------------- DEBUG CODE ---------------------
-bool DEBUG_CODE = false;
+bool DEBUG_CODE = true;
 int DEBUG_DELAY_TIME = 0; // 1 sec
 
 bool DEBUG_CLASS_CODE = true;
