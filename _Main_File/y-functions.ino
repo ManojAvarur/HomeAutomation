@@ -110,7 +110,7 @@ void check_requests_from_server(){
                     }
 
                 } else {
-                    if( json_user_request["pump_on_off_status"].as<String>().toInt() == 0 && json_user_request["time_in_hours"].as<String>().toInt() >= 19 ){
+                    if( json_user_request["pump_on_off_status"].as<String>().toInt() == 0 && json_user_request["time_in_hours"].as<String>().toInt() >= 19 && json_user_request["time_in_hours"].as<String>().toInt() <= 20  ){
                         water_pump();
 
                         if( DEBUG_CODE ){
@@ -128,8 +128,11 @@ void check_requests_from_server(){
                         }
 
                     } else {
-                        motor_control( MOTOR_OFF );
 
+                        motor_control( MOTOR_OFF );
+                        tankObj.waterLevelInTank();
+                        sumpObj.waterLevelInSump();
+                        
                         if( DEBUG_CODE ){
                             Serial.println("\n\tInside manual overide and under water_pump() as pump_on_off_status =  0");  
                             delay( DEBUG_DELAY_TIME );
@@ -174,7 +177,7 @@ bool get_user_requests_from_server(){
             delay( DEBUG_DELAY_TIME );
         }
         
-        if( httpCode == 404 ){
+        if( httpCode == 204 || httpCode == 500 ){
             http.end();
             return false;
         } else if( httpCode != 200 ){

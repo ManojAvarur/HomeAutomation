@@ -35,7 +35,7 @@ StaticJsonDocument<384> json_user_request;
 bool DEBUG_CODE = true;
 int DEBUG_DELAY_TIME = 0; // 1 sec
 
-bool DEBUG_CLASS_CODE = true;
+bool DEBUG_CLASS_CODE = false;
 int DEBUG_CLASS_DELAY_TIME = 0; // 1 sec
 
 
