@@ -21,11 +21,13 @@
                 $result["time_in_hours"] = date("H"); 
                 echo json_encode( $result );
             } else {
-                http_response_code( 404 );
+                http_response_code( 204 );
             }
         } else {
-            http_response_code( 400 );
+            http_response_code( 500 );
         }
         
+    } else {
+        http_response_code( 205 );
     }
 ?>
