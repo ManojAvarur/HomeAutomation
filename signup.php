@@ -29,7 +29,7 @@
 
             $qemailCheck = mysqli_query( $connection, $emailCheck);
 
-            if(mysqli_num_rows($qemailCheck) > 0) {
+            if( mysqli_num_rows($qemailCheck) > 0 ) {
 
                 $span_email_check = true;
 
@@ -157,10 +157,33 @@
                                         <label for="inputEmail">Email address</label>
                                     </div>
 
-                                    <div class="form-label-group">
-                                        <input type="tel" name="nodeMCUCode" id="inputNodeMcuCode" <?= ( isset( $_GET["nodemcuid"] ) && !empty( $_GET["nodemcuid"] ) )? "value='".$_GET["nodemcuid"]."' disabled": "value=''" ?> class="form-control" placeholder="Node MCU Code" required autofocus onKeyup="checkform()">
-                                        <label for="inputNodeMcuCode">Node MCU Code</label>
-                                    </div>
+                                    <?php
+
+                                        if( isset( $_GET["nodemcuid"] ) && !empty( $_GET["nodemcuid"] ) ){
+
+                                            echo "
+                                                <div class='form-label-group'>
+                                                    <input type='text' value='".$_GET["nodemcuid"]."' disabled class='form-control' placeholder='Node MCU Code' required autofocus onKeyup='checkform()'>
+                                                    <label for='inputNodeMcuCode'>Node MCU Code</label>
+                                                </div>
+
+                                                <input type='hidden' id='inputNodeMcuCode' name='nodeMCUCode' value='".$_GET["nodemcuid"]."'>
+                                            ";
+
+                                        } else {
+
+                                            echo "
+                                                <div class='form-label-group'>
+                                                    <input type='text' id='inputNodeMcuCode' name='nodeMCUCode' class='form-control' placeholder='Node MCU Code' required autofocus onKeyup='checkform()'>
+                                                    <label for='inputNodeMcuCode'>Node MCU Code</label>
+                                                </div>
+                                            ";
+
+                                        }
+
+                                    ?>
+
+                                    
 
                                     <div class="form-label-group">
                                         <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" name="password" required onKeyup="checkform()" minlength = "8">
