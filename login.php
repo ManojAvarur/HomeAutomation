@@ -35,8 +35,8 @@
             if( isset( $_POST["remember-me"] ) ){
                 $cookie_value = generate_cookie_token( $_POST['email-id'], $result["user_unique_id"] );
                 $expire = time() + 91 * 24 * 60 * 60;
-                setcookie("token_id_1", $cookie_value[0], $expire, "/"); //Setting Cookie
-                setcookie("token_id_2", $cookie_value[1], $expire, "/"); //Setting Cookie
+                setcookie("hato-token_id_1", $cookie_value[0], $expire, "/"); //Setting Cookie
+                setcookie("hato-token_id_2", $cookie_value[1], $expire, "/"); //Setting Cookie
 
                 $query = "SELECT cookie_user_unique_id FROM cookie_data ";
                 $query .= "WHERE cookie_user_unique_id = '" . $result["user_unique_id"] . "'; ";
