@@ -1,2 +1,1 @@
-information.php
-homeautomation_information.js
+Up to Date
