@@ -15,9 +15,11 @@ let debugLogDisplay = document.getElementById("debug-log");
 
 let displayWarningContainer = document.getElementById("warning-container");
 let displayWarningType = document.getElementById("warning-type");
+let displayWarningTime = document.getElementById("warning-time");
 let displayWarningMessage = document.getElementById("warning-msg");
 
 let displayErrorContainer = document.getElementById("error-container");
+let disaplyErrorTime = document.getElementById("error-time");
 let displayErrorMessage = document.getElementById("error-msg");
 
 let manualOverideCheckBox = document.getElementById("manual-overide");
@@ -133,8 +135,10 @@ function loadSensorData(){
                     timeStampDisplay.innerText = `${secs} sec ago.`
                 }
             }
-        } else {
+        } else if( retrivedTimeStamp.getFullYear() == currentTimeStamp.getFullYear() ) {
             timeStampDisplay.innerText = `${( currentTimeStamp.getDate() - retrivedTimeStamp.getDate() )} days ago.`;
+        } else {
+            timeStampDisplay.innerText = `${( currentTimeStamp.getFullYear() - retrivedTimeStamp.getFullYear() )} year ago ( ${ retrivedTimeStamp.getDate() } : ${ retrivedTimeStamp.getMonth() } : ${ retrivedTimeStamp.getFullYear() } ).`;
         }
 
         if( sensorData.debug_log !== undefined ){
@@ -176,7 +180,7 @@ async function pumpRelatedOperations( overRideOperationCount = operationCount ){
 
     let result = await response.json();
 
-    // console.log( result );
+    console.log( result );
 
     if( result["success"] && result["affected_rows"] > 0 ){
         operationCount = ( overRideOperationCount == -1 ) ? 0 : 1;
@@ -303,10 +307,12 @@ async function handelPumpManualOveride(){
     performToggleSwitchAndControlOP();
 }
 
+
 function showWarning({ type="Warning!", message }){
     // closeShowWarning();
     displayWarningType.innerText = type;
     displayWarningMessage.innerText = message;
+    displayWarningTime.innerText = timeIn24Hour();
     displayWarningContainer.style.display = "block";
     scrollToSensorDataViewPoint.scrollIntoView();
 }
@@ -314,13 +320,35 @@ function showWarning({ type="Warning!", message }){
 function closeShowWarning(){
     displayWarningContainer.style.display = "none";
     displayWarningType.innerText = "";
+    displayWarningTime.innerText = "";
     displayErrorMessage.innerText = "";
 }
 
 function showError( errorMsg ){
     displayErrorMessage.innerText = errorMsg;
+    disaplyErrorTime.innerText = timeIn24Hour();
     displayErrorContainer.style.display = "block";
     scrollToSensorDataViewPoint.scrollIntoView();
+}
+
+function timeIn24Hour(){
+
+    const date = new Date();
+    let hours = date.getHours();
+    let min = date.getMinutes();
+    let seconds = date.getSeconds();
+   
+    // const midDay = ( hours >= 0 && hours <= 12 )? "AM" : "PM";
+
+    hours = ( hours == 0 )? 12 : ( hours > 12 )? ( hours - 12 ) : hours;
+    hours = ( hours >= 1 && hours <= 9 )?   `0${hours}` : hours; 
+
+    min = ( min > 9 )? min : `0${min}`;
+    seconds = ( seconds > 9 )? seconds :  `0${seconds}`;
+
+    return `${hours}:${min}:${seconds}`
+    // return `${hours}:${min}:${seconds} ${midDay} `;
+
 }
 
 function performToggleSwitchAndControlOP(){

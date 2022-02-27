@@ -45,6 +45,32 @@
         <header id="header" class="fixed-top">
             <div class="container d-flex align-items-center justify-content-between">
                 <h1 class="logo"><a href="index.php">HOME<span>ATO</span></a></h1>
+
+                <?php
+                    if( $_SESSION["hato-is_admin"] ){
+                ?>
+
+                    <nav class="nav-bar d-none d-lg-block">
+                        <ul>
+                            <li><a href="javascript:void(0);" onclick="loadSensorData()" class="login-btn">Refresh Data</a></li>
+                        </ul>
+                    </nav>
+                    <nav class="nav-bar d-lg-none d-sm-block">
+                        <ul>
+                            <li class="drop-down">
+                                <a></a>
+                                <ul>
+                                    <!-- <li class="active"><a href="index.php">Home</a></li> -->
+                                    <li><a href="javascript:void(0);" onclick="loadSensorData()" class="login-btn active">Refresh Data</a></li> 
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+
+                <?php
+                    }
+                ?>
+                
                 <a href="javascript:void(0);" onclick="logout()" class="login-btn">Log Out</a>
             </div>
         </header>
@@ -90,12 +116,12 @@
                 ?>
                 <div class="warning" id="warning-container">
                     <span class="closebtn"  onclick="this.parentElement.style.display='none';">&times;</span> 
-                    <strong id="warning-type"></strong><strong> : </strong><span id="warning-msg"></span>
+                    <strong id="warning-type"></strong><strong> @ <span id="warning-time"></span> : </strong><span id="warning-msg"></span>
                 </div> 
 
                 <div class="error" id="error-container">
                     <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-                    <strong>Error! : </strong><span id="error-msg"></span>
+                    <strong>Error! @ <span id="error-time"></span>  : </strong><span id="error-msg"></span>
                 </div> 
 
                 <div class="data-container">
@@ -213,5 +239,6 @@
         <script src="Assets/vendor/aos/aos.js"></script>
         <script src="Assets/js/main.js"></script>
         <script src="Assets/js/homeautomation_information.js"></script>
+
     </body>
 </html>

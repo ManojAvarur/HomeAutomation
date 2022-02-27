@@ -1,0 +1,2 @@
+information.php
+homeautomation_information.js

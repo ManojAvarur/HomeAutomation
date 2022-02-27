@@ -49,13 +49,16 @@
 
     function mail_to( $email_id, $subject, $message ){
         $file = fopen( "../cred.txt", "r" );
+        $username = fgets($file); 
+        $password = fgets($file);
+        // echo $username . " - " . $password;
         $mail = new PHPMailer;
         // $mail->SMTPDebug = SMTP::DEBUG_SERVER;  
         $mail->isSMTP();                                       
         $mail->Host       = 'smtp.gmail.com';                    
         $mail->SMTPAuth   = true;                              
-        $mail->Username   = fgets($file);                       
-        $mail->Password   = fgets($file);  
+        $mail->Username   = $username;                     
+        $mail->Password   = $password;
         $mail->SMTPSecure = 'tls';           //Enable implicit TLS encryption
         $mail->Port       = 587;   
         //Sender
@@ -69,6 +72,7 @@
         if( $mail->send() ){ 
             return true;
         } else {
+            die();
             return false;
             // echo "Message not sent " . $mail->ErrorInfo;
         }
