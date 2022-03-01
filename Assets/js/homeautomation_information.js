@@ -187,9 +187,9 @@ async function pumpRelatedOperations( overRideOperationCount = operationCount ){
 
         operationCount = ( overRideOperationCount == -1 ) ? 0 : 1;
 
-        if( data.pump_take_over_complete_control == 1 ){
+        if( data.pump_take_over_complete_control === 1 && data.pump_manual_overide_request === 1 ){
             fullScreenOperations( true );
-        } else {
+        } else if( data.operation_count === -1 || data.pump_take_over_complete_control === 0 ) {
             fullScreenOperations( false );
         }
 
