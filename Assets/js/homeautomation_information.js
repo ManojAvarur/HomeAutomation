@@ -170,7 +170,7 @@ async function pumpRelatedOperations( overRideOperationCount = operationCount ){
         operation_count : overRideOperationCount
     };
     
-    let response = await fetch("handel_request/user/moto_control.php", { 
+    let response = await fetch("handel_request/user/motor_control.php", { 
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -180,16 +180,29 @@ async function pumpRelatedOperations( overRideOperationCount = operationCount ){
 
     let result = await response.json();
 
-    console.log( result );
+    // console.log( data );
+    // console.log( result );
 
     if( result["success"] && result["affected_rows"] > 0 ){
+
         operationCount = ( overRideOperationCount == -1 ) ? 0 : 1;
+
+        if( data.pump_take_over_complete_control == 1 ){
+            fullScreenOperations( true );
+        } else {
+            fullScreenOperations( false );
+        }
+
         return true;
+
     } else {
+
         if( result["usedby"] ){
             showError(`Pump controled by ' ${result["usedby"]} '.\nPlease try again after some time!` );
         }
+
         return false;
+
     }
 
 }
@@ -388,6 +401,50 @@ function performToggleSwitchAndControlOP(){
         }
     }
 }
+
+function fullScreenOperations( fullScreenState ) {
+
+    if( fullScreenState ){
+
+        if ( document.documentElement.requestFullscreen ) {
+            document.documentElement.requestFullscreen()
+            .catch( () => {
+                return null;
+            });
+        } else if ( document.documentElement.webkitRequestFullscreen ) { /* Safari */
+            document.documentElement.webkitRequestFullscreen()
+            .catch( () => {
+                return null;
+            });
+        } else if ( document.documentElement.msRequestFullscreen ) { /* IE11 */
+            document.documentElement.msRequestFullscreen()
+            .catch( () => {
+                return null;
+            });
+        }
+
+    } else {
+
+        if (document.exitFullscreen) {
+            document.exitFullscreen()
+            .catch( () => {
+                return null;
+            });
+        } else if (document.webkitExitFullscreen) { /* Safari */
+            document.webkitExitFullscreen()
+            .catch( () => {
+                return null;
+            });
+        } else if (document.msExitFullscreen) { /* IE11 */
+            document.msExitFullscreen()
+            .catch( () => {
+                return null;
+            });
+        }
+
+    }
+  
+}   
 
 function elementDisabledError(){
     if( completeControl.disabled || toggleButton.disabled ){

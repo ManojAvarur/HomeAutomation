@@ -38,10 +38,19 @@ CREATE TABLE user_requests (
   pump_manual_overide_request BOOLEAN,
   pump_on_off_status BOOLEAN,
   pump_take_over_complete_control boolean,
-  node_mcu_is_controled_by_user_id varchar(100),
+  node_mcu_is_controled_by_user_id varchar(100) UNIQUE,
+  phpsessid varchar(50) UNIQUE,
   FOREIGN KEY (node_mcu_is_controled_by_user_id) REFERENCES user_login(user_unique_id),
   FOREIGN KEY (unc_node_mcu_unique_id) REFERENCES registered_node_mcu(node_mcu_unique_id)
 );
+
+CREATE TABLE app_version ( 
+  time_stamp DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP , 
+  app_current_version FLOAT(10) NOT NULL , 
+  download_link VARCHAR(100) NOT NULL , 
+  next_app_version_available BOOLEAN NOT NULL DEFAULT '0'
+);
+
 
 -- CREATE TABLE user_nodemcu_com (
 --   time_stamp datetime DEFAULT current_timestamp(),
