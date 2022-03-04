@@ -1,7 +1,9 @@
 -- Check out json data type in mysql
 
 CREATE TABLE registered_node_mcu (
-  node_mcu_unique_id varchar(100) PRIMARY KEY
+  node_mcu_unique_id varchar(100) PRIMARY KEY,
+  belongs_to varchar(15) NOT NULL,
+  unique_code varchar(10) NOT NULL UNIQUE
 );
 
 CREATE TABLE user_login (
@@ -93,3 +95,4 @@ CREATE TABLE app_version (
 
 INSERT INTO node_mcu_data ( unc_node_mcu_unique_id, sump_status, tank_status, motor_status, debug_log  ) 
 VALUES ( "4bb7abf6d3782611339eb6fe6326b96b6b4fca3d6f7e16f33367268806c5512c", -1, -1, -1, "Nothing to display" );
+
