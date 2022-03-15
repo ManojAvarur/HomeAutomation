@@ -27,9 +27,14 @@ var isChromium = !!window.chrome;
 if(  !( ( isChrome ) ||  ( isEdgeChromium ) ||  ( isChromium ) ) ){
     // window.stop();
     // window.exec("stop");
-    document.write("<h1>Browser Not Supported.<br>Supported browsers are Chromium based browsers</h1>");
+    document.write("<h2>Browser Not Supported.<br>Supported browsers are Chromium based browsers</h2>");
     // alert( " test " + ! ( isChrome ) ||  ! ( isEdgeChromium ) || ! ( isChromium ) );
     document.execCommand("Stop");
     window.stop();
 
+}
+
+
+if (location.protocol !== 'https:') {
+    location.replace(`https:${location.href.substring(location.protocol.length)}`);
 }

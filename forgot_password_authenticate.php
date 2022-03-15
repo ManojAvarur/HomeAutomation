@@ -59,7 +59,7 @@
         <link href="Assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
         <link href="Assets/vendor/aos/aos.css" rel="stylesheet">
         <link href="Assets/css/style.css" rel="stylesheet">
-        <script src="Assets/js/browser_check.js"></script>
+        <script src="Assets/js/browser_and_protocol_check.js"></script>
     </head>
 
     <body>

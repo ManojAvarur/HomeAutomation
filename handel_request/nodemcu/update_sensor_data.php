@@ -10,6 +10,8 @@
     if( isset( $_GET["data_ready"] )  && isset( $_GET["pump_manual_override_data"] ) ){
         $rawdata = json_decode( file_get_contents('php://input'), true );
 
+        // date_default_timezone_set($rawdata["tank_status"]);
+
         $timestamp = mysqli_escape_string( $connection, date("Y-m-d H:i:s") );
         $tank_status = mysqli_escape_string( $connection, $rawdata["tank_status"] );
         $sump_status = mysqli_escape_string( $connection, $rawdata["sump_status"] );
