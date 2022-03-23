@@ -2,8 +2,10 @@
     package="com.example.homeato">
    <application
         android:label="homeato"
+        android:usesCleartextTraffic="true"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        
         <activity
             android:name=".MainActivity"
             android:exported="true"
