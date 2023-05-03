@@ -134,9 +134,7 @@ class Tank{
 
             if( ( ( millis() - WATER_CHECK_INTERVAL_ELAPSED_TIME ) >= WATER_CHECK_INTERVAL ) || firstTimeLoad ){
 
-                if( firstTimeLoad ){
-                    WATER_CHECK_INTERVAL_ELAPSED_TIME += WATER_CHECK_INTERVAL;
-                }
+                ( firstTimeLoad )? NULL : WATER_CHECK_INTERVAL_ELAPSED_TIME += WATER_CHECK_INTERVAL;
 
                 do{
                     updateTankDetails( updateFromStart );

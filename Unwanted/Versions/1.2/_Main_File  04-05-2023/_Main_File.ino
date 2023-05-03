@@ -66,4 +66,4 @@ void motor_control( uint8_t value );
 void update_server( int pump_manual_override_data );
 void check_requests_from_server();
 bool get_user_requests_from_server();
-bool setup_wifi( short overall_wait_time, short delay_timer );
+void setup_wifi();
