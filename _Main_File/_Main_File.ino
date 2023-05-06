@@ -6,10 +6,23 @@ String UNIQUE_ID = "4bb7abf6d3782611339eb6fe6326b96b6b4fca3d6f7e16f33367268806c5
 // ------------------ Wi-Fi Settings ------------------
 #include <ESP8266WiFi.h>
 #include <ESP8266HTTPClient.h>
+#include <ESPAsyncTCP.h>
+#include <ESPAsyncWebServer.h>
+
 
 const char* SSID = "";
 const char* PASSWORD = "";
+const char* AP_SSID = "HOMEATO Water Controller";
+const char* AP_PASSWORD = "36066585767";
+
+
+IPAddress local_ip( 192, 168, 0, 1 );
+IPAddress gateway( 192, 168, 0, 1 );
+IPAddress subnet( 255, 255, 255, 0 );
+
 WiFiClient client;
+AsyncWebServer server(80);
+AsyncWebSocket ws("/ws");
 
 // ------------------ Relay Sensor Settings -----------
 #define RELAY_1 D7 // For Water Pump
@@ -67,3 +80,7 @@ void update_server( int pump_manual_override_data );
 void check_requests_from_server();
 bool get_user_requests_from_server();
 bool setup_wifi( short overall_wait_time, short delay_timer );
+void control_wifi_ap( bool status );
+void notifyClients();
+void handleWebSocketMessage(void *arg, uint8_t *data, size_t len);
+void onEvent(AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventType type, void *arg, uint8_t *data, size_t len);

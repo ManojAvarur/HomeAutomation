@@ -65,8 +65,7 @@ class Sump{
 
                 default:
                     currentWaterStatus = -1;
-                    pinAlter().highDigitalPin( SUMP_WL_LOW );
-                    pinAlter().highDigitalPin( SUMP_WL_MID );
+                    pinAlter().highDigitalPins( new int[ SUMP_WL_LOW, SUMP_WL_MID ] );
                 break;
             }
 

@@ -1,4 +1,4 @@
-bool setup_wifi( short overall_wait_time, short delay_timer ){
+bool setup_wifi( short overall_wait_time = 0, short delay_timer = 0 ){
 	Serial.println("Connecting");
 
 	short while_counter = 0;

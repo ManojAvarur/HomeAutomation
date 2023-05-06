@@ -8,6 +8,7 @@ class pinAlter{
             if( changeToInput ){
                 pinMode( pin, INPUT );
             }
+
             if( delayRequired ){
                 delay(200);
             }
@@ -20,6 +21,37 @@ class pinAlter{
             if( changeToInput ){ 
                 pinMode( pin, INPUT );
             }
+
+            if( delayRequired ){
+                delay(200);
+            }
+        }
+
+        static void lowDigitalPins( int pin[], bool changeToInput = false, bool delayRequired = false ){
+            for( int i=0; i < pin.length; i++ ){
+                pinMode( pin[i], OUTPUT );
+                digitalWrite( pin[i], LOW );
+
+                if( changeToInput ){
+                    pinMode( pin[i], INPUT );
+                }
+            }
+
+            if( delayRequired ){
+                delay(200);
+            }
+        }
+
+        static void highDigitalPin( int pin[], bool changeToInput = false, bool delayRequired = false ){
+            for( int i=0; i < pin.length() ; i++ ){
+                pinMode( pin[i], OUTPUT );
+                digitalWrite( pin[i], HIGH );
+
+                if( changeToInput ){
+                    pinMode( pin[i], INPUT );
+                }
+            }
+
             if( delayRequired ){
                 delay(200);
             }

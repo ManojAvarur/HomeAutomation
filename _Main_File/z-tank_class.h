@@ -103,9 +103,7 @@ class Tank{
 
                 default:
                     currentWaterStatus = -1;
-                    pinAlter().highDigitalPin( TANK_WL_LOW );
-                    pinAlter().highDigitalPin( TANK_WL_MID );
-                    pinAlter().highDigitalPin( TANK_WL_HIGH );
+                    pinAlter().highDigitalPins( new int[ TANK_WL_LOW, TANK_WL_MID, TANK_WL_HIGH ] );
                     break;
             
             }
