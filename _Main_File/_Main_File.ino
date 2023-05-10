@@ -10,8 +10,8 @@ String UNIQUE_ID = "4bb7abf6d3782611339eb6fe6326b96b6b4fca3d6f7e16f33367268806c5
 #include <ESPAsyncWebServer.h>
 
 
-const char* SSID = "";
-const char* PASSWORD = "";
+const char* SSID = "POCO";
+const char* PASSWORD = "123456789";
 const char* AP_SSID = "HOMEATO Water Controller";
 const char* AP_PASSWORD = "36066585767";
 
@@ -45,7 +45,7 @@ StaticJsonDocument<512> json_sensor_data_update;
 StaticJsonDocument<384> json_user_request;
 
 // ----------------- DEBUG CODE ---------------------
-bool DEBUG_CODE = true;
+bool DEBUG_CODE = false;
 int DEBUG_DELAY_TIME = 0; // 1 sec
 
 bool DEBUG_CLASS_CODE = false;
@@ -58,6 +58,9 @@ int DEBUG_CLASS_DELAY_TIME = 0; // 1 sec
 
 int USER_REQUEST_CHECK_INTERVAL = 30000;
 unsigned long USER_REQUEST_CHECK_INTERVAL_ELAPSED_TIME = 0L;
+
+int WIFI_RECONNECTION_INTERVAL = 10000;
+unsigned long WIFI_RECONNECTION_INTERVAL_ELAPSED_TIME = 0L;
 
 int TANK_SUMP_WATER_LEVEL_UPDATE_INTERVAL = 20000; 
 
@@ -72,6 +75,7 @@ Tank tankObj = Tank( WL_T_LOW, WL_T_MID, WL_T_HIGH, TANK_SUMP_WATER_LEVEL_UPDATE
 // ------------------ Extras --------------------------
 String DEBUG_LOG = "";
 bool motor_status_changed = false;
+bool wifi_ap_enabled = false;
 
 // ---------------- Function Declaration -----------
 void water_pump();

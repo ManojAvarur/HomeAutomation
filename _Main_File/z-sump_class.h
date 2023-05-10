@@ -65,7 +65,7 @@ class Sump{
 
                 default:
                     currentWaterStatus = -1;
-                    pinAlter().highDigitalPins( new int[ SUMP_WL_LOW, SUMP_WL_MID ] );
+                    pinAlter().highDigitalPin( new int[ SUMP_WL_LOW, SUMP_WL_MID ] );
                 break;
             }
 
@@ -111,7 +111,6 @@ class Sump{
 
             }
 
-            Serial.println("\n\tReturning Sump currentWaterStatus : " + String( currentWaterStatus ) );
             return currentWaterStatus;
 
         }

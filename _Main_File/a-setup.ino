@@ -5,9 +5,7 @@ void setup(){
     WiFi.mode(WIFI_AP_STA);
     WiFi.setAutoReconnect( false );
 
-    if( !setup_wifi( 5, 1 ) ){
-        
-    }
+    setup_wifi( 6, 1 );
     
     // ----- Motor Setup ------
     pinMode(RELAY_1, OUTPUT);

@@ -28,7 +28,7 @@ class pinAlter{
         }
 
         static void lowDigitalPins( int pin[], bool changeToInput = false, bool delayRequired = false ){
-            for( int i=0; i < pin.length; i++ ){
+            for( int i=0; i < sizeof( pin ); i++ ){
                 pinMode( pin[i], OUTPUT );
                 digitalWrite( pin[i], LOW );
 
@@ -43,7 +43,7 @@ class pinAlter{
         }
 
         static void highDigitalPin( int pin[], bool changeToInput = false, bool delayRequired = false ){
-            for( int i=0; i < pin.length() ; i++ ){
+            for( int i=0; i < sizeof( pin ) ; i++ ){
                 pinMode( pin[i], OUTPUT );
                 digitalWrite( pin[i], HIGH );
 

@@ -103,7 +103,7 @@ class Tank{
 
                 default:
                     currentWaterStatus = -1;
-                    pinAlter().highDigitalPins( new int[ TANK_WL_LOW, TANK_WL_MID, TANK_WL_HIGH ] );
+                    pinAlter().highDigitalPin( new int[ TANK_WL_LOW, TANK_WL_MID, TANK_WL_HIGH ] );
                     break;
             
             }
@@ -149,10 +149,6 @@ class Tank{
 
             }
             
-            // Serial.println("\n\tReturning Tank after : " + String( ( millis() - WATER_CHECK_INTERVAL_ELAPSED_TIME ) ) + " >= " + String( WATER_CHECK_INTERVAL )  );
-            // Serial.println("\n\t WATER_CHECK_INTERVAL_ELAPSED_TIME : " + String( WATER_CHECK_INTERVAL_ELAPSED_TIME ) );
-            // delay( DEBUG_DELAY_TIME );
-            Serial.println("\n\tReturning Tank currentWaterStatus : " + String( currentWaterStatus ) );
             return currentWaterStatus;
             
             

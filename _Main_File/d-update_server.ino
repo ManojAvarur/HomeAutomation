@@ -1,5 +1,4 @@
 void update_server( int pump_manual_override_data ){
-    Serial.println("Inside update server");
 
     if( tankObj.isDataChanged() || sumpObj.isDataChanged() || motor_status_changed || ( pump_manual_override_data == 1 ) ){
         
@@ -47,7 +46,6 @@ void update_server( int pump_manual_override_data ){
             motor_status_changed = false;
             tankObj.setIsChangedToFalse();
             sumpObj.setIsChangedToFalse();
-            Serial.println("\n\t\t\t tankObj.isDataChanged() : " + String( tankObj.isDataChanged() ) );
         }
     }
 }

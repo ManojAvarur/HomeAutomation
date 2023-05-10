@@ -19,8 +19,6 @@ void check_requests_from_server(){
 
             while( json_user_request["pump_manual_overide_request"].as<String>().toInt() == 1  && json_user_request["execute_status"].as<String>().toInt() == 1 ){
 
-                Serial.println("\n\nMillis : " + String( millis() ) + "\n USER_REQUEST_CHECK_INTERVAL_ELAPSED_TIME =" + String( USER_REQUEST_CHECK_INTERVAL_ELAPSED_TIME ) );
-
                 if( json_user_request["pump_take_over_complete_control"].as<String>().toInt() == 1 ) {
                     
                     motor_control( ( json_user_request["pump_on_off_status"].as<String>().toInt() == 1 )? MOTOR_ON : MOTOR_OFF );

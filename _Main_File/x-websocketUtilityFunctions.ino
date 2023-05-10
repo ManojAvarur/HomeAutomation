@@ -8,7 +8,7 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
     if( info->final && info->index == 0 && info->len == len && info->opcode == WS_TEXT ){
         data[len] = 0;
         if( strcmp( (char*)data, "toggle" ) == 0){
-            ledState = !ledState;
+            motor_control( !digitalRead( RELAY_1 ) );
             notifyClients();
         }
     }
