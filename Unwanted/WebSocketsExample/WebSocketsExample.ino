@@ -3,11 +3,8 @@
 #include <ESPAsyncWebServer.h>
 
 // Replace with your network credentials
-const char* ssid = "POCO F1";
-const char* password = "123456789";
-
-bool ledState = 0;
-const int ledPin = 2;
+const char* ssid = "Madhura";
+const char* password = "Network_Bridge";
 
 // Create AsyncWebServer object on port 80
 AsyncWebServer server(80);
@@ -17,83 +14,9 @@ const char index_html[] PROGMEM = R"rawliteral(
     <!DOCTYPE HTML><html>
     <head>
       <title>ESP Web Server</title>
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <style>
-      html {
-        font-family: Arial, Helvetica, sans-serif;
-        text-align: center;
-      }
-      h1 {
-        font-size: 1.8rem;
-        color: white;
-      }
-      h2{
-        font-size: 1.5rem;
-        font-weight: bold;
-        color: #143642;
-      }
-      .topnav {
-        overflow: hidden;
-        background-color: #143642;
-      }
-      body {
-        margin: 0;
-      }
-      .content {
-        padding: 30px;
-        max-width: 600px;
-        margin: 0 auto;
-      }
-      .card {
-        background-color: #F8F7F9;;
-        box-shadow: 2px 2px 12px 1px rgba(140,140,140,.5);
-        padding-top:10px;
-        padding-bottom:20px;
-      }
-      .button {
-        padding: 15px 50px;
-        font-size: 24px;
-        text-align: center;
-        outline: none;
-        color: #fff;
-        background-color: #0f8b8d;
-        border: none;
-        border-radius: 5px;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        -webkit-tap-highlight-color: rgba(0,0,0,0);
-      }
-      /*.button:hover {background-color: #0f8b8d}*/
-      .button:active {
-        background-color: #0f8b8d;
-        box-shadow: 2 2px #CDCDCD;
-        transform: translateY(2px);
-      }
-      .state {
-        font-size: 1.5rem;
-        color:#8c8c8c;
-        font-weight: bold;
-      }
-      </style>
-    <title>ESP Web Server</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="data:,">
     </head>
     <body>
-      <div class="topnav">
-        <h1>ESP WebSocket Server</h1>
-      </div>
-      <div class="content">
-        <div class="card">
-          <h2>Output - GPIO 2</h2>
-          <p class="state">state: <span id="state">%STATE%</span></p>
-          <p><button id="button" class="button">Toggle</button></p>
-        </div>
-      </div>
+      <h1 id='state'>None</h1>
     <script>
       var gateway = `ws://${window.location.hostname}/ws`;
       var websocket;
@@ -113,18 +36,10 @@ const char index_html[] PROGMEM = R"rawliteral(
         setTimeout(initWebSocket, 2000);
       }
       function onMessage(event) {
-        var state;
-        if (event.data == "1"){
-          state = "ON";
-        }
-        else{
-          state = "OFF";
-        }
-        document.getElementById('state').innerHTML = state;
+        document.getElementById('state').innerHTML = event.data;
       }
       function onLoad(event) {
         initWebSocket();
-        initButton();
       }
       function initButton() {
         document.getElementById('button').addEventListener('click', toggle);
@@ -135,10 +50,10 @@ const char index_html[] PROGMEM = R"rawliteral(
     </script>
     </body>
     </html>
-)rawliteral";
+";)rawliteral";
 
-void notifyClients() {
-  ws.textAll(String(ledState));
+void notifyClients( String data = "c" ) {
+  ws.textAll( data );
 }
 
 void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
@@ -147,7 +62,6 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
   if (info->final && info->index == 0 && info->len == len && info->opcode == WS_TEXT) {
     data[len] = 0;
     if (strcmp((char*)data, "toggle") == 0) {
-      ledState = !ledState;
       notifyClients();
     }
   }
@@ -176,41 +90,24 @@ void initWebSocket() {
   server.addHandler(&ws);
 }
 
-String processor(const String& var){
-  Serial.println(var);
-  if(var == "STATE"){
-    if (ledState){
-      return "ON";
-    }
-    else{
-      return "OFF";
-    }
-  }
-  return String();
-}
-
 void setup(){
   // Serial port for debugging purposes
   Serial.begin(115200);
-
-  pinMode(ledPin, OUTPUT);
-  digitalWrite(ledPin, LOW);
   
   // Connect to Wi-Fi
   WiFi.mode(WIFI_AP_STA);
   WiFi.setAutoReconnect( false );
-  Serial.println( "Soft AP IP" + WiFi.softAPIP().toString()  );
 
-  // WiFi.begin( ssid, password );
+  WiFi.begin( ssid, password );
 
-  // while( WiFi.status() != WL_CONNECTED ){
-  //   Serial.print(".");
-  //   delay(1000);
-  // }
+  while( WiFi.status() != WL_CONNECTED ){
+    Serial.print(".");
+    delay(1000);
+  }
   // Soft AP
-  WiFi.softAPConfig( IPAddress(192, 168, 0, 1), IPAddress(192, 168, 0, 1), IPAddress(255, 255, 255, 0));
-  WiFi.softAP("Test");  
-  Serial.println( WiFi.softAPIP() );
+  // WiFi.softAPConfig( IPAddress(192, 168, 0, 1), IPAddress(192, 168, 0, 1), IPAddress(255, 255, 255, 0));
+  // WiFi.softAP("Test");  
+  // Serial.println( WiFi.softAPIP() );
 
   // Print ESP Local IP Address
   Serial.println(WiFi.localIP());
@@ -219,7 +116,7 @@ void setup(){
 
   // Route for root / web page
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send_P(200, "text/html", index_html, processor);
+    request->send_P(200, "text/html", index_html );
   });
 
   // Start server
@@ -229,10 +126,259 @@ void setup(){
 }
 
 void loop() {
+  String randomNumber = String( random(500) );
+  Serial.println(randomNumber);
+  notifyClients( randomNumber );
   ws.cleanupClients();
-  digitalWrite(ledPin, ledState);
-
-  Serial.println( "Clients length : " + String( ws.getClients().length() ) );
-
   delay(1000);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+// #include <ESP8266WiFi.h>
+// #include <ESPAsyncTCP.h>
+// #include <ESPAsyncWebServer.h>
+
+// // Replace with your network credentials
+// const char* ssid = "Madhura";
+// const char* password = "Network_Bridge";
+
+// bool ledState = 0;
+// const int ledPin = 2;
+
+// // Create AsyncWebServer object on port 80
+// AsyncWebServer server(80);
+// AsyncWebSocket ws("/ws");
+
+// const char index_html[] PROGMEM = R"rawliteral(
+//     <!DOCTYPE HTML><html>
+//     <head>
+//       <title>ESP Web Server</title>
+//       <meta name="viewport" content="width=device-width, initial-scale=1">
+//       <style>
+//       html {
+//         font-family: Arial, Helvetica, sans-serif;
+//         text-align: center;
+//       }
+//       h1 {
+//         font-size: 1.8rem;
+//         color: white;
+//       }
+//       h2{
+//         font-size: 1.5rem;
+//         font-weight: bold;
+//         color: #143642;
+//       }
+//       .topnav {
+//         overflow: hidden;
+//         background-color: #143642;
+//       }
+//       body {
+//         margin: 0;
+//       }
+//       .content {
+//         padding: 30px;
+//         max-width: 600px;
+//         margin: 0 auto;
+//       }
+//       .card {
+//         background-color: #F8F7F9;;
+//         box-shadow: 2px 2px 12px 1px rgba(140,140,140,.5);
+//         padding-top:10px;
+//         padding-bottom:20px;
+//       }
+//       .button {
+//         padding: 15px 50px;
+//         font-size: 24px;
+//         text-align: center;
+//         outline: none;
+//         color: #fff;
+//         background-color: #0f8b8d;
+//         border: none;
+//         border-radius: 5px;
+//         -webkit-touch-callout: none;
+//         -webkit-user-select: none;
+//         -khtml-user-select: none;
+//         -moz-user-select: none;
+//         -ms-user-select: none;
+//         user-select: none;
+//         -webkit-tap-highlight-color: rgba(0,0,0,0);
+//       }
+//       /*.button:hover {background-color: #0f8b8d}*/
+//       .button:active {
+//         background-color: #0f8b8d;
+//         box-shadow: 2 2px #CDCDCD;
+//         transform: translateY(2px);
+//       }
+//       .state {
+//         font-size: 1.5rem;
+//         color:#8c8c8c;
+//         font-weight: bold;
+//       }
+//       </style>
+//     <title>ESP Web Server</title>
+//     <meta name="viewport" content="width=device-width, initial-scale=1">
+//     <link rel="icon" href="data:,">
+//     </head>
+//     <body>
+//       <div class="topnav">
+//         <h1>ESP WebSocket Server</h1>
+//       </div>
+//       <div class="content">
+//         <div class="card">
+//           <h2>Output - GPIO 2</h2>
+//           <p class="state">state: <span id="state">%STATE%</span></p>
+//           <p><button id="button" class="button">Toggle</button></p>
+//         </div>
+//       </div>
+//     <script>
+//       var gateway = `ws://${window.location.hostname}/ws`;
+//       var websocket;
+//       window.addEventListener('load', onLoad);
+//       function initWebSocket() {
+//         console.log('Trying to open a WebSocket connection...');
+//         websocket = new WebSocket(gateway);
+//         websocket.onopen    = onOpen;
+//         websocket.onclose   = onClose;
+//         websocket.onmessage = onMessage; // <-- add this line
+//       }
+//       function onOpen(event) {
+//         console.log('Connection opened');
+//       }
+//       function onClose(event) {
+//         console.log('Connection closed');
+//         setTimeout(initWebSocket, 2000);
+//       }
+//       function onMessage(event) {
+//         var state;
+//         if (event.data == "1"){
+//           state = "ON";
+//         }
+//         else{
+//           state = "OFF";
+//         }
+//         document.getElementById('state').innerHTML = state;
+//       }
+//       function onLoad(event) {
+//         initWebSocket();
+//         initButton();
+//       }
+//       function initButton() {
+//         document.getElementById('button').addEventListener('click', toggle);
+//       }
+//       function toggle(){
+//         websocket.send('toggle');
+//       }
+//     </script>
+//     </body>
+//     </html>
+// )rawliteral";
+
+// void notifyClients() {
+//   ws.textAll(String(ledState));
+// }
+
+// void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
+//   AwsFrameInfo *info = (AwsFrameInfo*)arg;
+//   Serial.println( (char*)data );
+//   if (info->final && info->index == 0 && info->len == len && info->opcode == WS_TEXT) {
+//     data[len] = 0;
+//     if (strcmp((char*)data, "toggle") == 0) {
+//       ledState = !ledState;
+//       notifyClients();
+//     }
+//   }
+// }
+
+// void onEvent(AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventType type,
+//              void *arg, uint8_t *data, size_t len) {
+//     switch (type) {
+//       case WS_EVT_CONNECT:
+//         Serial.printf("WebSocket client #%u connected from %s\n", client->id(), client->remoteIP().toString().c_str());
+//         break;
+//       case WS_EVT_DISCONNECT:
+//         Serial.printf("WebSocket client #%u disconnected\n", client->id());
+//         break;
+//       case WS_EVT_DATA:
+//         handleWebSocketMessage(arg, data, len);
+//         break;
+//       case WS_EVT_PONG:
+//       case WS_EVT_ERROR:
+//         break;
+//   }
+// }
+
+// void initWebSocket() {
+//   ws.onEvent(onEvent);
+//   server.addHandler(&ws);
+// }
+
+// String processor(const String& var){
+//   Serial.println(var);
+//   if(var == "STATE"){
+//     if (ledState){
+//       return "ON";
+//     }
+//     else{
+//       return "OFF";
+//     }
+//   }
+//   return String();
+// }
+
+// void setup(){
+//   // Serial port for debugging purposes
+//   Serial.begin(115200);
+
+//   pinMode(ledPin, OUTPUT);
+//   digitalWrite(ledPin, LOW);
+  
+//   // Connect to Wi-Fi
+//   WiFi.mode(WIFI_AP_STA);
+//   WiFi.setAutoReconnect( false );
+//   Serial.println( "Soft AP IP" + WiFi.softAPIP().toString()  );
+
+//   // WiFi.begin( ssid, password );
+
+//   // while( WiFi.status() != WL_CONNECTED ){
+//   //   Serial.print(".");
+//   //   delay(1000);
+//   // }
+//   // Soft AP
+//   WiFi.softAPConfig( IPAddress(192, 168, 0, 1), IPAddress(192, 168, 0, 1), IPAddress(255, 255, 255, 0));
+//   WiFi.softAP("Test");  
+//   Serial.println( WiFi.softAPIP() );
+
+//   // Print ESP Local IP Address
+//   Serial.println(WiFi.localIP());
+
+//   initWebSocket();
+
+//   // Route for root / web page
+//   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
+//     request->send_P(200, "text/html", index_html, processor);
+//   });
+
+//   // Start server
+//   server.begin();
+
+//   ws.getClients();
+// }
+
+// void loop() {
+//   ws.cleanupClients();
+//   digitalWrite(ledPin, ledState);
+
+//   Serial.println( "Clients length : " + String( ws.getClients().length() ) );
+
+//   delay(1000);
+// }

@@ -13,11 +13,11 @@ void setup(){
 
     // Route for root / web page
     server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
-        request->send_P(200, "text/html", "<h1 style='text-align: center;'>Page is still being developed</h1>" );
+        request->send_P(200, "text/html", "<h1 style='text-align: center;'>Page is still being developed</h1><script>var gateway = `ws://${window.location.hostname}/ws`;var websocket;window.addEventListener('load', onLoad);function initWebSocket() {  console.log('Trying to open a WebSocket connection...');  websocket = new WebSocket(gateway);  websocket.onopen    = onOpen;  websocket.onclose   = onClose;  websocket.onmessage = onMessage; }function onOpen(event) {  console.log('Connection opened');}function onClose(event) {  console.log('Connection closed');  setTimeout(initWebSocket, 2000);}function onMessage(event) {  document.getElementsByTagName('h1').innerHTML = event.data;}function onLoad(event) {  initWebSocket();}</script>" );
     });
     
     server.onNotFound([](AsyncWebServerRequest *request){
-        request->send_P(200, "text/html", "<h1 style='text-align: center;'>Page is still being developed</h1>" );
+        request->send_P(200, "text/html", "<h1 style='text-align: center;'>Page is still being developed</h1> <script>var gateway = `ws://${window.location.hostname}/ws`;var websocket;window.addEventListener('load', onLoad);function initWebSocket() {  console.log('Trying to open a WebSocket connection...');  websocket = new WebSocket(gateway);  websocket.onopen    = onOpen;  websocket.onclose   = onClose;  websocket.onmessage = onMessage; }function onOpen(event) {  console.log('Connection opened');}function onClose(event) {  console.log('Connection closed');  setTimeout(initWebSocket, 2000);}function onMessage(event) {  document.getElementsByTagName('h1').innerHTML = event.data;}function onLoad(event) {  initWebSocket();}</script>" );
     });
 
     // ----- Server Configuration ----

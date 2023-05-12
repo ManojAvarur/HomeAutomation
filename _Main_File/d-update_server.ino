@@ -47,5 +47,7 @@ void update_server( int pump_manual_override_data ){
             tankObj.setIsChangedToFalse();
             sumpObj.setIsChangedToFalse();
         }
+
+        notifyClients();
     }
 }

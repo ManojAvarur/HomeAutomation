@@ -17,10 +17,12 @@ void control_wifi_ap( bool status ){
         Serial.println("WiFi AP Enabled");
         wifi_ap_enabled = true;
     } else if( !status ) {
+        Serial.println("ws.getClients().length() <= " + String( ws.getClients().length() ) + " && " + String( wifi_ap_enabled ) );
         if( ws.getClients().length() <= 0 && wifi_ap_enabled ){
             wifi_ap_enabled = false;
+            WiFi.enableAP( false );
             Serial.println("WiFi AP Disabled");
-            WiFi.softAPdisconnect();
+            // WiFi.softAPdisconnect( true );
         }
     }
 }
