@@ -7,13 +7,11 @@
     <title>HOMEATO</title>
 
     <style>
-
         /* 
         * Green: #97cb6a
         * Dark Green: #698b49
         * Black: #040404 
         */
-
         *{
            margin: 0;
            padding: 0;
@@ -130,15 +128,6 @@
             padding: 0.75rem;
             width: 24vw;
             text-align: center;
-        }
-
-        .circle{
-            height: 25px;
-            width: 25px;
-            display: inline-block;
-            border-radius: 100vw;
-            margin: 0.75rem;
-            padding: 0.75rem;
         }
 
         #Sensor-Data .Debug-log,
@@ -325,7 +314,10 @@
         .green_circle{
             height: 25px;
             width: 25px;
-            border-radius: 50%;
+            display: inline-block;
+            border-radius: 100vw;
+            margin: 0.75rem;
+            padding: 0.75rem;
             display: inline-block;
             transition: ease-in;
 
@@ -336,14 +328,7 @@
         } 
 
         .gradient_circle{
-            /* background-color: rgb(170, 170, 170); */
-            background:  linear-gradient( 217deg, rgba(255, 0, 0), rgba(0, 128, 0, .8) 70.71% ),
-                            linear-gradient( 127deg, rgba(255, 255, 0), rgba(255, 166, 0, .8) 70.71% ),
-                            linear-gradient( 336deg, rgba(255, 166, 0), rgba(255, 0, 0, .8) 70.71% );
-
-            /* background: linear-gradient(217deg, rgba(255,0,0,.8), rgba(255,0,0,0) 70.71%), linear-gradient(127deg, rgba(0,255,0,.8), rgba(0,255,0,0) 70.71%), linear-gradient(336deg, rgba(0,0,255,.8), rgba(0,0,255,0) 70.71%); */
-            /* background-color: linear-gradient( ); */
-            /* background-image: linear-gradient(217deg, rgba(255,0,0,.8), rgba(255,0,0,0) 70.71%), linear-gradient(127deg, rgba(0,255,0,.8), rgba(0,255,0,0) 70.71%), linear-gradient(336deg, rgba(0,0,255,.8), rgba(0,0,255,0) 70.71%); */
+            background:  linear-gradient( 217deg, rgba(255, 0, 0), rgba(0, 128, 0, .8) 70.71% ),linear-gradient( 127deg, rgba(255, 255, 0), rgba(255, 166, 0, .8) 70.71% ), linear-gradient( 336deg, rgba(255, 166, 0), rgba(255, 0, 0, .8) 70.71% );
         }
 
         .red_circle{
@@ -361,9 +346,80 @@
         .green_circle{
             background-color: rgb(0, 128, 0);
         }
-        
-
     </style>
+
+    <script>
+        const connectionUrl = `ws://${window.location.hostname}:81/`;
+        let ws = {}; //= WebSocket(connectionUrl);
+
+        const tankStatus = document.getElementById(`tank-status`);
+        const sumpStatus = document.getElementById(`sump-status`);
+        const motorStatus = document.getElementById(`motor-status`);
+        const debugLog = document.getElementById(`debug-log`);
+        const manualOverideCheckbox = document.getElementById(`manual-overide-checkbox`);
+        const manualOverideController = document.getElementById(`manual-overide-controller`);
+
+        ws.onopen = function(){
+            fetch(`/initial-message`)
+            .then( res => {
+                manualOverideCheckbox.disabled = false;
+            })
+            .catch( error => {
+                console.error(`Error occurred while initiaing the first message`);
+            })
+            console.log(`Connection establised`);
+        }
+
+        ws.onmessage = function( event ){
+            const levelIndicators = { 
+                '-1': 'gradient_circle', 
+                '0': 'red_circle', 
+                '1': 'yellow_circle', 
+                '2': 'green_circle', 
+                'motor': { 
+                    '-1': 'gradient_circle', 
+                    '0': 'red_circle', 
+                    '1': 'green_circle' 
+                } 
+            };
+
+            tankStatus.className = levelIndicators[ event.status.tank ];
+            sumpStatus.className = levelIndicators[ event.status.sump ];
+            motorStatus.className = levelIndicators.motor[ event.status.motor.displayState ];
+            
+            if( event.debug.display ){
+                debugLog.style.display = `block`;
+                debugLog.children[1].innerText = event.debug.log;
+            } else {
+                debugLog.style.display = `none`;
+                debugLog.children[1].innerText = `NO DEBUG LOG TO DISPLAY`;
+            }
+
+            const isMotorBeingControled = event.status.motor.isControlled;
+
+            manualOverideCheckbox.checked = isMotorBeingControled;
+
+            manualOverideController.disabled = !isMotorBeingControled;
+            manualOverideController.parentElement.className = ( isMotorBeingControled )? `toggle` : `toggle isDisabled`;
+            manualOverideController.checked = event.status.motor.state;
+        }
+    
+        ws.onerror = function( event ){
+            console.error(`Error occurred in sending/fetching data through sockets`);
+        }
+
+        ws.onclose = function(){
+            console.log(`Connection closed`);
+            setInterval( () => {
+                ws = WebSocket(connectionUrl);
+            }, 2000 );
+        }
+
+        function motorController( event ){
+            event.target.id
+        }
+    
+    </script>
 </head>
 
 <body onload="">
@@ -386,27 +442,27 @@
             <div class="grid-items">
                 <div class="grid">
                     <h2>Tank Status</h2>
-                    <span class="circle gradient_circle"></span>
+                    <span class="gradient_circle" id="tank-status"></span>
                 </div>
                 <div class="grid">
                     <h2>Sump Status</h2>
-                    <span class="circle yellow_circle"></span>
+                    <span class="yellow_circle" id="sump-status"></span>
                 </div>
                 <div class="grid">
                     <h2>Motor Status</h2>
-                    <span class="circle gradient_circle"></span>
+                    <span class="gradient_circle" id="motor-status"></span>
                 </div>
             </div>
 
-            <div class="Debug-log">
+            <div class="Debug-log" id="debug-log" style="display: none;">
                 <h2>Debug Log</h2>
-                <p>Tank level low turning off the pump because low water in sump</p>
+                <p>NO DEBUG LOG TO DISPLAY</p>
             </div>
 
         </div>
     </section>
 
-    <section id="Manual-Pump" class="mxy-2" style="display: none;">
+    <section id="Manual-Pump" class="mxy-2">
         <div class="container">
             <div class="title">
                 <h4>Pump</h4>
@@ -416,13 +472,13 @@
         <div class="Pump-override">
                 <h2>Manual Pump Override</h2>
                 <h3>
-                    <label for="manual-overide"><strong>Pump Manual Overide&nbsp;:&nbsp;</strong></label>
-                    <input type="checkbox" class="check-input" id="manual-overide">
+                    <label for="manual-overide-checkbox"><strong>Pump Manual Overide&nbsp;:&nbsp;</strong></label>
+                    <input type="checkbox" class="check-input" id="manual-overide-checkbox" onchange="motorController(event)" disabled>
                 </h3>
 
             <div class="mxy1">
-                <label class="toggle">
-                    <input class="toggle-input" type="checkbox" />
+                <label class="toggle isDisabled">
+                    <input class="toggle-input" type="checkbox" id="manual-overide-controller" onchange="motorController(event)" disabled/>
                     <span class="toggle-label" data-off="OFF" data-on="ON"></span>
                     <span class="toggle-handle"></span>
                 </label>
