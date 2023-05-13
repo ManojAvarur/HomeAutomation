@@ -8,9 +8,10 @@
 
     <style>
 
-        /* Light Green: #97cb6a
-           Dark Green: #698b49
-           Black: #040404 
+        /* 
+        * Green: #97cb6a
+        * Dark Green: #698b49
+        * Black: #040404 
         */
 
         *{
@@ -27,6 +28,7 @@
 
         h1, h2, h3, h4, h5, h6{
             text-transform: capitalize;
+            margin-bottom: 0.75rem;
         }
 
         .container{
@@ -54,7 +56,7 @@
 
         .btn {
             border: 2.5px solid #698b49;
-            border-radius: 10px;
+            border-radius: 5px;
             padding: 0.5rem 1rem;
             margin: 0.75rem;
             display: inline-block;
@@ -64,9 +66,9 @@
 
         .btn:hover,     
         .btn:focus-visible{
-            background: black;
-            color: white;
-            border: 2.5px solid white;
+            background: #698b49;
+            color: #040404 ;
+            border: 2.5px solid #698b49 ;
         }
 
         .logo{
@@ -95,16 +97,16 @@
             color: #698b49;
         }
 
-        #Sensor-Data .title h1{
+        .title h1{
             font-size: 1.75rem;
             text-transform: uppercase;
         }
 
-        #Sensor-Data .title h4{
+        .title h4{
             text-transform: uppercase;
         }
 
-        #Sensor-Data h4::after{
+        h4::after{
             content: "";
             width: 7rem;
             height: 0.12rem;
@@ -130,17 +132,17 @@
             text-align: center;
         }
 
-        .red-circle{
+        .circle{
             height: 25px;
             width: 25px;
             display: inline-block;
-            background-color: #698b49;
             border-radius: 100vw;
             margin: 0.75rem;
             padding: 0.75rem;
         }
 
-        #Sensor-Data .Debug-log{
+        #Sensor-Data .Debug-log,
+        #Manual-Pump .Pump-override{
             border: 1px solid rgba(0, 0, 0, 0.2);
             border-radius: 10px;
             margin: 2.5rem;
@@ -150,7 +152,8 @@
         }
 
         #Sensor-Data .container .grid-items .grid h2::after,
-        .Debug-log h2:after{
+        .Debug-log h2:after,
+        #Manual-Pump .Pump-override h2::after{
             content: "";
             width: 80px;
             height: 10px;
@@ -159,6 +162,112 @@
             margin-bottom: 20px;
             border-bottom: 1.5px solid #698b49;
         }
+
+        .toggle {
+            position: relative;
+            display: block;
+            width: 95px;
+            height: 32px;
+            padding: 3px;
+            margin: 0.75rem auto;
+            border-radius: 50px;
+            cursor: pointer;
+        }
+
+        .toggle-input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+        }
+
+        .toggle-label {
+            position: relative;
+            display: block;
+            height: inherit;
+            font-size: .9rem;
+            background: #882525;
+            border-radius: inherit;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.12), inset 0 0 3px
+            rgba(0, 0, 0, 0.15);
+        }
+
+        .toggle-label:before,
+        .toggle-label:after {
+            position: absolute;
+            top: 50%;
+            left: 38%;
+            color: black;
+            margin-top: -.5em;
+            line-height: .855;
+        }
+
+        .toggle-label:before {
+            content: attr(data-off);
+            /* right: 11px; */
+            color: #fff;
+            text-shadow: 0 1px rgba(0, 0, 0, 0.2);
+        }
+
+        .toggle-label:after {
+            content: attr(data-on);
+            /* left: 11px; */
+            color: #fff;
+            text-shadow: 0 1px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+        }
+
+        .toggle-input:checked~.toggle-label {
+            background: #698b49;
+        }
+
+        .toggle-input:checked~.toggle-label:before {
+            opacity: 0;
+        }
+
+        .toggle-input:checked~.toggle-label:after {
+            opacity: 1;
+        }
+
+        .toggle-handle {
+            position: absolute;
+            top: 6.5px;
+            left: 6.5px;
+            width: 25px;
+            height: 25px;
+            background: linear-gradient(to bottom, #FFFFFF 40%, #f0f0f0);
+            border-radius: 50%;
+        }
+
+        .toggle-handle:before {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin: -6px 0 0 -6px;
+            width: 16px;
+            height: 16px;
+        }
+        .toggle-input:checked~.toggle-handle {
+            left: 62px;
+            box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Transition*/
+        .toggle-label,
+        .toggle-handle {
+            transition: All 0.3s ease;
+            -webkit-transition: All 0.3s ease;
+            -moz-transition: All 0.3s ease;
+            -o-transition: All 0.3s ease;
+        }
+
+        .isDisabled {
+            color: rgb(152, 143, 129);
+            cursor: not-allowed;
+            opacity: 0.5;
+            text-decoration: none;
+        }
+
 
 
         @media ( max-width: 900px ) {
@@ -198,12 +307,66 @@
             #Sensor-Data .Debug-log{
                 margin: 0;
             }
-        }   
+        }  
+
+        @keyframes rotate-s-loader {
+            from {
+              transform: rotate(0);
+            }
+            to {
+              transform: rotate(360deg);
+            }
+          }
+        
+        .gradient_circle,
+        .red_circle,
+        .yellow_circle,
+        .orange_circle,
+        .green_circle{
+            height: 25px;
+            width: 25px;
+            border-radius: 50%;
+            display: inline-block;
+            transition: ease-in;
+
+            animation-name: rotate-s-loader;
+            animation-iteration-count: infinite;
+            animation-duration: 1s;
+            animation-timing-function: linear;
+        } 
+
+        .gradient_circle{
+            /* background-color: rgb(170, 170, 170); */
+            background:  linear-gradient( 217deg, rgba(255, 0, 0), rgba(0, 128, 0, .8) 70.71% ),
+                            linear-gradient( 127deg, rgba(255, 255, 0), rgba(255, 166, 0, .8) 70.71% ),
+                            linear-gradient( 336deg, rgba(255, 166, 0), rgba(255, 0, 0, .8) 70.71% );
+
+            /* background: linear-gradient(217deg, rgba(255,0,0,.8), rgba(255,0,0,0) 70.71%), linear-gradient(127deg, rgba(0,255,0,.8), rgba(0,255,0,0) 70.71%), linear-gradient(336deg, rgba(0,0,255,.8), rgba(0,0,255,0) 70.71%); */
+            /* background-color: linear-gradient( ); */
+            /* background-image: linear-gradient(217deg, rgba(255,0,0,.8), rgba(255,0,0,0) 70.71%), linear-gradient(127deg, rgba(0,255,0,.8), rgba(0,255,0,0) 70.71%), linear-gradient(336deg, rgba(0,0,255,.8), rgba(0,0,255,0) 70.71%); */
+        }
+
+        .red_circle{
+            background-color: rgb(255, 0, 0);
+        }
+
+        .yellow_circle{
+            background-color: rgb(255, 255, 0);
+        }
+
+        .orange_circle{
+            background-color: rgb(255, 166, 0);
+        }
+
+        .green_circle{
+            background-color: rgb(0, 128, 0);
+        }
+        
 
     </style>
 </head>
 
-<body>
+<body onload="">
     <header>
         <nav>
             <div class="container">
@@ -223,15 +386,15 @@
             <div class="grid-items">
                 <div class="grid">
                     <h2>Tank Status</h2>
-                    <span class="red-circle"></span>
+                    <span class="circle gradient_circle"></span>
                 </div>
                 <div class="grid">
-                    <h2>Pump Status</h2>
-                    <span class="red-circle"></span>
+                    <h2>Sump Status</h2>
+                    <span class="circle yellow_circle"></span>
                 </div>
                 <div class="grid">
                     <h2>Motor Status</h2>
-                    <span class="red-circle"></span>
+                    <span class="circle gradient_circle"></span>
                 </div>
             </div>
 
@@ -241,10 +404,35 @@
             </div>
 
         </div>
-       
-        
-        
+    </section>
+
+    <section id="Manual-Pump" class="mxy-2" style="display: none;">
+        <div class="container">
+            <div class="title">
+                <h4>Pump</h4>
+                <h1>Pump Control</h3>
+            </div>
+
+        <div class="Pump-override">
+                <h2>Manual Pump Override</h2>
+                <h3>
+                    <label for="manual-overide"><strong>Pump Manual Overide&nbsp;:&nbsp;</strong></label>
+                    <input type="checkbox" class="check-input" id="manual-overide">
+                </h3>
+
+            <div class="mxy1">
+                <label class="toggle">
+                    <input class="toggle-input" type="checkbox" />
+                    <span class="toggle-label" data-off="OFF" data-on="ON"></span>
+                    <span class="toggle-handle"></span>
+                </label>
+            </div>
+        </div>
+
+
     </section>
     
 </body>
 </html>
+
+

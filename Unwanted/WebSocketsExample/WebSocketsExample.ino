@@ -34,7 +34,7 @@ String WebPage = "\
 		function start() { \
 			Socket = new WebSocket('ws://' + window.location.hostname + ':81/'); \
 			Socket.onmessage = function (evt) { \
-				document.getElementById('rxConsole').value += evt.data; \
+				document.getElementById('rxConsole').innerHTML += '<br>' + evt.data; \
 			} \
 		} \
 		\
