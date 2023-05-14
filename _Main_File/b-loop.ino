@@ -1,4 +1,6 @@
 void loop(){
+    loopMultipleTimes();
+
     water_pump();
 
     if( WiFi.status() == WL_CONNECTED ){
@@ -15,9 +17,8 @@ void loop(){
     
     delay(1000);
     Serial.println("Looping : " + String( WiFi.status() ) );
-    notifyClients();
-    ws.cleanupClients();
 
+    loopMultipleTimes();
 }
 
 // else {

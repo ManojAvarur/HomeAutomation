@@ -103,6 +103,7 @@ void loop() {
       char c[] = {(char)Serial.read()};
       webSocket.broadcastTXT(c, sizeof(c));
     }
+	Serial.println("Connected clients : " + String( webSocket.connectedClients() ) );
 }
 
 void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t length){

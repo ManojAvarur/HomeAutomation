@@ -12,18 +12,19 @@ void setup(){
     motor_control( MOTOR_OFF );
 
     // Route for root / web page
-    server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
-        request->send_P(200, "text/html", "<h1 style='text-align: center;'>Page is still being developed</h1><script>var gateway = `ws://${window.location.hostname}/ws`;var websocket;window.addEventListener('load', onLoad);function initWebSocket() {  console.log('Trying to open a WebSocket connection...');  websocket = new WebSocket(gateway);  websocket.onopen    = onOpen;  websocket.onclose   = onClose;  websocket.onmessage = onMessage; }function onOpen(event) {  console.log('Connection opened');}function onClose(event) {  console.log('Connection closed');  setTimeout(initWebSocket, 2000);}function onMessage(event) {  document.getElementsByTagName('h1').innerHTML = event.data;}function onLoad(event) {  initWebSocket();}</script>" );
+    server.on("/", [](){
+        server.send(200, "text/html", getWebsite() );
     });
     
-    server.onNotFound([](AsyncWebServerRequest *request){
-        request->send_P(200, "text/html", "<h1 style='text-align: center;'>Page is still being developed</h1> <script>var gateway = `ws://${window.location.hostname}/ws`;var websocket;window.addEventListener('load', onLoad);function initWebSocket() {  console.log('Trying to open a WebSocket connection...');  websocket = new WebSocket(gateway);  websocket.onopen    = onOpen;  websocket.onclose   = onClose;  websocket.onmessage = onMessage; }function onOpen(event) {  console.log('Connection opened');}function onClose(event) {  console.log('Connection closed');  setTimeout(initWebSocket, 2000);}function onMessage(event) {  document.getElementsByTagName('h1').innerHTML = event.data;}function onLoad(event) {  initWebSocket();}</script>" );
+    server.onNotFound([](){
+        server.send(200, "text/html", getWebsite() );
     });
 
     // ----- Server Configuration ----
-    ws.onEvent(onEvent);
-    server.addHandler(&ws);
+  	dnsServer.start( 53, "*", local_ip ); // DNS spoofing (Only for HTTP)
+
 
     // Start server
     server.begin();
+	  webSocket.onEvent(webSocketEvent);
 }
