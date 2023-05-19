@@ -1,8 +1,8 @@
 void loop(){
-    loopMultipleTimes();
+    toLoopFunctionsMultipleTimes();
+    processLocalUserRequest();
 
     water_pump();
-
     if( WiFi.status() == WL_CONNECTED ){
         // update_server( 0 );
         // check_requests_from_server();
@@ -15,16 +15,6 @@ void loop(){
         control_wifi_ap( true );
     }
     
-    delay(1000);
-    Serial.println("Looping : " + String( WiFi.status() ) );
+    // Serial.println("Looping : " + String( WiFi.status() ) );
 
-    loopMultipleTimes();
 }
-
-// else {
-    //     // Initiate wifi connection and 
-    //     wifi_connection_initiatied = !wifi_connection_initiatied;
-    //     if( !setup_wifi( 1, 0 ) && !wifi_connection_initiatied ){
-    //         control_wifi_ap( true );
-    //     }
-    // }

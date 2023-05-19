@@ -7,7 +7,8 @@ void debug_log( String value ){
     }
 }
 
-void loopMultipleTimes(){
+// contains functions that are to be executed quite often
+void toLoopFunctionsMultipleTimes(){   
     webSocket.loop();
     dnsServer.processNextRequest(); 
     server.handleClient();
@@ -15,18 +16,49 @@ void loopMultipleTimes(){
 
 // The following function takes an argument which represents whether the WIFI AP should be turned on or off
 void control_wifi_ap( bool status ){
-    if( status && !wifi_ap_enabled ){
+    if( status && !WIFI_AP_ENABLED ){
         WiFi.softAPConfig( local_ip, gateway, subnet );
         WiFi.softAP( AP_SSID, AP_PASSWORD );
         
         Serial.println("WiFi AP Enabled");
-        wifi_ap_enabled = true;
+        WIFI_AP_ENABLED = true;
     } else if( !status ) {
-        if( webSocket.connectedClients() <= 0 && wifi_ap_enabled ){
-            wifi_ap_enabled = false;
+        if( webSocket.connectedClients() <= 0 && WIFI_AP_ENABLED ){
+            WIFI_AP_ENABLED = false;
             WiFi.enableAP( false );
             Serial.println("WiFi AP Disabled");
             // WiFi.softAPdisconnect( true );
         }
     }
+}
+
+// generates json data with all sensor information
+String generateStringifiedJsonDataForLocalUser(){
+    String jsonData = "";
+    json_sensor_data_update["nodemcu_id"] = UNIQUE_ID;
+    json_sensor_data_update["status"]["tank"] = tankObj.waterLevelInTank();
+    json_sensor_data_update["status"]["sump"] = sumpObj.waterLevelInSump();
+    json_sensor_data_update["status"]["motor"]["displayState"] = ( digitalRead(RELAY_1) )? 0 : 1;
+
+    json_sensor_data_update["debug"]["display"] = SEND_DEBUG_LOG;
+    json_sensor_data_update["debug"]["log"] = DEBUG_LOG;
+
+    json_sensor_data_update["status"]["motor"]["isControlled"] = false;
+    json_sensor_data_update["status"]["motor"]["state"] = false;
+
+    if( !json_local_user_request.isNull() ) {
+        json_sensor_data_update["status"]["motor"]["isControlled"] = json_local_user_request["isBeingControlled"];
+        json_sensor_data_update["status"]["motor"]["state"] = json_local_user_request["state"];
+    }
+
+    serializeJson( json_sensor_data_update, jsonData );
+    return jsonData;
+}
+
+StaticJsonDocument<96> deserializeStringifiedJsonDataFromLocalUser(){
+    if( string_local_user_request != "" ){
+        deserializeJson( json_local_user_request, string_local_user_request );
+        string_local_user_request = "";
+    }
+    return json_local_user_request;
 }

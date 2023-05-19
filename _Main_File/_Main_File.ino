@@ -49,13 +49,15 @@ WiFiClient client;
 #include "z-ArduinoJson-v6.18.5.h"
 StaticJsonDocument<512> json_sensor_data_update;
 StaticJsonDocument<384> json_user_request;
+StaticJsonDocument<96> json_local_user_request;
+String string_local_user_request;
 
 // ----------------- DEBUG CODE ---------------------
 bool DEBUG_CODE = false;
 int DEBUG_DELAY_TIME = 0; // 1 sec
 
 bool DEBUG_CLASS_CODE = false;
-int DEBUG_CLASS_DELAY_TIME = 0; // 1 sec
+int DEBUG_CLASS_DELAY_TIME = 0; // 1 
 
 
 // ---------------- Execution Time Period -------------
@@ -80,8 +82,9 @@ Tank tankObj = Tank( WL_T_LOW, WL_T_MID, WL_T_HIGH, TANK_SUMP_WATER_LEVEL_UPDATE
 
 // ------------------ Extras --------------------------
 String DEBUG_LOG = "";
-bool motor_status_changed = false;
-bool wifi_ap_enabled = false;
+bool MOTOR_STATUS_CHANGED = false;
+bool WIFI_AP_ENABLED = false;
+bool SEND_DEBUG_LOG = false;
 
 // ---------------- Function Declaration -----------
 void water_pump();
@@ -91,7 +94,10 @@ void check_requests_from_server();
 bool get_user_requests_from_server();
 bool setup_wifi( short overall_wait_time, short delay_timer );
 void control_wifi_ap( bool status );
-void notifyClients();
+void notifyLocalClients( bool forceNotify );
 void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t length);
 String getWebsite();
-void loopMultipleTimes();
+void toLoopFunctionsMultipleTimes();
+String generateStringifiedJsonDataForLocalUser();
+void processLocalUserRequest();
+StaticJsonDocument<96> deserializeStringifiedJsonDataFromLocalUser();

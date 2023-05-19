@@ -1,5 +1,5 @@
 void setup(){
-    Serial.begin(115200);
+    Serial.begin(19200);
 
     // ----- WIFI Setup -------
     WiFi.mode(WIFI_AP_STA);
@@ -26,5 +26,8 @@ void setup(){
 
     // Start server
     server.begin();
-	  webSocket.onEvent(webSocketEvent);
+	
+    
+	webSocket.begin();
+	webSocket.onEvent(webSocketEvent);
 }
