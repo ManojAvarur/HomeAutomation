@@ -8,51 +8,55 @@
 const char* ssid = "Madhura";
 const char* password = "Network_Bridge";
 
-String WebPage = "\
-	<!DOCTYPE html>\
-	<html>\
-	<style>\
-		input[type='text'] {\
-			width: 90%;\
-			height: 3vh;\
-		}\
-		input[type='button'] {\
-			width: 9%;\
-			height: 3.6vh;\
-		}\
-		.rxd {\
-			height: 90vh;\
-		}\
-		textarea {\
-			width: 99%;\
-			height: 100%;\
-			resize: none;\
-		}\
-	</style>\
-	<script>\
-		var Socket; \
-		function start() { \
-			Socket = new WebSocket('ws://' + window.location.hostname + ':81/'); \
-			Socket.onmessage = function (evt) { \
-				document.getElementById('rxConsole').innerHTML += '<br>' + evt.data; \
-			} \
-		} \
-		\
-		function enterpressed(){ \
-			Socket.send(document.getElementById('txbuff').value); \
-			document.getElementById('txbuff').value = ''; \
-		}\
-	</script>\
-	<body onload='javascript:start();'>\
-		<div>\
-			<input class='txd' type='text' id='txbuff' onkeydown='if(event.keyCode==13) enterpressed();'>\
-			<input class='txd' type='button' onclick='enterpressed();' value='Send'> </div><br>\
-		<div class='rxd'> \
-			<textarea id='rxConsole' readonly></textarea> \
-		</div>\
-	</body>\
-</html>\
-";
+String WebPage(){
+  return R"(
+    <!DOCTYPE html>
+    <html>
+      <style>
+        input[type='text'] {
+          width: 90%;
+          height: 3vh;
+        }
+        input[type='button'] {
+          width: 9%;
+          height: 3.6vh;
+        }
+        .rxd {
+          height: 90vh;
+        }
+        textarea {
+          width: 99%;
+          height: 100%;
+          resize: none;
+        }
+      </style>
+      <script>
+        var Socket; 
+        function start() { 
+          Socket = new WebSocket('ws://' + window.location.hostname + ':81/'); 
+          Socket.onmessage = function (evt) { 
+            document.getElementById('rxConsole').innerHTML += '<br>' + evt.data; 
+          } 
+        } 
+        
+        function enterpressed(){ 
+          Socket.send(document.getElementById('txbuff').value); 
+          document.getElementById('txbuff').value = ''; 
+        }
+      </script>
+      <body onload='javascript:start();'>
+        <div>
+          <input class='txd' type='text' id='txbuff' onkeydown='if(event.keyCode==13) enterpressed();'>
+          <input class='txd' type='button' onclick='enterpressed();' value='Send'> </div><br>
+        <div class='rxd'> 
+          <textarea id='rxConsole' readonly></textarea> 
+        </div>
+      </body>
+    </html>
+  )";
+}
+
+
 
 WebSocketsServer webSocket = WebSocketsServer(81);
 ESP8266WebServer server(80);
@@ -64,7 +68,7 @@ void setup() {
 
 	WiFi.mode(WIFI_AP_STA);
 	WiFi.softAPConfig(APIP, APIP, IPAddress(255, 255, 255, 0));
-  	dnsServer.start( 53, "*", APIP); // DNS spoofing (Only for HTTP)
+  dnsServer.start( 53, "*", APIP); // DNS spoofing (Only for HTTP)
 
 	WiFi.softAP("Test");
 	WiFi.begin(ssid, password);
@@ -82,11 +86,11 @@ void setup() {
 	Serial.println(WiFi.localIP());
 	
 	server.on("/", [](){
-		server.send(200, "text/html", WebPage);
+		server.send(200, "text/html", WebPage() );
 	});
 
 	server.onNotFound( [](){ 
-        server.send(200, "text/html", WebPage ); 
+        server.send(200, "text/html", WebPage() ); 
     });
 	
 	server.begin();
@@ -95,15 +99,28 @@ void setup() {
 	webSocket.onEvent(webSocketEvent);
 }
 
+String data = "true"; 
+
 void loop() {
-    webSocket.loop();
+    
+
     dnsServer.processNextRequest(); 
     server.handleClient();
-    if (Serial.available() > 0){
-      char c[] = {(char)Serial.read()};
-      webSocket.broadcastTXT(c, sizeof(c));
+
+    if( data == "true" ){
+       webSocket.loop();
     }
-	Serial.println("Connected clients : " + String( webSocket.connectedClients() ) );
+
+    if( Serial.available() > 0 ){
+      data = "";
+    }
+
+    while( Serial.available() > 0 ){
+      data += (char)Serial.read();
+    }
+
+      Serial.println("Connected clients : " + String( webSocket.connectedClients() ) + " Data : " + data );
+    // delay(30000);
 }
 
 void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t length){
@@ -111,6 +128,7 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t length
    	if (type == WStype_TEXT){
 		payload[length] = '\0';
 		textToBroadcast = (char*)payload;
+    Serial.println( textToBroadcast );
 		webSocket.broadcastTXT( textToBroadcast, strlen( textToBroadcast ) );
 	}
 }
