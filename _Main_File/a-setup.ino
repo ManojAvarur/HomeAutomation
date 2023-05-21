@@ -1,5 +1,5 @@
 void setup(){
-    Serial.begin(19200);
+    Serial.begin(9600);
 
     // ----- WIFI Setup -------
     WiFi.mode(WIFI_AP_STA);
@@ -14,6 +14,12 @@ void setup(){
     // Route for root / web page
     server.on("/", [](){
         server.send(200, "text/html", getWebsite() );
+    });
+
+    server.on("/initial-message", [](){
+      String jsonData = generateStringifiedJsonDataForLocalUser();
+      Serial.println( jsonData );
+      server.send(200, "text/plain", jsonData );
     });
     
     server.onNotFound([](){

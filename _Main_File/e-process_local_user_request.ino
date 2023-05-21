@@ -3,8 +3,11 @@ void processLocalUserRequest(){
 
     bool isBeingControlledLocally = userRequest["isBeingControlled"];
     bool motorStateRequest = userRequest["state"];
+    bool doNotifyLocalClients = false;
 
     while( isBeingControlledLocally ){
+
+        doNotifyLocalClients = true;
 
         if( motorStateRequest ){
             motor_control( MOTOR_ON );
@@ -12,7 +15,7 @@ void processLocalUserRequest(){
             motor_control( MOTOR_OFF );
         }
 
-        notifyLocalClients(false);
+        notifyLocalClients( false );
         toLoopFunctionsMultipleTimes();
 
         userRequest = deserializeStringifiedJsonDataFromLocalUser();
@@ -25,7 +28,7 @@ void processLocalUserRequest(){
         sumpObj.setIsChangedToFalse();
     }
 
-    notifyLocalClients(false);
+    // notifyLocalClients( doNotifyLocalClients );
     toLoopFunctionsMultipleTimes();
 
     motor_control( MOTOR_OFF );

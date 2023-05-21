@@ -277,7 +277,7 @@
         }   
         
         
-        @media ( max-width: 400px ) {   
+        @media ( max-width: 435px ) {   
             .container{ 
                 max-width: 100vw;   
                 margin: 0;  
@@ -301,7 +301,17 @@
             #Sensor-Data .Debug-log{    
                 margin: 0;  
             }   
-        }   
+        }
+        
+        @media ( max-width: 350px ) {
+            .logo{
+                font-size: 1.5rem;
+            }
+
+            nav .btn{
+                font-size: 0.9rem;
+            }
+        }
         
         @keyframes rotate-s-loader {    
             from {  
@@ -310,7 +320,7 @@
             to {    
               transform: rotate(360deg);    
             }   
-          } 
+        } 
           
         .gradient_circle,   
         .red_circle,    
@@ -354,7 +364,7 @@
     </style>    
     
     <script>    
-        const connectionUrl = `ws://192.168.1.4:81/`;
+        const connectionUrl = `ws://${window.location.host}:81/`;
         let ws = new WebSocket(connectionUrl); 
         
         var tankStatus, sumpStatus, motorStatus, debugLog, manualOverideCheckbox, manualOverideController, interval;  
@@ -370,15 +380,20 @@
         
         ws.onopen = function(){ 
             fetch(`/initial-message`)   
-            .then( res => { 
-                manualOverideCheckbox.disabled = false; 
-            })  
+            .then( res => res.text() )
+            .then( textRes => ws.onmessage( textRes ) )  
             .catch( error => {  
                 console.error(`Error occurred while initiaing the first message`);  
+                console.log( error );
             });  
+
+            manualOverideCheckbox.disabled = false; 
+
+
             if( interval ){
                 clearInterval( interval );
             }
+
             console.log(`Connection establised`);   
         }; 
         
@@ -521,21 +536,3 @@
         
 </body> 
 </html> 
-    
-
-<!-- {
-    "nodemcu_id": "4bb7abf6d3782611339eb6fe6326b96b6b4fca3d6f7e16f33367268806c5512c",
-    "status": {
-      "tank": true,
-      "sump": true,
-      "motor": {
-        "displayState": true,
-        "isControlled": false,
-        "state": false
-      }
-    },
-    "debug": {
-      "log": "adfnalfjlqwuefnhlqwenfliqwuenfliquwehfhnqlwiuefh qlciwuefliquwefilqwelifql",
-      "display": false
-    }
-  } -->

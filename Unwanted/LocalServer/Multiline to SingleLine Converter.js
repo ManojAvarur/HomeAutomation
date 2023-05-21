@@ -1,6 +1,9 @@
 const fs = require('fs');
 
-let data = fs.readFileSync('C:\\xampp\\htdocs\\HomeAutomation\\New\\HomeAutomation\\Unwanted\\LocalServer\\localServer.html')
+let location = 'C:\\xampp\\htdocs\\HomeAutomation\\HomeAutomation - IoT\\Unwanted\\LocalServer\\';
+
+
+let data = fs.readFileSync(`${location}localServer.html`)
 let newStr = "";
 
 data.toString().split('\n').forEach( elm => {
@@ -13,4 +16,38 @@ data.toString().split('\n').forEach( elm => {
     newStr += ' ' + newElm ;
 })
 
-fs.writeFileSync('C:\\xampp\\htdocs\\HomeAutomation\\New\\HomeAutomation\\Unwanted\\LocalServer\\localServerCompressed.html', newStr )
+fs.writeFileSync(`${location}localServerCompressed.html`, newStr )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+x = {
+    "nodemcu_id": "4bb7abf6d3782611339eb6fe6326b96b6b4fca3d6f7e16f33367268806c5512c",
+    "status": {
+      "tank": true,
+      "sump": true,
+      "motor": {
+        "displayState": true,
+        "isControlled": false,
+        "state": false
+      }
+    },
+    "debug": {
+      "log": "adfnalfjlqwuefnhlqwenfliqwuenfliquwehfhnqlwiuefh qlciwuefliquwefilqwelifql",
+      "display": false
+    },
+    "https://iotdesignpro.com/projects/real-time-data-transfer-between-two-esp32-using-websocket-client-on-arduino-ide": ""
+  }
