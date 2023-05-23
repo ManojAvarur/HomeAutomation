@@ -1,5 +1,5 @@
 void notifyLocalClients( bool forceNotify = false ) {
-    if( tankObj.isDataChanged() || sumpObj.isDataChanged() || MOTOR_STATUS_CHANGED || forceNotify ){
+    if( tankObj.isDataChanged() || sumpObj.isDataChanged() || motorController.isDataChanged() || forceNotify ){
         Serial.println("Inside notify local clients");
         String jsonData = generateStringifiedJsonDataForLocalUser();
         webSocket.broadcastTXT( jsonData );

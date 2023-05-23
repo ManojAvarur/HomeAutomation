@@ -9,7 +9,7 @@ void setup(){
     
     // ----- Motor Setup ------
     pinMode(RELAY_1, OUTPUT);
-    motor_control( MOTOR_OFF );
+    motorController.turnOff();
 
     // Route for root / web page
     server.on("/", [](){

@@ -7,6 +7,8 @@ class Sump{
         bool CODE_DEBUG, firstTimeLoad = false;
         int DEBUG_DELAY_TIME;
         bool isChanged = true;
+        // Should be depricated once NodeJs is completed
+        bool isChangedForLocal = false;
         int WATER_CHECK_INTERVAL;
         unsigned long WATER_CHECK_INTERVAL_ELAPSED_TIME = 0L;
 
@@ -83,11 +85,23 @@ class Sump{
 
     public:
         bool isDataChanged(){
-            return isChanged;
+            bool changeStatus = isChanged;
+            isChanged = false;
+            return changeStatus;
         }
 
-        void setIsChangedToFalse(){
-            isChanged = false;
+        void rollBackChangeNotifier(){
+            isChanged = !isChanged;
+        }
+
+        bool isDataChanged_Local(){
+            bool changeStatus = isChangedForLocal;
+            isChangedForLocal = false;
+            return changeStatus;
+        }
+
+        void rollBackChangeNotifier_Local(){
+            isChangedForLocal = !isChangedForLocal;
         }
 
         int waterLevelInSump( bool updateFromStart = false ){
@@ -104,6 +118,7 @@ class Sump{
 
                 if( currentWaterStatus != oldWaterStatus ){
                     isChanged = true;
+                    isChangedForLocal = true;
                     oldWaterStatus = currentWaterStatus;
                 }
 

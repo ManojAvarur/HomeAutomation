@@ -7,6 +7,8 @@ class Tank{
         bool CODE_DEBUG;
         int DEBUG_DELAY_TIME;
         bool isChanged = true, firstTimeLoad = false;
+        // Should be depricated once NodeJs is completed
+        bool isChangedForLocal = false;
         int WATER_CHECK_INTERVAL;
         unsigned long WATER_CHECK_INTERVAL_ELAPSED_TIME = 0L;
 
@@ -121,11 +123,23 @@ class Tank{
 
     public:
         bool isDataChanged(){
-            return isChanged;
+            bool changeStatus = isChanged;
+            isChanged = false;
+            return changeStatus;
         }
 
-        void setIsChangedToFalse(){
-            isChanged = false;
+        void rollBackChangeNotifier(){
+            isChanged = !isChanged;
+        }
+
+        bool isDataChanged_Local(){
+            bool changeStatus = isChangedForLocal;
+            isChangedForLocal = false;
+            return changeStatus;
+        }
+
+        void rollBackChangeNotifier_Local(){
+            isChangedForLocal = !isChangedForLocal;
         }
 
         int waterLevelInTank( bool updateFromStart = false ){
@@ -142,6 +156,7 @@ class Tank{
 
                 if( currentWaterStatus != oldWaterStatus ){
                     isChanged = true;
+                    isChangedForLocal = true;
                     oldWaterStatus = currentWaterStatus;
                 }
 

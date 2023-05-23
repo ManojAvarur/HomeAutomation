@@ -10,9 +10,9 @@ void processLocalUserRequest(){
         doNotifyLocalClients = true;
 
         if( motorStateRequest ){
-            motor_control( MOTOR_ON );
+            motorController.turnOn();
         } else {
-            motor_control( MOTOR_OFF );
+            motorController.turnOff();
         }
 
         notifyLocalClients( false );
@@ -22,15 +22,11 @@ void processLocalUserRequest(){
 
         isBeingControlledLocally = userRequest["isBeingControlled"];
         motorStateRequest = userRequest["state"];
-
-        MOTOR_STATUS_CHANGED = false;
-        tankObj.setIsChangedToFalse();
-        sumpObj.setIsChangedToFalse();
     }
 
-    // notifyLocalClients( doNotifyLocalClients );
+    notifyLocalClients( doNotifyLocalClients );
     toLoopFunctionsMultipleTimes();
 
-    motor_control( MOTOR_OFF );
+    motorController.turnOff();
 
 }

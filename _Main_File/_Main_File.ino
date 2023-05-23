@@ -30,10 +30,8 @@ DNSServer dnsServer;
 WiFiClient client;
 
 
-// ------------------ Relay Sensor Settings -----------
+// ------------------ Relay Settings -----------
 #define RELAY_1 D7 // For Water Pump
-#define MOTOR_ON LOW // Turing on the pump / relay
-#define MOTOR_OFF HIGH // Turing off the pump / relay
 
 // ------------------ Water Level Sensor Settings ------
 // For Tank
@@ -54,7 +52,7 @@ String string_local_user_request;
 
 // ----------------- DEBUG CODE ---------------------
 bool DEBUG_CODE = false;
-int DEBUG_DELAY_TIME = 0; // 1 sec
+int DEBUG_DELAY_TIME = 0; // 0 sec
 
 bool DEBUG_CLASS_CODE = false;
 int DEBUG_CLASS_DELAY_TIME = 0; // 1 
@@ -76,19 +74,19 @@ int TANK_SUMP_WATER_LEVEL_UPDATE_INTERVAL = 20000;
 
 #include "z-sump_class.h"
 #include "z-tank_class.h"
+#include "z-motor_control_class.h"
 
 Sump sumpObj = Sump( WL_S_LOW, WL_S_MID, TANK_SUMP_WATER_LEVEL_UPDATE_INTERVAL, DEBUG_CLASS_CODE, DEBUG_CLASS_DELAY_TIME );
 Tank tankObj = Tank( WL_T_LOW, WL_T_MID, WL_T_HIGH, TANK_SUMP_WATER_LEVEL_UPDATE_INTERVAL, DEBUG_CLASS_CODE, DEBUG_CLASS_DELAY_TIME );
+MotorControl motorController = MotorControl( RELAY_1 );
 
 // ------------------ Extras --------------------------
 String DEBUG_LOG = "";
-bool MOTOR_STATUS_CHANGED = false;
 bool WIFI_AP_ENABLED = false;
 bool SEND_DEBUG_LOG = false;
 
 // ---------------- Function Declaration -----------
 void water_pump();
-void motor_control( uint8_t value );
 void update_server( int pump_manual_override_data );
 void check_requests_from_server();
 bool get_user_requests_from_server();

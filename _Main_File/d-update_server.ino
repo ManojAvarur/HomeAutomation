@@ -1,6 +1,6 @@
 void update_server( int pump_manual_override_data ){
 
-    if( tankObj.isDataChanged() || sumpObj.isDataChanged() || MOTOR_STATUS_CHANGED || ( pump_manual_override_data == 1 ) ){
+    if( tankObj.isDataChanged() || sumpObj.isDataChanged() || motorController.isDataChanged() || ( pump_manual_override_data == 1 ) ){
     
         int httpCode;
         int repeatCount = 5, count = 0;
@@ -22,18 +22,6 @@ void update_server( int pump_manual_override_data ){
             httpCode = http.POST( jsonData );
 
             http.end();
-
-            if( DEBUG_CODE ){
-                Serial.println("\n\t\t Inside Send update server .\n\t Responce Code : " + String( httpCode ) ); 
-                Serial.println("\n\t\t\t tankObj.isDataChanged() : " + String( tankObj.isDataChanged() ) );
-                Serial.println("\n\t\t\t sumpObj.isDataChanged() : " + String( sumpObj.isDataChanged() ) );
-                Serial.println("\n\t\t\t motor_status_changed : " + String( MOTOR_STATUS_CHANGED ) );
-                Serial.println("\n\t\t\t ( pump_manual_override_data == 1 ) ? true : false : " + String( ( pump_manual_override_data == 1 ) ? true : false ) );
-                
-                delay( DEBUG_DELAY_TIME );
-
-            }
-
         
             if( httpCode != 200 ){
                 delay( 500 );
@@ -42,10 +30,10 @@ void update_server( int pump_manual_override_data ){
 
         } while( httpCode != 200 && count <= repeatCount );
 
-        if( httpCode == 200 ){  
-            MOTOR_STATUS_CHANGED = false;
-            tankObj.setIsChangedToFalse();
-            sumpObj.setIsChangedToFalse();
+        if( httpCode != 200 ){  
+            motorController.rollBackChangeNotifier();
+            tankObj.rollBackChangeNotifier();
+            sumpObj.rollBackChangeNotifier();
         }
 
     }

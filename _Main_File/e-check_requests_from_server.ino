@@ -21,7 +21,12 @@ void check_requests_from_server(){
 
                 if( json_user_request["pump_take_over_complete_control"].as<String>().toInt() == 1 ) {
                     
-                    motor_control( ( json_user_request["pump_on_off_status"].as<String>().toInt() == 1 )? MOTOR_ON : MOTOR_OFF );
+                    if( json_user_request["pump_on_off_status"].as<String>().toInt() == 1 ){ 
+                        motorController.turnOn();
+                    } else { 
+                        motorController.turnOff();
+                    }
+
                     tankObj.waterLevelInTank();
                     sumpObj.waterLevelInSump();
                     update_server( ++counter );
@@ -33,6 +38,7 @@ void check_requests_from_server(){
                     }
 
                 } else {
+                    
                     if( json_user_request["pump_on_off_status"].as<String>().toInt() == 0 && json_user_request["time_in_hours"].as<String>().toInt() >= 19 && json_user_request["time_in_hours"].as<String>().toInt() <= 20  ){
                         water_pump();
 
@@ -52,7 +58,7 @@ void check_requests_from_server(){
 
                     } else {
 
-                        motor_control( MOTOR_OFF );
+                        motorController.turnOff();
                         tankObj.waterLevelInTank();
                         sumpObj.waterLevelInSump();
                         
