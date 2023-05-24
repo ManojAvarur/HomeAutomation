@@ -3,11 +3,17 @@ void processLocalUserRequest(){
 
     bool isBeingControlledLocally = userRequest["isBeingControlled"];
     bool motorStateRequest = userRequest["state"];
-    bool doNotifyLocalClients = false;
+    bool processEndNotify = false, processStartNotify = true;
 
     while( isBeingControlledLocally ){
 
-        doNotifyLocalClients = true;
+        notifyLocalClients( processStartNotify );
+        processStartNotify = false;
+
+        processEndNotify = true;
+       
+        notifyLocalClients( false );
+        toLoopFunctionsMultipleTimes();
 
         if( motorStateRequest ){
             motorController.turnOn();
@@ -15,16 +21,13 @@ void processLocalUserRequest(){
             motorController.turnOff();
         }
 
-        notifyLocalClients( false );
-        toLoopFunctionsMultipleTimes();
-
         userRequest = deserializeStringifiedJsonDataFromLocalUser();
 
         isBeingControlledLocally = userRequest["isBeingControlled"];
         motorStateRequest = userRequest["state"];
     }
 
-    notifyLocalClients( doNotifyLocalClients );
+    notifyLocalClients( processEndNotify );
     toLoopFunctionsMultipleTimes();
 
     motorController.turnOff();

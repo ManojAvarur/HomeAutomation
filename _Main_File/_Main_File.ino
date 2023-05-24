@@ -12,7 +12,6 @@ String UNIQUE_ID = "4bb7abf6d3782611339eb6fe6326b96b6b4fca3d6f7e16f33367268806c5
 #include <DNSServer.h> 
 #include <Hash.h>
 
-
 const char* SSID = "Madhura";
 const char* PASSWORD = "Network_Bridge";
 const char* AP_SSID = "HOMEATO Water Controller";

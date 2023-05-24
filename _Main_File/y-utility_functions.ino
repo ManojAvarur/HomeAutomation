@@ -41,7 +41,9 @@ String generateStringifiedJsonDataForLocalUser(){
     json_sensor_data_update["status"]["motor"]["displayState"] = ( digitalRead(RELAY_1) )? 0 : 1;
 
     json_sensor_data_update["debug"]["display"] = SEND_DEBUG_LOG;
-    json_sensor_data_update["debug"]["log"] = DEBUG_LOG;
+    if( SEND_DEBUG_LOG ){
+        json_sensor_data_update["debug"]["log"] = DEBUG_LOG;
+    }
 
     json_sensor_data_update["status"]["motor"]["isControlled"] = false;
     json_sensor_data_update["status"]["motor"]["state"] = false;

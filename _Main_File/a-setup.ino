@@ -1,5 +1,5 @@
 void setup(){
-    Serial.begin(9600);
+    // Serial.begin(9600);
 
     // ----- WIFI Setup -------
     WiFi.mode(WIFI_AP_STA);
@@ -21,6 +21,13 @@ void setup(){
       Serial.println( jsonData );
       server.send(200, "text/plain", jsonData );
     });
+
+    // td > Toggle debug
+    server.on("/td", [](){
+        SEND_DEBUG_LOG = !SEND_DEBUG_LOG;
+        server.sendHeader("Location", String("/"), true);
+        server.send(302, "text/plain", "");
+    });
     
     server.onNotFound([](){
         server.send(200, "text/html", getWebsite() );
@@ -33,7 +40,6 @@ void setup(){
     // Start server
     server.begin();
 	
-    
-	webSocket.begin();
-	webSocket.onEvent(webSocketEvent);
+    webSocket.begin();
+    webSocket.onEvent(webSocketEvent);
 }

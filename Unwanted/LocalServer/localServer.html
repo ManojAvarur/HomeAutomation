@@ -367,7 +367,7 @@
         const connectionUrl = `ws://${window.location.host}:81/`;
         let ws = new WebSocket(connectionUrl); 
         
-        var tankStatus, sumpStatus, motorStatus, debugLog, manualOverideCheckbox, manualOverideController, interval;  
+        let tankStatus, sumpStatus, motorStatus, debugLog, manualOverideCheckbox, manualOverideController;  
         
         function loadElements(){    
             tankStatus = document.getElementById(`tank-status`);    
@@ -381,18 +381,16 @@
         ws.onopen = function(){ 
             fetch(`/initial-message`)   
             .then( res => res.text() )
-            .then( textRes => ws.onmessage( textRes ) )  
+            .then( textRes => { 
+                ws.onmessage({ data: textRes });
+                manualOverideCheckbox.disabled = false; 
+                document.getElementById('Manual-Pump').style.display = 'block';
+            })  
             .catch( error => {  
                 console.error(`Error occurred while initiaing the first message`);  
                 console.log( error );
             });  
 
-            manualOverideCheckbox.disabled = false; 
-
-
-            if( interval ){
-                clearInterval( interval );
-            }
 
             console.log(`Connection establised`);   
         }; 
@@ -439,9 +437,7 @@
         
         ws.onclose = function(){    
             console.log(`Connection closed`);   
-            interval = setInterval( () => {    
-                ws = new WebSocket(connectionUrl);  
-            }, 1000 );  
+            setTimeout( () => window.location.reload(), 3000 );
         };    
             
         function motorController( event ){  
@@ -473,7 +469,7 @@
         <nav>   
             <div class='container'> 
                 <a class='logo' href='#'>HOME<span>ATO</span></a>   
-                <a class='btn' href='#'>Wi-Fi Credentials</a>   
+                <a class='btn' href='/alter-wifi-credentials'>Wi-Fi Credentials</a>   
             </div>  
         </nav>  
     </header>   
@@ -508,7 +504,7 @@
         </div>  
     </section>  
     
-    <section id='Manual-Pump' class='mxy-2'>    
+    <section id='Manual-Pump' class='mxy-2' style="display: none;">    
         <div class='container'> 
             <div class='title'> 
                 <h4>Pump</h4>   
@@ -519,7 +515,7 @@
                 <h2>Manual Pump Override</h2>   
                 <h3>    
                     <label for='manual-overide-checkbox'><strong>Pump Manual Overide&nbsp;:&nbsp;</strong></label>  
-                    <input type='checkbox' class='check-input' id='manual-overide-checkbox' data-type='checkbox' onclick='motorController(event)'>  
+                    <input type='checkbox' class='check-input' id='manual-overide-checkbox' data-type='checkbox' onclick='motorController(event)' disabled>  
                 </h3>   
                 
             <div class='mxy1'>  
