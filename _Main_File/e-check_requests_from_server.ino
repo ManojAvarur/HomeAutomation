@@ -19,6 +19,8 @@ void check_requests_from_server(){
 
             while( json_user_request["pump_manual_overide_request"].as<String>().toInt() == 1  && json_user_request["execute_status"].as<String>().toInt() == 1 ){
 
+                IS_MOTOR_CONTROLLED_ONLINE = true;
+
                 if( json_user_request["pump_take_over_complete_control"].as<String>().toInt() == 1 ) {
                     
                     if( json_user_request["pump_on_off_status"].as<String>().toInt() == 1 ){ 
@@ -79,7 +81,11 @@ void check_requests_from_server(){
 
                 }
 
+                notifyLocalClients(false);
+
             }
+
+            IS_MOTOR_CONTROLLED_ONLINE = false;
 
             USER_REQUEST_CHECK_INTERVAL = 30000;
         }

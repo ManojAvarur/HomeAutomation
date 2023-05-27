@@ -12,7 +12,7 @@ void update_server( int pump_manual_override_data ){
         json_sensor_data_update["debug_log"] = DEBUG_LOG;
         serializeJson( json_sensor_data_update, jsonData );
 
-        String href = URL+"/update_sensor_data.php?data_ready=true&pump_manual_override_data=" + String( ( pump_manual_override_data >= 1 )? "true" : "false" );
+        String href = URL+"/update_sensor_data.php?data_ready=true&motor_controlled_locally="+ String(IS_MOTOR_CONTROLLED_LOCALLY) +"&pump_manual_override_data=" + String( ( pump_manual_override_data >= 1 )? "true" : "false" );
         do{
             HTTPClient http;
             http.begin( client, href );

@@ -1,5 +1,5 @@
 void setup(){
-    // Serial.begin(9600);
+    Serial.begin(9600);
 
     // ----- WIFI Setup -------
     WiFi.mode(WIFI_AP_STA);
@@ -19,7 +19,8 @@ void setup(){
     server.on("/initial-message", [](){
       String jsonData = generateStringifiedJsonDataForLocalUser();
       Serial.println( jsonData );
-      server.send(200, "text/plain", jsonData );
+      server.sendHeader("Access-Control-Allow-Origin", "*", true);
+      server.send(200, "application/json", jsonData );
     });
 
     // td > Toggle debug

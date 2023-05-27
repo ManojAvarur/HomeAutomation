@@ -47,6 +47,7 @@ String generateStringifiedJsonDataForLocalUser(){
 
     json_sensor_data_update["status"]["motor"]["isControlled"] = false;
     json_sensor_data_update["status"]["motor"]["state"] = false;
+    json_sensor_data_update["status"]["motor"]["isOnlineControlled"] = IS_MOTOR_CONTROLLED_ONLINE;
 
     if( !json_local_user_request.isNull() ) {
         json_sensor_data_update["status"]["motor"]["isControlled"] = json_local_user_request["isBeingControlled"];

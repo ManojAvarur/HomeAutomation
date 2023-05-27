@@ -83,6 +83,8 @@ MotorControl motorController = MotorControl( RELAY_1 );
 String DEBUG_LOG = "";
 bool WIFI_AP_ENABLED = false;
 bool SEND_DEBUG_LOG = false;
+bool IS_MOTOR_CONTROLLED_LOCALLY = false;
+bool IS_MOTOR_CONTROLLED_ONLINE = false;
 
 // ---------------- Function Declaration -----------
 void water_pump();

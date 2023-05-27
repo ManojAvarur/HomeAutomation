@@ -4,6 +4,7 @@ void processLocalUserRequest(){
     bool isBeingControlledLocally = userRequest["isBeingControlled"];
     bool motorStateRequest = userRequest["state"];
     bool processEndNotify = false, processStartNotify = true;
+    IS_MOTOR_CONTROLLED_LOCALLY = isBeingControlledLocally;
 
     while( isBeingControlledLocally ){
 
@@ -25,11 +26,14 @@ void processLocalUserRequest(){
 
         isBeingControlledLocally = userRequest["isBeingControlled"];
         motorStateRequest = userRequest["state"];
+
+        update_server(0);
     }
 
     notifyLocalClients( processEndNotify );
     toLoopFunctionsMultipleTimes();
 
+    IS_MOTOR_CONTROLLED_LOCALLY = isBeingControlledLocally;
     motorController.turnOff();
 
 }
