@@ -8,16 +8,23 @@ void processLocalUserRequest(){
 
     while( isBeingControlledLocally ){
 
-        notifyLocalClients( processStartNotify );
-        processStartNotify = false;
+        tankObj.waterLevelInTank();
+        sumpObj.waterLevelInSump();
 
-        processEndNotify = true;
+        if( processStartNotify ){
+            processStartNotify = false;
+            processEndNotify = true;
+            notifyLocalClients(true);
+            update_server(1, 0);
+        }
+
        
-        notifyLocalClients( false );
+        notifyLocalClients(false);
         toLoopFunctionsMultipleTimes();
 
         if( motorStateRequest ){
             motorController.turnOn();
+            Serial.println("Motor On");
         } else {
             motorController.turnOff();
         }
@@ -27,13 +34,14 @@ void processLocalUserRequest(){
         isBeingControlledLocally = userRequest["isBeingControlled"];
         motorStateRequest = userRequest["state"];
 
-        update_server(0);
+        update_server(0, 0);
+        Serial.println("Inside local loop");
     }
 
     notifyLocalClients( processEndNotify );
     toLoopFunctionsMultipleTimes();
 
     IS_MOTOR_CONTROLLED_LOCALLY = isBeingControlledLocally;
-    motorController.turnOff();
+    // motorController.turnOff();
 
 }

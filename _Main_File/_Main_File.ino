@@ -88,7 +88,7 @@ bool IS_MOTOR_CONTROLLED_ONLINE = false;
 
 // ---------------- Function Declaration -----------
 void water_pump();
-void update_server( int pump_manual_override_data );
+void update_server( int pump_manual_override_data, int repeatCount  );
 void check_requests_from_server();
 bool get_user_requests_from_server();
 bool setup_wifi( short overall_wait_time, short delay_timer );

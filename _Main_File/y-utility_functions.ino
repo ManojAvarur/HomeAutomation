@@ -9,9 +9,9 @@ void debug_log( String value ){
 
 // contains functions that are to be executed quite often
 void toLoopFunctionsMultipleTimes(){   
+    server.handleClient();
     webSocket.loop();
     dnsServer.processNextRequest(); 
-    server.handleClient();
 }
 
 // The following function takes an argument which represents whether the WIFI AP should be turned on or off

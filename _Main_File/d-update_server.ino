@@ -1,9 +1,9 @@
-void update_server( int pump_manual_override_data ){
+void update_server( int pump_manual_override_data, int repeatCount ){
 
     if( tankObj.isDataChanged() || sumpObj.isDataChanged() || motorController.isDataChanged() || ( pump_manual_override_data == 1 ) ){
     
         int httpCode;
-        int repeatCount = 5, count = 0;
+        int count = 1;
         String jsonData;
         json_sensor_data_update["nodemcu_id"] = UNIQUE_ID;
         json_sensor_data_update["tank_status"] = tankObj.waterLevelInTank();
@@ -25,7 +25,7 @@ void update_server( int pump_manual_override_data ){
         
             if( httpCode != 200 ){
                 delay( 500 );
-                count += 1;
+                count++;
             }
 
         } while( httpCode != 200 && count <= repeatCount );

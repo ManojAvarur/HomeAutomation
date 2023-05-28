@@ -20,6 +20,7 @@ void check_requests_from_server(){
             while( json_user_request["pump_manual_overide_request"].as<String>().toInt() == 1  && json_user_request["execute_status"].as<String>().toInt() == 1 ){
 
                 IS_MOTOR_CONTROLLED_ONLINE = true;
+                Serial.println("Inside Server loop");
 
                 if( json_user_request["pump_take_over_complete_control"].as<String>().toInt() == 1 ) {
                     
@@ -31,7 +32,7 @@ void check_requests_from_server(){
 
                     tankObj.waterLevelInTank();
                     sumpObj.waterLevelInSump();
-                    update_server( ++counter );
+                    update_server(++counter, 0);
 
                     if( DEBUG_CODE ){
                         Serial.println("\n\nInside Manual Overide Complete Control");
@@ -70,18 +71,21 @@ void check_requests_from_server(){
                         }
                     }
 
-                    update_server( ++counter );
-                }
-
-                if( ( millis() - USER_REQUEST_CHECK_INTERVAL_ELAPSED_TIME ) >= USER_REQUEST_CHECK_INTERVAL ){
-                    USER_REQUEST_CHECK_INTERVAL_ELAPSED_TIME += USER_REQUEST_CHECK_INTERVAL;
-                    if( ! get_user_requests_from_server() ){
-                        break;
-                    }
-
+                    update_server(++counter, 0);
                 }
 
                 notifyLocalClients(false);
+                toLoopFunctionsMultipleTimes();
+
+                if( ( millis() - USER_REQUEST_CHECK_INTERVAL_ELAPSED_TIME ) >= USER_REQUEST_CHECK_INTERVAL ){
+                    USER_REQUEST_CHECK_INTERVAL_ELAPSED_TIME += USER_REQUEST_CHECK_INTERVAL;
+                    if( !get_user_requests_from_server() ){
+                        break;
+                    }
+                }
+
+                notifyLocalClients(false);
+                toLoopFunctionsMultipleTimes();
 
             }
 

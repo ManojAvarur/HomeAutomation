@@ -368,6 +368,17 @@
         let ws = new WebSocket(connectionUrl); 
         
         let tankStatus, sumpStatus, motorStatus, debugLog, manualOverideCheckbox, manualOverideController;  
+
+        function onChangeOverideCheckbox( event ){
+            if( manualOverideCheckbox.checked ){
+                manualOverideController.disabled = false;
+                manualOverideController.parentElement.className =  `toggle`;    
+            } else {
+                manualOverideController.checked = false;
+                manualOverideController.disabled = true;
+                manualOverideController.parentElement.className =  `toggle isDisabled`;    
+            }
+        }
         
         function loadElements(){    
             tankStatus = document.getElementById(`tank-status`);    
@@ -376,7 +387,9 @@
             debugLog = document.getElementById(`debug-log`);    
             manualOverideCheckbox = document.getElementById(`manual-overide-checkbox`); 
             manualOverideController = document.getElementById(`manual-overide-controller`); 
-        };
+
+            manualOverideCheckbox.addEventListener('change', onChangeOverideCheckbox);
+        }
         
         ws.onopen = function(){ 
             fetch(`/initial-message`)   
@@ -390,7 +403,6 @@
                 console.error(`Error occurred while initiaing the first message`);  
                 console.log( error );
             });  
-
 
             console.log(`Connection establised`);   
         }; 
@@ -422,13 +434,20 @@
                 debugLog.children[1].innerText = `NO DEBUG LOG TO DISPLAY`; 
             }   
             
-            const isMotorBeingControled = event.status.motor.isControlled;  
+            if( event.status.motor.isControlled ){
+                manualOverideCheckbox.checked = true;
+                manualOverideController.checked = event.status.motor.state;
+
+                if( event.status.motor.isOnlineControlled ){
+                    manualOverideCheckbox.checked = false;
+                    alert('Motor is controlled only by one of your family member');
+                }
+            } else {
+                manualOverideCheckbox.checked = false;
+            }
             
-            manualOverideCheckbox.checked = isMotorBeingControled;  
-            
-            manualOverideController.disabled = !isMotorBeingControled;  
-            manualOverideController.parentElement.className = ( isMotorBeingControled )? `toggle` : `toggle isDisabled`;    
-            manualOverideController.checked = ( isMotorBeingControled )? event.status.motor.state : false;  
+
+            onChangeOverideCheckbox();
         };  
         
         ws.onerror = function( event ){ 
@@ -438,27 +457,11 @@
         ws.onclose = function(){    
             console.log(`Connection closed`);   
             setTimeout( () => window.location.reload(), 3000 );
-        };    
+        }; 
             
-        function motorController( event ){  
-
-            const target = event.target;    
-            const motorControl = { isBeingControlled: false, state: false };    
-            
-            if( target.dataset.type === 'checkbox' ){   
-                if( target.checked ){   
-                    manualOverideController.disabled = false;   
-                    manualOverideController.parentElement.className = 'toggle'; 
-                } else {    
-                    manualOverideController.parentElement.className = 'toggle isDisabled';   
-                    manualOverideController.disabled = true;    
-                }   
-            }   
-            
-            motorControl.isBeingControlled = manualOverideCheckbox.checked; 
-            motorControl.state = manualOverideController.checked;   
-            
-            ws.send(JSON.stringify( motorControl ));    
+        function motorController(){  
+            onChangeOverideCheckbox();
+            ws.send(JSON.stringify({ isBeingControlled: manualOverideCheckbox.checked, state: manualOverideController.checked }));    
         };   
         
     </script>   

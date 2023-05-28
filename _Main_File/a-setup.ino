@@ -1,5 +1,5 @@
 void setup(){
-    Serial.begin(9600);
+    // Serial.begin(9600);
 
     // ----- WIFI Setup -------
     WiFi.mode(WIFI_AP_STA);
@@ -13,7 +13,7 @@ void setup(){
 
     // Route for root / web page
     server.on("/", [](){
-        server.send(200, "text/html", getWebsite() );
+        server.sendContent( getWebsite() );
     });
 
     server.on("/initial-message", [](){
@@ -31,7 +31,7 @@ void setup(){
     });
     
     server.onNotFound([](){
-        server.send(200, "text/html", getWebsite() );
+        server.sendContent( getWebsite() );
     });
 
     // ----- Server Configuration ----

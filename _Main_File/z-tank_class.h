@@ -165,8 +165,6 @@ class Tank{
             }
             
             return currentWaterStatus;
-            
-            
         }
 
         Tank( int low, int mid, int high, int checkInterval,  bool debug, int delay_time ){

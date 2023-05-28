@@ -2,9 +2,9 @@ void loop(){
     toLoopFunctionsMultipleTimes();
     processLocalUserRequest();
 
-    water_pump();
+    // water_pump();
     if( WiFi.status() == WL_CONNECTED ){
-        update_server( 0 );
+        update_server(0, 0);
 
         toLoopFunctionsMultipleTimes();
         processLocalUserRequest();
