@@ -6,7 +6,7 @@ void processLocalUserRequest(){
     bool processEndNotify = false, processStartNotify = true;
     IS_MOTOR_CONTROLLED_LOCALLY = isBeingControlledLocally;
 
-    while( isBeingControlledLocally ){
+    while( isBeingControlledLocally && webSocket.connectedClients() > 0 ){
 
         tankObj.waterLevelInTank();
         sumpObj.waterLevelInSump();

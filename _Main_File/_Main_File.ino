@@ -50,8 +50,8 @@ StaticJsonDocument<96> json_local_user_request;
 String string_local_user_request;
 
 // ----------------- DEBUG CODE ---------------------
-bool DEBUG_CODE = false;
-int DEBUG_DELAY_TIME = 0; // 0 sec
+bool DEBUG_CODE = true;
+int DEBUG_DELAY_TIME = 1000; // 0 sec
 
 bool DEBUG_CLASS_CODE = false;
 int DEBUG_CLASS_DELAY_TIME = 0; // 1 

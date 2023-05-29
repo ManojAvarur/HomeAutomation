@@ -1,5 +1,5 @@
-#define trigPin D5
-#define echoPin D6
+#define trigPin D5 // yellow
+#define echoPin D6 // green
 #include <ESP8266WiFi.h>
 #include <WiFiClient.h>
 #include <ESP8266WebServer.h>
@@ -44,7 +44,7 @@ float distanceCm;
 float distanceInch;
 
 void setup() {
-  	// Serial.begin(19200); // Starts the serial communication
+  	Serial.begin(19200); // Starts the serial communication
 
 
 	WiFi.begin(ssid, password);
@@ -103,14 +103,16 @@ void loop() {
 	data += "&nbsp;&nbsp;Distance (inch): ";
 	data += String(distanceInch);
   
-  Serial.println( data );
+  // Serial.println( data );
 	webSocket.broadcastTXT( data );
 
   server.handleClient();
   webSocket.loop();
 
 
-  	delay(500);
+  	delay(200);
+
+    Serial.println( webSocket.connectedClients() );
 }
 
 

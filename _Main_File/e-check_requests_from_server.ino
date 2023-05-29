@@ -1,6 +1,7 @@
 void check_requests_from_server(){
     if( ( millis() - USER_REQUEST_CHECK_INTERVAL_ELAPSED_TIME ) >= USER_REQUEST_CHECK_INTERVAL ){
         USER_REQUEST_CHECK_INTERVAL_ELAPSED_TIME += USER_REQUEST_CHECK_INTERVAL;
+        bool firstTimeNotify = true;
 
         if( get_user_requests_from_server() ){
 
@@ -74,23 +75,24 @@ void check_requests_from_server(){
                     update_server(++counter, 0);
                 }
 
-                notifyLocalClients(false);
+                notifyLocalClients(firstTimeNotify);
                 toLoopFunctionsMultipleTimes();
 
                 if( ( millis() - USER_REQUEST_CHECK_INTERVAL_ELAPSED_TIME ) >= USER_REQUEST_CHECK_INTERVAL ){
                     USER_REQUEST_CHECK_INTERVAL_ELAPSED_TIME += USER_REQUEST_CHECK_INTERVAL;
                     if( !get_user_requests_from_server() ){
+                        IS_MOTOR_CONTROLLED_ONLINE = false;
+                        notifyLocalClients(true);
+                        toLoopFunctionsMultipleTimes();
                         break;
                     }
                 }
 
-                notifyLocalClients(false);
-                toLoopFunctionsMultipleTimes();
+                firstTimeNotify = false;
 
             }
 
             IS_MOTOR_CONTROLLED_ONLINE = false;
-
             USER_REQUEST_CHECK_INTERVAL = 30000;
         }
     }

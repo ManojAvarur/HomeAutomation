@@ -434,18 +434,17 @@
                 debugLog.children[1].innerText = `NO DEBUG LOG TO DISPLAY`; 
             }   
             
+            if( manualOverideCheckbox.checked && event.status.motor.isOnlineControlled ){
+                manualOverideCheckbox.checked = false;
+                alert('Motor is controlled by one of your family member!');
+            }
+
             if( event.status.motor.isControlled ){
                 manualOverideCheckbox.checked = true;
                 manualOverideController.checked = event.status.motor.state;
-
-                if( event.status.motor.isOnlineControlled ){
-                    manualOverideCheckbox.checked = false;
-                    alert('Motor is controlled only by one of your family member');
-                }
             } else {
                 manualOverideCheckbox.checked = false;
             }
-            
 
             onChangeOverideCheckbox();
         };  
