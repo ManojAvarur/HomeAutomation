@@ -15,7 +15,7 @@ void processLocalUserRequest(){
             processStartNotify = false;
             processEndNotify = true;
             notifyLocalClients(true);
-            update_server(1, 0);
+            update_server(true, false, 0);
         }
 
        
@@ -34,7 +34,7 @@ void processLocalUserRequest(){
         isBeingControlledLocally = userRequest["isBeingControlled"];
         motorStateRequest = userRequest["state"];
 
-        update_server(0, 0);
+        update_server(false, false, 0);
         Serial.println("Inside local loop");
     }
 
