@@ -95,7 +95,7 @@
 
         <header id="header" class="fixed-top">
             <div class="container d-flex align-items-center justify-content-between">
-                <h1 class="logo"><a href="index.php">FARM<span>ATO</span></a></h1>
+                <h1 class="logo"><a href="index.php">HOME<span>ATO</span></a></h1>
                 <a href="login.php" class="login-btn">Login</a>
             </div>
         </header>

@@ -1,7 +1,7 @@
 <?php
     // ini_set('display_errors', '1');
     session_start();
-
+    date_default_timezone_set("Asia/Kolkata");
     include "../../_headers/db_connection.php";
 
     global $connection;
@@ -151,7 +151,7 @@
     ){
         $rawdata = json_decode( file_get_contents('php://input'), true );
 
-        $rawdata["time_stamp"] = mysqli_escape_string( $connection, $rawdata["time_stamp"] );
+        $rawdata["time_stamp"] = mysqli_escape_string( $connection, date("Y-m-d H:i:s") );
         $rawdata["pump_manual_overide_request"] = mysqli_escape_string( $connection, $rawdata["pump_manual_overide_request"] );
         $rawdata["pump_on_off_status"] = mysqli_escape_string( $connection, $rawdata["pump_on_off_status"] );
         $rawdata["pump_take_over_complete_control"] = mysqli_escape_string( $connection, $rawdata["pump_take_over_complete_control"] );

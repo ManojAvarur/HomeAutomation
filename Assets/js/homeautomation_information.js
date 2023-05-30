@@ -36,6 +36,7 @@ let loadSensorDataInterval = setInterval( () => {
 }, sensorDataLoadIntervalTime );
 
 let updateTimeToServerInterval;
+let totalRetrivedCount = 0;
 
 function loadSensorData(){
     fetch("handel_request/user/retrive_sensor_data.php")
@@ -43,9 +44,20 @@ function loadSensorData(){
     .then( sensorData => {
 
         if( manualOverideCheckBox.checked ){
-            if( parseInt( sensorData.pump_manual_overide_data_flag ) != 1 ){
-                return true;
+            if( sensorData.pump_manual_overide_data_flag != "true" ){
+                return;
             }
+
+            if( sensorData.is_controlled_locally == "true" && totalRetrivedCount >= 2 ){
+                showError({ type:"Error!", message:"Motor is controlled locally!" });
+                manualOverideCheckBox.checked = false;
+                performToggleSwitchAndControlOP();
+            } else {
+                return;
+            }
+            totalRetrivedCount++;
+        } else {
+            totalRetrivedCount = 0;
         }
 
         switch( parseInt( sensorData.tank_status ) ){
@@ -524,13 +536,3 @@ document.addEventListener("visibilitychange", ( event )=> {
         }
     }
 });
-
-
-
-// USER : Sensor Data request every 10 secs
-// NODE MCU : Sesnsor data update only when changes
-// USER : Manual over ride request only when changed
-// NODE MCU : user request check and Manual pump overside status check with full control  every 2 secs
-// USER : online update only under manual pump overide is set for every 5 secs
-
-// USER : as soon as user check manual over ride wait 5 secs before updating server

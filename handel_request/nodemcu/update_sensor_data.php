@@ -10,13 +10,12 @@
     if( isset( $_GET["data_ready"] )  && isset( $_GET["pump_manual_override_data"] ) ){
         $rawdata = json_decode( file_get_contents('php://input'), true );
 
-        // date_default_timezone_set($rawdata["tank_status"]);
-
         $timestamp = mysqli_escape_string( $connection, date("Y-m-d H:i:s") );
         $tank_status = mysqli_escape_string( $connection, $rawdata["tank_status"] );
         $sump_status = mysqli_escape_string( $connection, $rawdata["sump_status"] );
         $motor_status = mysqli_escape_string( $connection, $rawdata["motor_status"] );
         $debug_log = mysqli_escape_string( $connection, $rawdata["debug_log"] );
+        $is_controlled_locally = mysqli_escape_string( $connection, $_GET["motor_controlled_locally"] );
         $nodemcu_id = mysqli_escape_string( $connection, $rawdata["nodemcu_id"] );
         $pump_manual_overide_data_flag = ( $_GET["pump_manual_override_data"] === "true" )? "1" : "0";  
 
@@ -27,6 +26,7 @@
         $query .= "sump_status = '" . $sump_status . "', ";
         $query .= "motor_status = '" . $motor_status . "', ";
         $query .= "debug_log = '" . $debug_log . "', ";
+        $query .= "is_controlled_locally = '" . $is_controlled_locally . "', ";
         $query .= "pump_manual_overide_data_flag = '".$pump_manual_overide_data_flag."' ";
         $query .= "WHERE unc_node_mcu_unique_id = '" . $nodemcu_id . "'; ";
 
@@ -40,13 +40,14 @@
                 http_response_code(200);
             } else {
 
-                $query = "INSERT INTO node_mcu_data (time_stamp, unc_node_mcu_unique_id, sump_status, tank_status, motor_status, debug_log, pump_manual_overide_data_flag) VALUES (";
+                $query = "INSERT INTO node_mcu_data (time_stamp, unc_node_mcu_unique_id, sump_status, tank_status, motor_status, debug_log, is_controlled_locally, pump_manual_overide_data_flag) VALUES (";
                 $query .= "'".$timestamp."', ";
                 $query .= "'".$nodemcu_id."', ";
                 $query .= "'".$sump_status."', ";
                 $query .= "'".$tank_status."', ";
                 $query .= "'".$motor_status."', ";
                 $query .= "'".$debug_log."', ";
+                $query .= "'".$is_controlled_locally."', ";
                 $query .= "'".$pump_manual_overide_data_flag."'); ";
 
                 if( mysqli_query( $connection, $query ) ){

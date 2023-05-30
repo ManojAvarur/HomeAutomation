@@ -10,10 +10,10 @@
     {            
         $query = "";
         if( $_SESSION["hato-is_admin" ] ){
-            $query = "SELECT time_stamp, sump_status, tank_status, motor_status, pump_manual_overide_data_flag, debug_log ";
+            $query = "SELECT time_stamp, sump_status, tank_status, motor_status, pump_manual_overide_data_flag, debug_log, is_controlled_locally ";
             $query .= "FROM node_mcu_data WHERE unc_node_mcu_unique_id = '".$_SESSION["hato-nodemcu_id"]."';";
         } else {
-            $query = "SELECT time_stamp, sump_status, tank_status, motor_status, pump_manual_overide_data_flag ";
+            $query = "SELECT time_stamp, sump_status, tank_status, motor_status, pump_manual_overide_data_flag, is_controlled_locally ";
             $query .= "FROM node_mcu_data WHERE unc_node_mcu_unique_id = '".$_SESSION["hato-nodemcu_id"]."';";
         }
                 
