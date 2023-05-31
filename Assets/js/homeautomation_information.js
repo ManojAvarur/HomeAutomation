@@ -41,7 +41,7 @@ let totalRetrivedCount = 0;
 function loadSensorData(){
     fetch("handel_request/user/retrive_sensor_data.php")
     .then( result => result.json() )
-    .then( sensorData => {
+    .then( async sensorData => {
 
         if( manualOverideCheckBox.checked ){
             if( sensorData.pump_manual_overide_data_flag != "true" ){
@@ -49,6 +49,7 @@ function loadSensorData(){
             }
 
             if( sensorData.is_controlled_locally == "true" && totalRetrivedCount >= 2 ){
+                await pumpRelatedOperations();
                 showError({ type:"Error!", message:"Motor is controlled locally!" });
                 manualOverideCheckBox.checked = false;
                 performToggleSwitchAndControlOP();
