@@ -1,3 +1,7 @@
 <?php
-    $connection = mysqli_connect( "localhost", "root", "", "homeautomation") or die("Connection failed!");
+    try{
+        $connection = mysqli_connect( "localhost", "root", "", "homeautomation");
+    } catch( error ){
+        die("Error");
+    }
 ?>

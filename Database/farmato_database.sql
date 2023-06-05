@@ -1,9 +1,7 @@
 -- Check out json data type in mysql
 
 CREATE TABLE registered_node_mcu (
-  node_mcu_unique_id varchar(100) PRIMARY KEY,
-  belongs_to varchar(15) NOT NULL,
-  unique_code varchar(10) NOT NULL UNIQUE
+  node_mcu_unique_id varchar(100) PRIMARY KEY
 );
 
 CREATE TABLE user_login (

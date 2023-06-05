@@ -48,11 +48,11 @@ function loadSensorData(){
                 return;
             }
 
-            if( sensorData.is_controlled_locally == "true" && totalRetrivedCount >= 2 ){
-                await pumpRelatedOperations();
-                showError({ type:"Error!", message:"Motor is controlled locally!" });
+            if( sensorData.is_controlled_locally == "true" ){
                 manualOverideCheckBox.checked = false;
                 performToggleSwitchAndControlOP();
+                showError({ type:"Error!", message:"Motor is controlled locally!" });
+                await pumpRelatedOperations();
             } else {
                 return;
             }
@@ -173,6 +173,7 @@ function loadSensorData(){
 async function pumpRelatedOperations( overRideOperationCount = operationCount ){
 
     let timeStamp = new Date();
+    // Depricated
     timeStamp = timeStamp.toISOString().split('T')[0] + ' ' + timeStamp.toTimeString().split(' ')[0];
 
     let data = {

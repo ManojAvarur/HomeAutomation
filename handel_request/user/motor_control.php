@@ -43,6 +43,19 @@
 
         global $connection;
 
+        $query = "
+            UPDATE node_mcu_data SET 
+            is_controlled_locally = false
+            WHERE unc_node_mcu_unique_id = '".$_SESSION["hato-nodemcu_id"]."'
+        ";
+
+        if( !mysqli_query( $connection, $query ) ){
+            return [
+                "success" => false,
+                "from" => "UPDATE"
+            ];
+        }
+
         $query = "INSERT INTO user_requests (time_stamp, 
                                             unc_node_mcu_unique_id, 
                                             pump_manual_overide_request, 
@@ -58,25 +71,10 @@
         $query .= "'".$_SESSION["hato-token-id"]."', ";
         $query .= "'" . $rawdata["phpsessid"] . "'); ";
 
-        if( mysqli_query( $connection, $query ) ){
-
-            return [
-                "success" => true, 
-                "affected_rows" => mysqli_affected_rows( $connection ),
-                // "query" => $query,
-                // "mysqli_error" => mysqli_error( $connection ) 
-            ];
-
-        } else {
-
-            return [
-                "success" => false, 
-                "affected_rows" => mysqli_affected_rows( $connection ),
-                // "query" => $query,
-                // "mysqli_error" => mysqli_error( $connection ) 
-            ];
-
-        }
+        return [
+            "success" => mysqli_query( $connection, $query ), 
+            "affected_rows" => mysqli_affected_rows( $connection )
+        ];
 
     }
 
@@ -169,6 +167,11 @@
 
                 echo json_encode( $result );
                 
+            } else if( $result["from"] === "UPDATE" ) {
+                
+                // unset( $result["from"] );
+                echo json_encode( $result );
+
             } else {
                 
                 $query = "SELECT node_mcu_is_controled_by_user_id, time_stamp, phpsessid FROM user_requests ";
