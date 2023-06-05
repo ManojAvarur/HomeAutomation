@@ -22,4 +22,6 @@ void loop(){
         }
         // control_wifi_ap( true );
     }
+
+    delay(1000);
 }

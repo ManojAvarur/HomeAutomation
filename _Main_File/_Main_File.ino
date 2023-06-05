@@ -1,6 +1,6 @@
 // ------------------ Main Declaration --------------
-String URL = "http://iotproject.coolpage.biz/home_automation/handel_request/nodemcu";
-//String URL = "http://192.168.2.2/HomeAutomation-website/handel_request/nodemcu";
+// String URL = "http://iotproject.coolpage.biz/home_automation/handel_request/nodemcu";
+String URL = "http://192.168.1.9/HomeAutomation/HomeAutomation-website/handel_request/nodemcu";
 String UNIQUE_ID = "4bb7abf6d3782611339eb6fe6326b96b6b4fca3d6f7e16f33367268806c5512c";
 
 // ------------------ Wi-Fi Settings ------------------
