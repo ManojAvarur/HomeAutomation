@@ -36,7 +36,6 @@ let loadSensorDataInterval = setInterval( () => {
 }, sensorDataLoadIntervalTime );
 
 let updateTimeToServerInterval;
-let totalRetrivedCount = 0;
 
 function loadSensorData(){
     fetch("handel_request/user/retrive_sensor_data.php")
@@ -44,21 +43,17 @@ function loadSensorData(){
     .then( async sensorData => {
 
         if( manualOverideCheckBox.checked ){
-            if( sensorData.pump_manual_overide_data_flag != "true" ){
+            debugger;
+            if( sensorData.pump_manual_overide_data_flag != "1" ){
                 return;
             }
 
-            if( sensorData.is_controlled_locally == "true" ){
+            if( sensorData.is_controlled_locally == "1" ){
                 manualOverideCheckBox.checked = false;
                 performToggleSwitchAndControlOP();
-                showError({ type:"Error!", message:"Motor is controlled locally!" });
+                showError("Motor is controlled locally!");
                 await pumpRelatedOperations();
-            } else {
-                return;
             }
-            totalRetrivedCount++;
-        } else {
-            totalRetrivedCount = 0;
         }
 
         switch( parseInt( sensorData.tank_status ) ){
