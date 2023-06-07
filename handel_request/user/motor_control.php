@@ -69,12 +69,19 @@
         $query .= "'".$rawdata["pump_on_off_status"]."',";
         $query .= "'".$rawdata["pump_take_over_complete_control"]."',";
         $query .= "'".$_SESSION["hato-token-id"]."', ";
-        $query .= "'" . $rawdata["phpsessid"] . "'); ";
+        $query .= "'" . $rawdata["phpsessid"] . "') ";
 
-        return [
-            "success" => mysqli_query( $connection, $query ), 
-            "affected_rows" => mysqli_affected_rows( $connection )
-        ];
+        try {
+            return [
+                "success" => mysqli_query( $connection, $query ), 
+                "affected_rows" => mysqli_affected_rows( $connection ) 
+            ];
+        } catch( mysqli_sql_exception $e ) {
+            return [
+                "success" => false, 
+                "affected_rows" => 0
+            ];
+        }
 
     }
 
@@ -167,7 +174,7 @@
 
                 echo json_encode( $result );
                 
-            } else if( $result["from"] === "UPDATE" ) {
+            } else if( isset( $result["from"] ) && $result["from"] === "UPDATE" ) {
                 
                 // unset( $result["from"] );
                 echo json_encode( $result );

@@ -17,7 +17,7 @@
         $debug_log = mysqli_escape_string( $connection, $rawdata["debug_log"] );
         $is_controlled_locally = mysqli_escape_string( $connection, $_GET["motor_controlled_locally"] );
         $nodemcu_id = mysqli_escape_string( $connection, $rawdata["nodemcu_id"] );
-        $pump_manual_overide_data_flag = ( $_GET["pump_manual_override_data"] === "true" )? "1" : "0";  
+        $pump_manual_overide_data_flag = mysqli_escape_string( $connection, $_GET["pump_manual_override_data"] );
 
 
         $query = "UPDATE node_mcu_data SET ";
