@@ -43,7 +43,6 @@ function loadSensorData(){
     .then( async sensorData => {
 
         if( manualOverideCheckBox.checked ){
-            debugger;
             if( sensorData.pump_manual_overide_data_flag != "1" ){
                 return;
             }
