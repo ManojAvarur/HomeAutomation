@@ -2,7 +2,6 @@
 void debug_log( String value ){
     DEBUG_LOG = value;
     if( DEBUG_CODE ){
-        Serial.println("Debug Log : " + value );
         delay( DEBUG_DELAY_TIME );
     }
 }
@@ -35,6 +34,7 @@ void control_wifi_ap( bool status ){
 // generates json data with all sensor information
 String generateStringifiedJsonDataForLocalUser(){
     String jsonData = "";
+    json_sensor_data_update.clear();
     json_sensor_data_update["nodemcu_id"] = UNIQUE_ID;
     json_sensor_data_update["status"]["tank"] = tankObj.waterLevelInTank();
     json_sensor_data_update["status"]["sump"] = sumpObj.waterLevelInSump();

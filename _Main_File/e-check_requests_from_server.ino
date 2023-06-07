@@ -30,8 +30,10 @@ void check_requests_from_server(){
         if( json_user_request["pump_take_over_complete_control"].as<String>().toInt() == 1 ) {
 
             if( json_user_request["pump_on_off_status"].as<String>().toInt() == 1 ){ 
+                Serial.println("Overide On : Complete Control On : Motor On");
                 motorController.turnOn();
             } else { 
+                Serial.println("Overide On : Complete Control On : Motor Off");
                 motorController.turnOff();
             }
 
@@ -46,6 +48,7 @@ void check_requests_from_server(){
             ){
                 water_pump();
             } else {
+                Serial.println("Overide On : Complete Control Off : Motor Off");
                 motorController.turnOff();
             }
 
