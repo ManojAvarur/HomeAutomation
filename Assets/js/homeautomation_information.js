@@ -43,15 +43,16 @@ function loadSensorData(){
     .then( async sensorData => {
 
         if( manualOverideCheckBox.checked ){
-            if( sensorData.pump_manual_overide_data_flag != "1" ){
-                return;
-            }
 
             if( sensorData.is_controlled_locally == "1" ){
                 manualOverideCheckBox.checked = false;
                 performToggleSwitchAndControlOP();
                 showError("Motor is controlled locally!");
                 await pumpRelatedOperations();
+            }
+
+            if( manualOverideCheckBox.checked && sensorData.pump_manual_overide_data_flag != "1" ){
+                return;
             }
         }
 

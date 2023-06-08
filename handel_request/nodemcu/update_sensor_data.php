@@ -15,7 +15,7 @@
         $sump_status = mysqli_escape_string( $connection, $rawdata["sump_status"] );
         $motor_status = mysqli_escape_string( $connection, $rawdata["motor_status"] );
         $debug_log = mysqli_escape_string( $connection, $rawdata["debug_log"] );
-        $is_controlled_locally = mysqli_escape_string( $connection, $_GET["motor_controlled_locally"] );
+        $is_controlled_locally = ( $_GET["motor_controlled_locally"] === "1" )? 1 : 0;
         $nodemcu_id = mysqli_escape_string( $connection, $rawdata["nodemcu_id"] );
         $pump_manual_overide_data_flag = mysqli_escape_string( $connection, $_GET["pump_manual_override_data"] );
 
@@ -26,20 +26,21 @@
         $query .= "sump_status = '" . $sump_status . "', ";
         $query .= "motor_status = '" . $motor_status . "', ";
         $query .= "debug_log = '" . $debug_log . "', ";
-        $query .= "is_controlled_locally = '" . $is_controlled_locally . "', ";
+        $query .= "is_controlled_locally = " . $is_controlled_locally . ", ";
         $query .= "pump_manual_overide_data_flag = '".$pump_manual_overide_data_flag."' ";
         $query .= "WHERE unc_node_mcu_unique_id = '" . $nodemcu_id . "'; ";
 
+        echo  $query;
         if( mysqli_query( $connection, $query ) ){
             if( mysqli_affected_rows( $connection ) > 0 ){
                 // echo json_encode([
                 //     "query" => $query,
                 //     "success" => true
                 // ]);
-                echo $pump_manual_overide_data_flag;
                 http_response_code(200);
             } else {
 
+                
                 $query = "INSERT INTO node_mcu_data (time_stamp, unc_node_mcu_unique_id, sump_status, tank_status, motor_status, debug_log, is_controlled_locally, pump_manual_overide_data_flag) VALUES (";
                 $query .= "'".$timestamp."', ";
                 $query .= "'".$nodemcu_id."', ";
@@ -49,7 +50,9 @@
                 $query .= "'".$debug_log."', ";
                 $query .= "'".$is_controlled_locally."', ";
                 $query .= "'".$pump_manual_overide_data_flag."'); ";
-
+                
+                echo $query;
+                
                 if( mysqli_query( $connection, $query ) ){
                     if( mysqli_affected_rows( $connection ) > 0 ){
                         // echo json_encode([
