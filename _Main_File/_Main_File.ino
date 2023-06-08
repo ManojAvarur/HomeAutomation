@@ -50,8 +50,8 @@ StaticJsonDocument<96> json_local_user_request;
 String string_local_user_request;
 
 // ----------------- DEBUG CODE ---------------------
-bool DEBUG_CODE = true;
-int DEBUG_DELAY_TIME = 1000; // 0 sec
+bool DEBUG_CODE = false;
+int DEBUG_DELAY_TIME = 000; // 0 sec
 
 bool DEBUG_CLASS_CODE = false;
 int DEBUG_CLASS_DELAY_TIME = 0; // 1 
@@ -67,7 +67,8 @@ unsigned long USER_REQUEST_CHECK_INTERVAL_ELAPSED_TIME = 0L;
 int WIFI_RECONNECTION_INTERVAL = 10000;
 unsigned long WIFI_RECONNECTION_INTERVAL_ELAPSED_TIME = 0L;
 
-int TANK_SUMP_WATER_LEVEL_UPDATE_INTERVAL = 20000; 
+int TANK_SUMP_WATER_LEVEL_UPDATE_INTERVAL = 60000; 
+unsigned long TANK_SUMP_WATER_LEVEL_UPDATE_INTERVAL_ELAPSED_TIME = 0L;
 
 // ------------------ Class Instantiation -------------
 

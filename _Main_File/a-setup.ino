@@ -18,7 +18,6 @@ void setup(){
 
     server.on("/initial-message", [](){
       String jsonData = generateStringifiedJsonDataForLocalUser();
-      Serial.println( jsonData );
       server.sendHeader("Access-Control-Allow-Origin", "*", true);
       server.send(200, "application/json", jsonData );
     });

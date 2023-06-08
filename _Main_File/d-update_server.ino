@@ -1,11 +1,10 @@
 void update_server( bool forceUpdate, bool pump_manual_override_data, int repeatCount ){
 
     if( !tankObj.isDataChanged() && !sumpObj.isDataChanged() && !motorController.isDataChanged() && !forceUpdate ){
-        Serial.println("Failed to update");
         return;
     }
 
-    delay(1000);
+    Serial.println("Updating server");
 
     int httpCode;
     int count = 1;
@@ -26,6 +25,9 @@ void update_server( bool forceUpdate, bool pump_manual_override_data, int repeat
         http.addHeader("Content-Type", "application/json");
 
         httpCode = http.POST( jsonData );
+        Serial.println( href );
+        Serial.println( http.getString() );
+
 
         http.end();
     
@@ -37,18 +39,10 @@ void update_server( bool forceUpdate, bool pump_manual_override_data, int repeat
     } while( httpCode != 200 && count <= repeatCount );
 
     if( httpCode != 200 ){  
-        Serial.println("Failed");
-        Serial.println( href );
-        Serial.println( jsonData );
-        delay(30000);
         motorController.rollBackChangeNotifier();
         tankObj.rollBackChangeNotifier();
         sumpObj.rollBackChangeNotifier();
-    } else {
-      Serial.println( href );
-      Serial.println( jsonData );
-
-      delay(20000);
     }
+
 
 }
