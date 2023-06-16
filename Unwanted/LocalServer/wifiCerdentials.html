@@ -188,27 +188,40 @@
     </header>  
 
     <main class="container">
-        <section id='Sensor-Data' class='mxy-2'>    
-            <div class='container'> 
-                <div class='title'> 
-                    <h4>Wi-Fi</h4> 
-                    <h1>Wi-Fi Credentials</h3>    
-                </div>  
-
-                <form action="/update-wifi-cred" method="post">
-                    <div class="form-group">
-                        <label for="ssid">SSID</label>
-                        <input type="text" id="ssid" name="ssid" value="ssid">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="ssid">Password</label>
-                        <input type="password" id="ssid" name="ssid">
-                    </div>
-                    <input type="submit" value="Submit">
-                </form>
+        <section id='wifi-data' class='mxy-2'>    
+            <div class='title'> 
+                <h4>Wi-Fi</h4> 
+                <h1>Wi-Fi Credentials</h3>    
             </div>  
+
+            <form action="/update-wifi-cred" class="grid" style="display: grid; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 100px;" method="post">
+                <div class="form-group-1">
+                    <label for="ssid">SSID</label>
+                    <input type="text" id="ssid" name="ssid" value="ssid">
+                </div>
+
+                <div class="form-group-2">
+                    <label for="ssid">Password</label>
+                    <input type="password" id="ssid" name="ssid">
+                </div>
+
+                <div class="form-group-3">
+                    <input type="submit" value="Submit">
+                </div>
+            </form>
         </section>  
     </main>
+    <div class="water-wave" style="min-height: 100vh;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+            <path 
+                fill="#698b49"
+                fill-opacity="0.5" 
+                d="M0,128L24,112C48,96,96,64,144,80C192,96,240,160,288,160C336,160,384,96,432,85.3C480,75,528,117,576,128C624,139,672,117,720,106.7C768,96,816,96,864,117.3C912,139,960,181,1008,208C1056,235,1104,245,1152,250.7C1200,256,1248,256,1296,224C1344,192,1392,128,1416,96L1440,64L1440,320L1416,320C1392,320,1344,320,1296,320C1248,320,1200,320,1152,320C1104,320,1056,320,1008,320C960,320,912,320,864,320C816,320,768,320,720,320C672,320,624,320,576,320C528,320,480,320,432,320C384,320,336,320,288,320C240,320,192,320,144,320C96,320,48,320,24,320L0,320Z" 
+                data-darkreader-inline-fill="" 
+                style="--darkreader-inline-fill: #007acc #698b49;"
+            >
+            </path>
+        </svg>
+    </div>
 </body>
 </html>
