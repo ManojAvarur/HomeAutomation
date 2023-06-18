@@ -148,6 +148,46 @@
             grid-area: submit;
         }
 
+        #sump-sensor-data form,
+        #tank-sensor-data form{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr 1fr;
+            align-items: center;
+            column-gap: 10px;
+            grid-template-areas: 
+                "low high"
+                "new new"
+                "submit submit"
+            ;
+
+        }
+
+        #sump-sensor-data form div.form-group-1,
+        #tank-sensor-data form div.form-group-1{
+            grid-area: low;
+        }
+
+        #sump-sensor-data form div.form-group-2,
+        #tank-sensor-data form div.form-group-2{
+            grid-area: high;
+        }
+
+        #sump-sensor-data form div.form-group-3,
+        #tank-sensor-data form div.form-group-3{
+            grid-area: submit;
+            margin: auto;
+        }
+
+        #sump-sensor-data form div.form-group-4,
+        #tank-sensor-data form div.form-group-4{
+            grid-area: new;
+            margin: auto;
+
+        }
+
+        #sump-sensor-data form input,
+        #tank-sensor-data form input,
         #wifi-data form input[type=text],
         #wifi-data form input[type=password]{
             font-size: 1.2em;
@@ -163,6 +203,10 @@
             border-color: #698b49;
         }
 
+        #sump-sensor-data form input[type=submit],
+        #tank-sensor-data form input[type=submit],
+        #tank-sensor-data form input[type=button],
+        #sump-sensor-data form input[type=button],
         #wifi-data form input[type=submit]{
             font-size: 1em;
             border-radius: 5rem;
@@ -174,11 +218,21 @@
             cursor: pointer;
         }
 
+        #sump-sensor-data form input[type=submit]:hover,
+        #sump-sensor-data form input[type=submit]:focus,
+        #sump-sensor-data form input[type=button]:hover,
+        #sump-sensor-data form input[type=button]:focus,
+        #tank-sensor-data form input[type=submit]:hover,
+        #tank-sensor-data form input[type=submit]:focus,
+        #tank-sensor-data form input[type=button]:hover,
+        #tank-sensor-data form input[type=button]:focus,
         #wifi-data form input[type=submit]:hover,
         #wifi-data form input[type=submit]:focus{
             color: #040404;
         }
 
+        #sump-sensor-data form div,
+        #tank-sensor-data form div,
         #wifi-data form div{
             display: inherit;
         }
@@ -215,6 +269,8 @@
                 ;
             }
 
+            #sump-sensor-data form div.form-group-3,
+            #tank-sensor-data form div.form-group-3,
             #wifi-data form div.form-group-3{
                 margin: auto;
                 min-width: 30%;
@@ -231,7 +287,59 @@
                     "submit"
                 ;
             }
+
+            #sump-sensor-data form,
+            #tank-sensor-data form{
+                grid-template-columns: 1fr;
+                grid-template-rows: 1fr 1fr 1fr 1fr;
+                grid-template-areas: 
+                    "low"
+                    "high"
+                    "new"
+                    "submit"
+                ;
+            }
         }
+
+        /* Model Style */
+
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            padding-top: 100px; /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            }
+
+            /* Modal Content */
+            .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            }
+
+            /* The Close Button */
+            .close {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            }
+
+            .close:hover,
+            .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+            }
 
             
     </style>  
@@ -271,25 +379,55 @@
                 </form>
             </section>  
 
-            <section id='sump-data' class='mxy-2'>    
+            <section id='tank-sensor-data' class='mxy-2'>    
                 <div class='title'> 
-                    <h4>Wi-Fi</h4> 
-                    <h1>Wi-Fi Credentials</h3>    
+                    <h4>Sensor Calibration</h4> 
+                    <h1>Tank Sensor</h3>    
                 </div>  
     
-                <form action="/update-wifi-cred" method="post">
+                <form action="/update-tank-sensor" method="post">
                     <div class="form-group-1">
-                        <input type="text" id="ssid" name="ssid" value="ssid" placeholder="SSID">
-                        <!-- <label for="ssid">SSID</label> -->
+                        <input type="number" id="tlow" name="tlow" value="tlow" placeholder="Low">
+                        <!-- <label for="tlow">Low</label> -->
                     </div>
     
                     <div class="form-group-2">
-                        <input type="password" id="ssid" name="password" placeholder="Password">
-                        <!-- <label for="ssid">Password</label> -->
+                        <input type="number" id="thigh" name="thigh" placeholder="High">
+                        <!-- <label for="ssid">High</label> -->
                     </div>
     
                     <div class="form-group-3">
                         <input class="btn" type="submit" value="Submit">
+                    </div>
+
+                    <div class="form-group-4">
+                        <input class="btn" name="captureCurrentTank" type="button" value="Capture Current Sensor Data">
+                    </div>
+                </form>
+            </section>
+
+            <section id='sump-sensor-data' class='mxy-2'>    
+                <div class='title'> 
+                    <h1>Sump Sensor</h3>    
+                </div>  
+    
+                <form action="/update-sump-sensor" method="post">
+                    <div class="form-group-1">
+                        <input type="number" id="slow" name="slow" value="slow" placeholder="Low">
+                        <!-- <label for="slow">Low</label> -->
+                    </div>
+    
+                    <div class="form-group-2">
+                        <input type="number" id="shigh" name="shigh" placeholder="High">
+                        <!-- <label for="shigh">High</label> -->
+                    </div>
+    
+                    <div class="form-group-3">
+                        <input class="btn" type="submit" value="Submit">
+                    </div>
+
+                    <div class="form-group-4">
+                        <input class="btn" name="captureCurrentSump" type="button" value="Capture Current Sensor Data">
                     </div>
                 </form>
             </section>
@@ -307,6 +445,18 @@
                 </path>
             </svg>
         </div>
+
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Some text in the Modal..</p>
+            </div>
+        </div>
+
     </main>
 </body>
+<script>
+
+</script>
 </html>
