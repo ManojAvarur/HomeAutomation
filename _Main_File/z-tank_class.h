@@ -1,4 +1,5 @@
 //#include "z-pin_alter_class.h"
+#include "z-ultra_sonic_sensor.h"
 
 class Tank{
     private:
