@@ -6,6 +6,7 @@
 #include <WebSocketsServer.h>
 #include <DNSServer.h> 
 #include <Hash.h>
+#include "z-ultra_sonic_sensor.h"
 
 const char* ssid = "Madhura";
 const char* password = "Network_Bridge";
@@ -43,11 +44,15 @@ long duration;
 float distanceCm;
 float distanceInch;
 
+UltraSonicSensor *uss;// = new UltraSonicSensor( trigPin, echoPin );
+
 void setup() {
   	Serial.begin(19200); // Starts the serial communication
 
 
 	WiFi.begin(ssid, password);
+
+	uss = new UltraSonicSensor( trigPin, echoPin );
 
 	while (WiFi.status() != WL_CONNECTED) {
 		delay(500);
@@ -75,35 +80,41 @@ void setup() {
 	webSocket.onEvent(webSocketEvent);
 
 
-	pinMode(trigPin, OUTPUT); // Sets the trigPin as an Output
-	pinMode(echoPin, INPUT); // Sets the echoPin as an Input
+	// pinMode(trigPin, OUTPUT); // Sets the trigPin as an Output
+	// pinMode(echoPin, INPUT); // Sets the echoPin as an Input
 }
 
 void loop() {
-	// Clears the trigPin
-	digitalWrite(trigPin, LOW);
-	delayMicroseconds(2);
-	// Sets the trigPin on HIGH state for 10 micro seconds
-	digitalWrite(trigPin, HIGH);
-	delayMicroseconds(10);
-	digitalWrite(trigPin, LOW);
+	// // Clears the trigPin
+	// digitalWrite(trigPin, LOW);
+	// delayMicroseconds(2);
+	// // Sets the trigPin on HIGH state for 10 micro seconds
+	// digitalWrite(trigPin, HIGH);
+	// delayMicroseconds(10);
+	// digitalWrite(trigPin, LOW);
 	
-	// Reads the echoPin, returns the sound wave travel time in microseconds
-	duration = pulseIn(echoPin, HIGH);
+	// // Reads the echoPin, returns the sound wave travel time in microseconds
+	// duration = pulseIn(echoPin, HIGH);
 	
-	// Calculate the distance
-	distanceCm = duration * SOUND_VELOCITY/2;
+	// // Calculate the distance
+	// distanceCm = duration * SOUND_VELOCITY/2;
 	
-	// Convert to inches
-	distanceInch = distanceCm * CM_TO_INCH;
+	// // Convert to inches
+	// distanceInch = distanceCm * CM_TO_INCH;
 	
 	// Prints the distance on the Serial Monitor
+
+	UltraSonicSensor *newData = uss->getCurrentValue();
+	distanceCm = newData->inCentimeter();
+	distanceInch = newData->inInches();
+
+
 	String data = "Distance (cm): ";
 	data += String( distanceCm );
-	data += "&nbsp;&nbsp;Distance (inch): ";
+	data += " &nbsp;&nbsp; Distance (inch): ";
 	data += String(distanceInch);
   
-  // Serial.println( data );
+  Serial.println( data );
 	webSocket.broadcastTXT( data );
 
   server.handleClient();
@@ -112,7 +123,7 @@ void loop() {
 
   	delay(200);
 
-    Serial.println( webSocket.connectedClients() );
+    // Serial.println( webSocket.connectedClients() );
 }
 
 

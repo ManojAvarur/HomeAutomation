@@ -481,12 +481,12 @@
     
                 <form action="/update-wifi-cred" method="post">
                     <div class="form-group-1">
-                        <input type="text" id="ssid" name="ssid" value="ssid" placeholder="SSID">
+                        <input type="text" id="ssid" name="ssid" value="ssid" placeholder="SSID" required>
                         <!-- <label for="ssid">SSID</label> -->
                     </div>
     
                     <div class="form-group-2">
-                        <input type="password" id="password" name="password" placeholder="Password">
+                        <input type="password" id="password" name="password" placeholder="Password" required>
                         <!-- <label for="password">Password</label> -->
                     </div>
     
@@ -504,17 +504,17 @@
     
                 <form action="/update-tank-sensor" method="post">
                     <div class="form-group-1">
-                        <input type="number" id="tlow" name="tlow" placeholder="Low">
+                        <input type="number" id="tlow" name="tlow" placeholder="Low" required>
                         <!-- <label for="tlow">Low</label> -->
                     </div>
     
                     <div class="form-group-2">
-                        <input type="number" id="thigh" name="thigh" placeholder="High">
+                        <input type="number" id="thigh" name="thigh" placeholder="High" required>
                         <!-- <label for="ssid">High</label> -->
                     </div>
     
                     <div class="form-group-3">
-                        <input class="btn" type="submit" value="Submit">
+                        <input class="btn" type="submit" value="Submit Locally">
                     </div>
 
                     <div class="form-group-4">
@@ -530,12 +530,12 @@
     
                 <form action="/update-sump-sensor" method="post">
                     <div class="form-group-1">
-                        <input type="number" id="slow" name="slow" placeholder="Low">
+                        <input type="number" id="slow" name="slow" placeholder="Low" required>
                         <!-- <label for="slow">Low</label> -->
                     </div>
     
                     <div class="form-group-2">
-                        <input type="number" id="shigh" name="shigh" placeholder="High">
+                        <input type="number" id="shigh" name="shigh" placeholder="High" required>
                         <!-- <label for="shigh">High</label> -->
                     </div>
     
