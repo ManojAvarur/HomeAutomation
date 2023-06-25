@@ -53,10 +53,7 @@ void check_requests_from_server(){
             }
 
         }
-
         
-        tankObj.waterLevelInTank();
-        sumpObj.waterLevelInSump();
         update_server(firstTimeNotify, true, 1);
 
         notifyLocalClients(firstTimeNotify);

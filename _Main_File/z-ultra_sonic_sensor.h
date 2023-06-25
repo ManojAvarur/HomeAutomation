@@ -1,10 +1,12 @@
+#define _USS_BY_ "UltraSonicSensor"
+
 class UltraSonicSensor{
     private:
         const double SOUND_VELOCITY = 0.034;
         const double CM_TO_INCH = 0.393701;
 
-        int TRIGGER_PIN;
-        int ECHO_PIN;
+        uint8_t TRIGGER_PIN;
+        uint8_t ECHO_PIN;
 
         long DURATION;
 

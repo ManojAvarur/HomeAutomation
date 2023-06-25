@@ -8,18 +8,17 @@ void setup(){
     setup_wifi( 6, 1 );
     
     // ----- Motor Setup ------
-    pinMode(RELAY_1, OUTPUT);
     motorController.turnOff();
 
     // Route for root / web page
     server.on("/", [](){
-        server.sendContent( getWebsite() );
+		server.sendContent( serveIndexSite() );
     });
 
     server.on("/initial-message", [](){
-      String jsonData = generateStringifiedJsonDataForLocalUser();
-      server.sendHeader("Access-Control-Allow-Origin", "*", true);
-      server.send(200, "application/json", jsonData );
+		String jsonData = generateStringifiedJsonDataForLocalUser();
+		server.sendHeader("Access-Control-Allow-Origin", "*", true);
+		server.send(200, "application/json", jsonData );
     });
 
     // td > Toggle debug
@@ -30,7 +29,7 @@ void setup(){
     });
     
     server.onNotFound([](){
-        server.sendContent( getWebsite() );
+        server.sendContent( serveIndexSite() );
     });
 
     // ----- Server Configuration ----

@@ -58,7 +58,6 @@ class MotorControl{
 
         MotorControl( int relay ){
             relayToControl = relay;
-            // MOTOR_ON = LOW;
-            // MOTOR_OFF = HIGH;
+            pinMode(relayToControl, OUTPUT);
         }
 };

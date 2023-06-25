@@ -18,7 +18,8 @@ void loop(){
     } else {
         if( ( millis() - WIFI_RECONNECTION_INTERVAL_ELAPSED_TIME ) >= WIFI_RECONNECTION_INTERVAL ){
             setup_wifi( 0, 0 );
-            WIFI_RECONNECTION_INTERVAL_ELAPSED_TIME = millis();
+            // WIFI_RECONNECTION_INTERVAL_ELAPSED_TIME = millis();
+            WIFI_RECONNECTION_INTERVAL_ELAPSED_TIME += WIFI_RECONNECTION_INTERVAL;
         }
         control_wifi_ap( true );
     }

@@ -1,5 +1,6 @@
-//#include "z-pin_alter_class.h"
+#ifndef _USS_BY_
 #include "z-ultra_sonic_sensor.h"
+#endif
 
 class Tank{
     private:
@@ -35,9 +36,10 @@ class Tank{
         }
 
         int waterLevelInTank( bool updateFromStart = false ){
-            if( ( ( millis() - WATER_CHECK_INTERVAL_ELAPSED_TIME ) < WATER_CHECK_INTERVAL ) ){
+            if( ( ( millis() - WATER_CHECK_INTERVAL_ELAPSED_TIME ) < WATER_CHECK_INTERVAL ) && ( oldWaterStatus != -1 ) ){
                 return oldWaterStatus;
             }
+            WATER_CHECK_INTERVAL_ELAPSED_TIME += WATER_CHECK_INTERVAL;
 
             currentWaterStatus = ultraSonicSensor->getCurrentValue()->inInches();
 

@@ -12,12 +12,6 @@ String UNIQUE_ID = "4bb7abf6d3782611339eb6fe6326b96b6b4fca3d6f7e16f33367268806c5
 #include <DNSServer.h> 
 #include <Hash.h>
 
-const char* SSID = "Madhura";
-const char* PASSWORD = "Network_Bridge";
-const char* AP_SSID = "HOMEATO Water Controller";
-const char* AP_PASSWORD = "36066585767";
-
-
 IPAddress local_ip( 192, 168, 0, 1 );
 IPAddress gateway( 192, 168, 0, 1 );
 IPAddress subnet( 255, 255, 255, 0 );
@@ -34,13 +28,12 @@ WiFiClient client;
 
 // ------------------ Water Level Sensor Settings ------
 // For Tank
-#define WL_T_LOW D0 // LOW
-#define WL_T_MID D1 // MID
-#define WL_T_HIGH D2 // HIGH
+#define TANK_TRIGGER_PIN D0 
+#define TANK_ECHO_PIN D1
 
 // For Sump
-#define WL_S_LOW D5 // LOW
-#define WL_S_MID D6 // MID
+#define SUMP_TRIGGER_PIN D2 // LOW
+#define SUMP_ECHO_PIN D3 // MID
 
 // ----------------- Json Libraies Settings ------------
 #include "z-ArduinoJson-v6.18.5.h"
@@ -67,7 +60,7 @@ unsigned long USER_REQUEST_CHECK_INTERVAL_ELAPSED_TIME = 0L;
 int WIFI_RECONNECTION_INTERVAL = 10000;
 unsigned long WIFI_RECONNECTION_INTERVAL_ELAPSED_TIME = 0L;
 
-int TANK_SUMP_WATER_LEVEL_UPDATE_INTERVAL = 60000; 
+int TANK_SUMP_WATER_LEVEL_UPDATE_INTERVAL = 30000; 
 unsigned long TANK_SUMP_WATER_LEVEL_UPDATE_INTERVAL_ELAPSED_TIME = 0L;
 
 // ------------------ Class Instantiation -------------
@@ -76,8 +69,8 @@ unsigned long TANK_SUMP_WATER_LEVEL_UPDATE_INTERVAL_ELAPSED_TIME = 0L;
 #include "z-tank_class.h"
 #include "z-motor_control_class.h"
 
-Sump sumpObj = Sump( WL_S_LOW, WL_S_MID, TANK_SUMP_WATER_LEVEL_UPDATE_INTERVAL, DEBUG_CLASS_CODE, DEBUG_CLASS_DELAY_TIME );
-Tank tankObj = Tank( WL_T_LOW, WL_T_MID, WL_T_HIGH, TANK_SUMP_WATER_LEVEL_UPDATE_INTERVAL, DEBUG_CLASS_CODE, DEBUG_CLASS_DELAY_TIME );
+Sump sumpObj = Sump( SUMP_TRIGGER_PIN, SUMP_ECHO_PIN, TANK_SUMP_WATER_LEVEL_UPDATE_INTERVAL );
+Tank tankObj = Tank( TANK_TRIGGER_PIN, TANK_ECHO_PIN, TANK_SUMP_WATER_LEVEL_UPDATE_INTERVAL );
 MotorControl motorController = MotorControl( RELAY_1 );
 
 // ------------------ Extras --------------------------
@@ -86,6 +79,20 @@ bool WIFI_AP_ENABLED = false;
 bool SEND_DEBUG_LOG = false;
 bool IS_MOTOR_CONTROLLED_LOCALLY = false;
 bool IS_MOTOR_CONTROLLED_ONLINE = false;
+
+const char* SSID = "Madhura";
+const char* PASSWORD = "Network_Bridge";
+const char* AP_SSID = "HOMEATO Water Controller";
+const char* AP_PASSWORD = "36066585767";
+
+struct {
+    float tankLow = -1;
+    float tankHigh = -1;
+    float sumpLow = -1;
+    float sumpHigh = -1;
+    float motorSafeBuffer = 3;
+    bool dataLoadedFromMemory = false;
+} TANK_AND_SUMP_LIMITS;
 
 // ---------------- Function Declaration -----------
 void water_pump();
@@ -96,7 +103,7 @@ bool setup_wifi( short overall_wait_time, short delay_timer );
 void control_wifi_ap( bool status );
 void notifyLocalClients( bool forceNotify );
 void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t length);
-String getWebsite();
+String serveIndexSite();
 void toLoopFunctionsMultipleTimes();
 String generateStringifiedJsonDataForLocalUser();
 void processLocalUserRequest();
