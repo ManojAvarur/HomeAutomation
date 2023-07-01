@@ -369,6 +369,10 @@
         
         let tankStatus, sumpStatus, motorStatus, debugLog, manualOverideCheckbox, manualOverideController;  
 
+        function calculatePercentage({ min, max, value }){
+            return ( ( value - min ) * 100 ) / ( max - min );
+        }
+
         function onChangeOverideCheckbox( event ){
             if( manualOverideCheckbox.checked ){
                 manualOverideController.disabled = false;
@@ -424,10 +428,23 @@
             
             event = JSON.parse( event.data );   
             
-            tankStatus.className = levelIndicators[ event.status.tank ] || levelIndicators['-1'];   
-            sumpStatus.className = levelIndicators[ event.status.sump ] || levelIndicators['-1'];   
-            motorStatus.className = levelIndicators.motor[ event.status.motor.displayState ] || levelIndicators['-1'] ; 
-                
+            sumpStatus.className = ``;  
+            tankStatus.className = ``; 
+            motorStatus.className = levelIndicators[ event.status.motor.displayState ] || levelIndicators.motor['-1']; 
+
+            
+            sumpStatus.innerText = `${calculatePercentage({
+                min: event.status.sump.maximumLevel,
+                max: event.status.sump.minimumLevel,  
+                value: event.status.sump.currentLevel
+            })} %`;
+
+            tankStatus.innerText = `${calculatePercentage({
+                min: event.status.tank.maximumLevel,
+                max: event.status.tank.minimumLevel,  
+                value: event.status.tank.currentLevel
+            })} %`;
+
             if( event.debug.display ){  
                 debugLog.style.display = `block`;   
                 debugLog.children[1].innerText = event.debug.log;   
@@ -473,7 +490,7 @@
         <nav>   
             <div class='container'> 
                 <a class='logo' href='/'>HOME<span>ATO</span></a>   
-                <a class='btn' href='/alter-wifi-credentials'>Wi-Fi Credentials</a>   
+                <a class='btn' href='/settings'>Settings</a>   
             </div>  
         </nav>  
     </header>   

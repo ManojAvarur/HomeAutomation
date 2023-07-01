@@ -2,25 +2,25 @@ void loop(){
     toLoopFunctionsMultipleTimes();
     processLocalUserRequest();
 
-    water_pump();
+    // water_pump();
     if( WiFi.status() == WL_CONNECTED ){
-        update_server(false, false, 0);
+        // update_server(false, false, 0);
 
         toLoopFunctionsMultipleTimes();
         processLocalUserRequest();
 
-        check_requests_from_server();
+        // check_requests_from_server();
 
         toLoopFunctionsMultipleTimes();
         processLocalUserRequest();
 
-        control_wifi_ap( false );
+        // control_wifi_ap( false );
     } else {
-        if( ( millis() - WIFI_RECONNECTION_INTERVAL_ELAPSED_TIME ) >= WIFI_RECONNECTION_INTERVAL ){
-            setup_wifi( 0, 0 );
+        // if( ( millis() - WIFI_RECONNECTION_INTERVAL_ELAPSED_TIME ) >= WIFI_RECONNECTION_INTERVAL ){
+            // setup_wifi( 0, 0 );
             // WIFI_RECONNECTION_INTERVAL_ELAPSED_TIME = millis();
-            WIFI_RECONNECTION_INTERVAL_ELAPSED_TIME += WIFI_RECONNECTION_INTERVAL;
-        }
-        control_wifi_ap( true );
+            // WIFI_RECONNECTION_INTERVAL_ELAPSED_TIME += WIFI_RECONNECTION_INTERVAL;
+        // }
+        // control_wifi_ap( true );
     }
 }

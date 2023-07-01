@@ -4,8 +4,8 @@
 
 class Sump{
     private:
-        UltraSonicSensor *ultraSonicSensor;
-        short oldWaterStatus = -1, currentWaterStatus = -1;
+        UltraSonicSensor *ultraSonicSensorData;
+        float oldWaterStatus = -1, currentWaterStatus = -1;
 
         bool isChanged = true;
         // Should be depricated once NodeJs is completed
@@ -36,13 +36,17 @@ class Sump{
             isChangedForLocal = !isChangedForLocal;
         }
 
-        int waterLevelInSump(){
+        float waterLevelInSump(){
             if( ( ( millis() - WATER_CHECK_INTERVAL_ELAPSED_TIME ) < WATER_CHECK_INTERVAL ) && ( oldWaterStatus != -1 ) ){
+                Serial.print("In Previous Sump data : ");
+                Serial.println(oldWaterStatus);
                 return oldWaterStatus;
             }
-            WATER_CHECK_INTERVAL_ELAPSED_TIME += WATER_CHECK_INTERVAL;
+            WATER_CHECK_INTERVAL_ELAPSED_TIME = millis();
 
-            currentWaterStatus = ultraSonicSensor->getCurrentValue()->inInches();
+            currentWaterStatus = ultraSonicSensorData->getCurrentValue()->inInches();
+            Serial.print("In Current Sump data : ");
+            Serial.println(currentWaterStatus);
 
             if( currentWaterStatus != oldWaterStatus ){
                 isChanged = true;
@@ -54,7 +58,7 @@ class Sump{
         }
 
         Sump( int triggerPin, int echoPin, int checkInterval  ){
-            ultraSonicSensor = new UltraSonicSensor( triggerPin, echoPin );
+            ultraSonicSensorData = new UltraSonicSensor( triggerPin, echoPin );
             WATER_CHECK_INTERVAL = checkInterval;
         }
 };

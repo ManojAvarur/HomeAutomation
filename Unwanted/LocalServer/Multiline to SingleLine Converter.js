@@ -1,20 +1,24 @@
 const fs = require('fs');
 
-let location = 'C:\\xampp\\htdocs\\HomeAutomation\\HomeAutomation - IoT\\Unwanted\\LocalServer\\';
+function reduce( which ){
+    let location = 'C:\\xampp\\htdocs\\HomeAutomation\\HomeAutomation - IoT\\Unwanted\\LocalServer\\';
+    
+    const url = ( which == 1 )? `${location}localServer.html` : `${location}settings.html`;
+    let data = fs.readFileSync( url );
+    let newStr = "";
+    
+    data.toString().split('\n').forEach( elm => {
+        let newElm = elm.replaceAll('"', '\'');
+        newElm = newElm.replace('\r', '');
+        newElm = newElm.replace('\t', '' );
+    
+        newStr += ' ' + newElm ;
+    })
+    
+    fs.writeFileSync(`${location}compressed.html`, newStr )
+}
 
-
-let data = fs.readFileSync(`${location}localServer.html`)
-let newStr = "";
-
-data.toString().split('\n').forEach( elm => {
-    let newElm = elm.replaceAll('"', '\'');
-    newElm = newElm.replace('\r', '');
-    newElm = newElm.replace('\t', '' );
-
-    newStr += ' ' + newElm ;
-})
-
-fs.writeFileSync(`${location}localServerCompressed.html`, newStr )
+reduce(1);
 
 
 

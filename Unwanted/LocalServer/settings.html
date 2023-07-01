@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang='en'>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wi-Fi Credentials</title>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Settings</title>
     <style> 
         /*  
         * Green: #97cb6a    
@@ -138,8 +138,8 @@
             grid-template-columns: 1fr 1fr;
             grid-template-rows: 1fr;
             grid-template-areas: 
-                "ssid password" 
-                "submit submit";
+                'ssid password' 
+                'submit submit';
             align-items: center;
             column-gap: 10px;
         }
@@ -165,9 +165,9 @@
             align-items: center;
             column-gap: 10px;
             grid-template-areas: 
-                "low high"
-                "new new"
-                "submit submit"
+                'low high'
+                'new new'
+                'submit submit'
             ;
 
         }
@@ -217,7 +217,8 @@
         #tank-sensor-data form input[type=button],
         #sump-sensor-data form input[type=button],
         #wifi-data form input[type=submit],
-        #captureData{
+        #captureData,
+        #commit-data{
             font-size: 1em;
             border-radius: 5rem;
             letter-spacing: .2rem;
@@ -237,7 +238,11 @@
         #tank-sensor-data form input[type=button]:hover,
         #tank-sensor-data form input[type=button]:focus,
         #wifi-data form input[type=submit]:hover,
-        #wifi-data form input[type=submit]:focus{
+        #wifi-data form input[type=submit]:focus,
+        #captureData:hover,
+        #captureData:focus,
+        #commit-data:hover,
+        #commit-data:focus{
             color: #040404;
         }
 
@@ -331,7 +336,7 @@
 
         .modal .wrapper .option .dot::before{
             position: absolute;
-            content: "";
+            content: '';
             top: 4px;
             left: 4px;
             width: 12px;
@@ -343,7 +348,7 @@
             transition: all 0.3s ease;
         }
 
-        .modal .modal-content .wrapper input[type="radio"]{
+        .modal .modal-content .wrapper input[type='radio']{
             display: none;
         }
 
@@ -407,8 +412,8 @@
                 grid-template-columns: 1fr 1fr;
                 grid-template-rows: 1fr 1fr ;
                 grid-template-areas: 
-                    "ssid password"
-                    "submit submit"
+                    'ssid password'
+                    'submit submit'
                 ;
             }
 
@@ -425,9 +430,9 @@
                 grid-template-columns: 1fr;
                 grid-template-rows: 1fr 1fr 1fr ;
                 grid-template-areas: 
-                    "ssid"
-                    "password"
-                    "submit"
+                    'ssid'
+                    'password'
+                    'submit'
                 ;
             }
 
@@ -436,10 +441,10 @@
                 grid-template-columns: 1fr;
                 grid-template-rows: 1fr 1fr 1fr 1fr;
                 grid-template-areas: 
-                    "low"
-                    "high"
-                    "new"
-                    "submit"
+                    'low'
+                    'high'
+                    'new'
+                    'submit'
                 ;
             }
         }
@@ -472,26 +477,26 @@
     </header>  
 
     <main>
-        <div class="container">
+        <div class='container'>
             <section id='wifi-data' class='mxy-2'>    
                 <div class='title'> 
                     <h4>Wi-Fi</h4> 
                     <h1>Wi-Fi Credentials</h3>    
                 </div>  
     
-                <form action="/update-wifi-cred" method="post">
-                    <div class="form-group-1">
-                        <input type="text" id="ssid" name="ssid" value="ssid" placeholder="SSID" required>
-                        <!-- <label for="ssid">SSID</label> -->
+                <form action='/update-wifi-cred' method='post'>
+                    <div class='form-group-1'>
+                        <input type='text' id='ssid' name='ssid' value='ssid' placeholder='SSID' required>
+                        <!-- <label for='ssid'>SSID</label> -->
                     </div>
     
-                    <div class="form-group-2">
-                        <input type="password" id="password" name="password" placeholder="Password" required>
-                        <!-- <label for="password">Password</label> -->
+                    <div class='form-group-2'>
+                        <input type='password' id='password' name='password' placeholder='Password' required>
+                        <!-- <label for='password'>Password</label> -->
                     </div>
     
-                    <div class="form-group-3">
-                        <input class="btn" type="submit" value="Submit">
+                    <div class='form-group-3'>
+                        <input class='btn' type='submit' value='Submit Locally'>
                     </div>
                 </form>
             </section>  
@@ -502,23 +507,23 @@
                     <h1>Tank Sensor</h3>    
                 </div>  
     
-                <form action="/update-tank-sensor" method="post">
-                    <div class="form-group-1">
-                        <input type="number" id="tlow" name="tlow" placeholder="Low" required>
-                        <!-- <label for="tlow">Low</label> -->
+                <form action='/update-tank-sensor' method='post'>
+                    <div class='form-group-1'>
+                        <input type='number' id='tlow' name='tlow' placeholder='Low' required>
+                        <!-- <label for='tlow'>Low</label> -->
                     </div>
     
-                    <div class="form-group-2">
-                        <input type="number" id="thigh" name="thigh" placeholder="High" required>
-                        <!-- <label for="ssid">High</label> -->
+                    <div class='form-group-2'>
+                        <input type='number' id='thigh' name='thigh' placeholder='High' required>
+                        <!-- <label for='ssid'>High</label> -->
                     </div>
     
-                    <div class="form-group-3">
-                        <input class="btn" type="submit" value="Submit Locally">
+                    <div class='form-group-3'>
+                        <input class='btn' type='submit' value='Submit Locally'>
                     </div>
 
-                    <div class="form-group-4">
-                        <input class="btn" data-capturefrom="Tank" onclick="displayModel(event)" name="captureCurrentTank" type="button" value="Capture Current Sensor Data">
+                    <div class='form-group-4'>
+                        <input class='btn' data-capturefrom='Tank' onclick='displayModel(event)' name='captureCurrentTank' type='button' value='Capture Current Sensor Data'>
                     </div>
                 </form>
             </section>
@@ -528,36 +533,46 @@
                     <h1>Sump Sensor</h3>    
                 </div>  
     
-                <form action="/update-sump-sensor" method="post">
-                    <div class="form-group-1">
-                        <input type="number" id="slow" name="slow" placeholder="Low" required>
-                        <!-- <label for="slow">Low</label> -->
+                <form action='/update-sump-sensor' method='post'>
+                    <div class='form-group-1'>
+                        <input type='number' id='slow' name='slow' placeholder='Low' required>
+                        <!-- <label for='slow'>Low</label> -->
                     </div>
     
-                    <div class="form-group-2">
-                        <input type="number" id="shigh" name="shigh" placeholder="High" required>
-                        <!-- <label for="shigh">High</label> -->
+                    <div class='form-group-2'>
+                        <input type='number' id='shigh' name='shigh' placeholder='High' required>
+                        <!-- <label for='shigh'>High</label> -->
                     </div>
     
-                    <div class="form-group-3">
-                        <input class="btn" type="submit" value="Submit">
+                    <div class='form-group-3'>
+                        <input class='btn' type='submit' value='Submit Locally'>
                     </div>
 
-                    <div class="form-group-4">
-                        <input class="btn" data-capturefrom="Sump" onclick="displayModel(event)" name="captureCurrentSump" type="button" value="Capture Current Sensor Data">
+                    <div class='form-group-4'>
+                        <input class='btn' data-capturefrom='Sump' onclick='displayModel(event)' name='captureCurrentSump' type='button' value='Capture Current Sensor Data'>
                     </div>
+                </form>
+            </section>
+
+            <section id='' class='mxy-2'>    
+                <div class='title'> 
+                    <h4>Commit Data</h4> 
+                    <h1>Store Data Permanently</h3>    
+                </div>  
+    
+                <form action='/commit-data' method='post' onsubmit='javascript:return confirm(`Are sure you want to permanently store the data?`)'>
+                        <input class='btn' id='commit-data' type='submit' value='Store Data Permanently' style='margin: auto; display: block;'>
                 </form>
             </section>
         </div>
 
-        <div class="water-wave">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <div class='water-wave'>
+            <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'>
                 <path 
-                    fill="#698b49"
-                    fill-opacity="0.5" 
-                    d="M0,128L24,112C48,96,96,64,144,80C192,96,240,160,288,160C336,160,384,96,432,85.3C480,75,528,117,576,128C624,139,672,117,720,106.7C768,96,816,96,864,117.3C912,139,960,181,1008,208C1056,235,1104,245,1152,250.7C1200,256,1248,256,1296,224C1344,192,1392,128,1416,96L1440,64L1440,320L1416,320C1392,320,1344,320,1296,320C1248,320,1200,320,1152,320C1104,320,1056,320,1008,320C960,320,912,320,864,320C816,320,768,320,720,320C672,320,624,320,576,320C528,320,480,320,432,320C384,320,336,320,288,320C240,320,192,320,144,320C96,320,48,320,24,320L0,320Z" 
-                    data-darkreader-inline-fill="" 
-                    style="--darkreader-inline-fill: #007acc #698b49;"
+                    fill='#698b49'
+                    fill-opacity='0.5' 
+                    d='M0,128L24,112C48,96,96,64,144,80C192,96,240,160,288,160C336,160,384,96,432,85.3C480,75,528,117,576,128C624,139,672,117,720,106.7C768,96,816,96,864,117.3C912,139,960,181,1008,208C1056,235,1104,245,1152,250.7C1200,256,1248,256,1296,224C1344,192,1392,128,1416,96L1440,64L1440,320L1416,320C1392,320,1344,320,1296,320C1248,320,1200,320,1152,320C1104,320,1056,320,1008,320C960,320,912,320,864,320C816,320,768,320,720,320C672,320,624,320,576,320C528,320,480,320,432,320C384,320,336,320,288,320C240,320,192,320,144,320C96,320,48,320,24,320L0,320Z' 
+                    style='--darkreader-inline-fill: #007acc #698b49;'
                 >
                 </path>
             </svg>
@@ -565,73 +580,83 @@
     </main>
 
     <!-- The Modal -->
-    <div id="myModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="javascript:this.parentElement.parentElement.style.display = 'none';">&times;</span>
-            <h2 style="text-align: center;"><span id="captureFrom"></span> Sensor Data Capture</h2>
-            <div class="wrapper">
-                <input type="radio" name="sensorLevelSelector" id="low" onclick="handelRadioButtonChange(event)">
-                <input type="radio" name="sensorLevelSelector" id="high" onclick="handelRadioButtonChange(event)">
-                  <label for="low" class="option low">
-                    <div class="dot"></div>
+    <div id='myModal' class='modal'>
+        <div class='modal-content'>
+            <span class='close' onclick='javascript:this.parentElement.parentElement.style.display = `none`;'>&times;</span>
+            <h2 style='text-align: center;'><span id='captureFrom'></span> Sensor Data Capture</h2>
+            <div class='wrapper'>
+                <input type='radio' name='sensorLevelSelector' id='low' onclick='handelRadioButtonChange(event)'>
+                <input type='radio' name='sensorLevelSelector' id='high' onclick='handelRadioButtonChange(event)'>
+                  <label for='low' class='option low'>
+                    <div class='dot'></div>
                      <span>Low</span>
                      </label>
-                  <label for="high" class="option high">
-                    <div class="dot"></div>
+                  <label for='high' class='option high'>
+                    <div class='dot'></div>
                      <span>High</span>
                   </label>
             </div>
-            <input class="btn" type="button" id="captureData" onclick="handelCaptureRequest(event)" value="Capture Data">
+            <input class='btn' type='button' id='captureData' onclick='handelCaptureRequest(event)' value='Capture Data'>
         </div>
     </div>
+    <script>
+        const dataCapturePreferences = {
+            Sump: {
+                selected: null,
+                data: { low: null, high: null }
+            },
+            Tank: {
+                selected: null,
+                data: { low: null, high: null }
+            }
+        };
+    
+        function fetchCurrentData(){
+            fetch(`/current-settings`)
+            .then( settings => settings.json() )
+            .then( settings => {
+                console.log( settings );
+            }).catch( error => {
+                console.log( error );
+                alert(`failed to fetch current settings`);
+                window.location.href = `/`;
+            });
+        };
+    
+        function displayModel(event){
+            const captureFrom = event.target.dataset.capturefrom;
+    
+            document.getElementById(`captureFrom`).innerText = captureFrom;
+    
+            document.getElementById(`captureData`).dataset[`capturefrom`] = captureFrom;
+    
+            document.querySelectorAll(`[name=sensorLevelSelector]`).forEach( elem => {
+                elem.dataset[`capturefrom`] = captureFrom;
+                elem.checked = dataCapturePreferences[captureFrom].selected === elem.id;
+            });
+    
+            document.getElementById(`myModal`).style.display = `block`;
+        };
+    
+        function handelRadioButtonChange(event){
+            const captureFrom = event.target.dataset.capturefrom;
+            dataCapturePreferences[captureFrom].selected = event.target.id;
+        };
+    
+        function handelCaptureRequest(event){
+            const captureFrom = event.target.dataset.capturefrom;
+            const requestPayload = { captureFrom, sensorLevelSelector: `` };
+    
+            document.querySelectorAll(`[name=sensorLevelSelector]`).forEach( el => { 
+                if( requestPayload.sensorLevelSelector ){ return null; }
+                requestPayload.sensorLevelSelector = ( el.checked )? el.id : null;
+            });
+    
+            if( !requestPayload.sensorLevelSelector ){
+                alert(`Please select level for which the data will be assigned to`);
+                return;
+            }
+        };
+    </script>
 </body>
-<script>
-    const dataCapturePreferences = {
-        Sump: {
-            selected: null,
-            data: { low: null, high: null }
-        },
-        Tank: {
-            selected: null,
-            data: { low: null, high: null }
-        }
-    };
-
-    function displayModel(event){
-        const captureFrom = event.target.dataset.capturefrom;
-
-        document.getElementById('captureFrom').innerText = captureFrom;
-
-        document.getElementById('captureData').dataset['capturefrom'] = captureFrom;
-
-        document.querySelectorAll('[name=sensorLevelSelector]').forEach( elem => {
-            elem.dataset['capturefrom'] = captureFrom;
-            elem.checked = dataCapturePreferences[captureFrom].selected === elem.id;
-        });
-
-        document.getElementById('myModal').style.display = 'block';
-    }
-
-    function handelRadioButtonChange(event){
-        const captureFrom = event.target.dataset.capturefrom;
-        dataCapturePreferences[captureFrom].selected = event.target.id;
-    }
-
-    function handelCaptureRequest(event){
-        const captureFrom = event.target.dataset.capturefrom;
-        const requestPayload = { captureFrom, sensorLevelSelector: "" };
-
-        document.querySelectorAll('[name=sensorLevelSelector]').forEach( el => { 
-            if( requestPayload.sensorLevelSelector ){ return };
-            requestPayload.sensorLevelSelector = ( el.checked )? el.id : null;
-        });
-
-        if( !requestPayload.sensorLevelSelector ){
-            alert('Please select level for which the data will be assigned to');
-            return;
-        }
-        
-        
-    }
-</script>
 </html>

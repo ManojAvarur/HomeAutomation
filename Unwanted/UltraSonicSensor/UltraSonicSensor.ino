@@ -1,5 +1,5 @@
-#define trigPin D5 // yellow
-#define echoPin D6 // green
+#define trigPin D2 // yellow
+#define echoPin D3 // green
 #include <ESP8266WiFi.h>
 #include <WiFiClient.h>
 #include <ESP8266WebServer.h>
@@ -121,7 +121,7 @@ void loop() {
   webSocket.loop();
 
 
-  	delay(200);
+  delay(200);
 
     // Serial.println( webSocket.connectedClients() );
 }

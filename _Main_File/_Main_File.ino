@@ -28,18 +28,19 @@ WiFiClient client;
 
 // ------------------ Water Level Sensor Settings ------
 // For Tank
-#define TANK_TRIGGER_PIN D0 
-#define TANK_ECHO_PIN D1
+#define TANK_TRIGGER_PIN D1
+#define TANK_ECHO_PIN D2
 
 // For Sump
-#define SUMP_TRIGGER_PIN D2 // LOW
-#define SUMP_ECHO_PIN D3 // MID
+#define SUMP_TRIGGER_PIN D3 
+#define SUMP_ECHO_PIN D4
 
 // ----------------- Json Libraies Settings ------------
 #include "z-ArduinoJson-v6.18.5.h"
 StaticJsonDocument<512> json_sensor_data_update;
 StaticJsonDocument<384> json_user_request;
 StaticJsonDocument<96> json_local_user_request;
+StaticJsonDocument<384> general_purpose_json_holder;
 String string_local_user_request;
 
 // ----------------- DEBUG CODE ---------------------
@@ -60,7 +61,7 @@ unsigned long USER_REQUEST_CHECK_INTERVAL_ELAPSED_TIME = 0L;
 int WIFI_RECONNECTION_INTERVAL = 10000;
 unsigned long WIFI_RECONNECTION_INTERVAL_ELAPSED_TIME = 0L;
 
-int TANK_SUMP_WATER_LEVEL_UPDATE_INTERVAL = 30000; 
+int TANK_SUMP_WATER_LEVEL_UPDATE_INTERVAL = 10000; 
 unsigned long TANK_SUMP_WATER_LEVEL_UPDATE_INTERVAL_ELAPSED_TIME = 0L;
 
 // ------------------ Class Instantiation -------------
@@ -92,7 +93,7 @@ struct {
     float sumpHigh = -1;
     float motorSafeBuffer = 3;
     bool dataLoadedFromMemory = false;
-} TANK_AND_SUMP_LIMITS;
+} TANK_AND_SUMP_LIMITS, TANK_AND_SUMP_LIMITS_OLD;
 
 // ---------------- Function Declaration -----------
 void water_pump();
@@ -103,8 +104,18 @@ bool setup_wifi( short overall_wait_time, short delay_timer );
 void control_wifi_ap( bool status );
 void notifyLocalClients( bool forceNotify );
 void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t length);
-String serveIndexSite();
 void toLoopFunctionsMultipleTimes();
 String generateStringifiedJsonDataForLocalUser();
 void processLocalUserRequest();
 StaticJsonDocument<96> deserializeStringifiedJsonDataFromLocalUser();
+
+// Server website serving functions
+char* indexPage();
+char* settingsPage();
+
+// Server Route Functions
+void serveIndexPage();
+void serveSettingsPage();
+void initialMessage();
+void currentSettings();
+void toggleDebug();

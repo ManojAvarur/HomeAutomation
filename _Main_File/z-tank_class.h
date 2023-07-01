@@ -35,11 +35,11 @@ class Tank{
             isChangedForLocal = !isChangedForLocal;
         }
 
-        int waterLevelInTank( bool updateFromStart = false ){
+        float waterLevelInTank( bool updateFromStart = false ){
             if( ( ( millis() - WATER_CHECK_INTERVAL_ELAPSED_TIME ) < WATER_CHECK_INTERVAL ) && ( oldWaterStatus != -1 ) ){
                 return oldWaterStatus;
             }
-            WATER_CHECK_INTERVAL_ELAPSED_TIME += WATER_CHECK_INTERVAL;
+            WATER_CHECK_INTERVAL_ELAPSED_TIME = millis();
 
             currentWaterStatus = ultraSonicSensor->getCurrentValue()->inInches();
 

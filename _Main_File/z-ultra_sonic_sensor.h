@@ -5,8 +5,8 @@ class UltraSonicSensor{
         const double SOUND_VELOCITY = 0.034;
         const double CM_TO_INCH = 0.393701;
 
-        uint8_t TRIGGER_PIN;
-        uint8_t ECHO_PIN;
+        int TRIGGER_PIN;
+        int ECHO_PIN;
 
         long DURATION;
 

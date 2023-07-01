@@ -36,22 +36,29 @@ String generateStringifiedJsonDataForLocalUser(){
     String jsonData = "";
     json_sensor_data_update.clear();
     json_sensor_data_update["nodemcu_id"] = UNIQUE_ID;
-    json_sensor_data_update["status"]["tank"] = tankObj.waterLevelInTank();
-    json_sensor_data_update["status"]["sump"] = sumpObj.waterLevelInSump();
+
+    json_sensor_data_update["status"]["tank"]["currentLevel"] = tankObj.waterLevelInTank();
+    json_sensor_data_update["status"]["tank"]["maximumLevel"] = TANK_AND_SUMP_LIMITS.tankHigh;
+    json_sensor_data_update["status"]["tank"]["minimumLevel"] = TANK_AND_SUMP_LIMITS.tankLow;
+    
+    json_sensor_data_update["status"]["sump"]["currentLevel"] = sumpObj.waterLevelInSump();
+    json_sensor_data_update["status"]["sump"]["maximumLevel"] = TANK_AND_SUMP_LIMITS.sumpHigh;
+    json_sensor_data_update["status"]["sump"]["minimumLevel"] = TANK_AND_SUMP_LIMITS.sumpLow;
+    
     json_sensor_data_update["status"]["motor"]["displayState"] = ( digitalRead(RELAY_1) )? 0 : 1;
 
     json_sensor_data_update["debug"]["display"] = SEND_DEBUG_LOG;
     json_sensor_data_update["debug"]["log"] = ( SEND_DEBUG_LOG )? DEBUG_LOG : "";
     
 
-    json_sensor_data_update["status"]["motor"]["isControlled"] = false;
-    json_sensor_data_update["status"]["motor"]["state"] = false;
-    json_sensor_data_update["status"]["motor"]["isOnlineControlled"] = IS_MOTOR_CONTROLLED_ONLINE;
-
     if( !json_local_user_request.isNull() ) {
         json_sensor_data_update["status"]["motor"]["isControlled"] = json_local_user_request["isBeingControlled"];
         json_sensor_data_update["status"]["motor"]["state"] = json_local_user_request["state"];
+    } else {
+        json_sensor_data_update["status"]["motor"]["isControlled"] = false;
+        json_sensor_data_update["status"]["motor"]["state"] = false;
     }
+    json_sensor_data_update["status"]["motor"]["isOnlineControlled"] = IS_MOTOR_CONTROLLED_ONLINE;
 
     serializeJson( json_sensor_data_update, jsonData );
     return jsonData;
