@@ -19,11 +19,11 @@ void setup(){
 
     // server.on("/settings", serveSettingsPage );
 
-    server.on("/current-settings", serveSettingsPage );
+    server.on("/current-settings", currentSettings );
 
     server.on("/td", toggleDebug ); // td = Toggle debug
     
-    server.onNotFound( indexPage );
+    server.onNotFound( serveIndexPage );
 
     // ----- Server Configuration ----
   	dnsServer.start( 53, "*", local_ip ); // DNS spoofing (Only for HTTP)

@@ -1,5 +1,5 @@
 void serveIndexPage(){
-    char* htmlCode = indexPage();
+    String htmlCode = indexPage();
     server.send( 200, "text/html", htmlCode );
 }
 

@@ -81,8 +81,8 @@ bool SEND_DEBUG_LOG = false;
 bool IS_MOTOR_CONTROLLED_LOCALLY = false;
 bool IS_MOTOR_CONTROLLED_ONLINE = false;
 
-const char* SSID = "Madhura";
-const char* PASSWORD = "Network_Bridge";
+const char* SSID = "Home Network";
+const char* PASSWORD = "helloworld";
 const char* AP_SSID = "HOMEATO Water Controller";
 const char* AP_PASSWORD = "36066585767";
 
@@ -110,12 +110,12 @@ void processLocalUserRequest();
 StaticJsonDocument<96> deserializeStringifiedJsonDataFromLocalUser();
 
 // Server website serving functions
-char* indexPage();
-char* settingsPage();
+String indexPage();
+// String settingsPage();
 
 // Server Route Functions
 void serveIndexPage();
-void serveSettingsPage();
+// void serveSettingsPage();
 void initialMessage();
 void currentSettings();
 void toggleDebug();
