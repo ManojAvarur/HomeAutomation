@@ -69,6 +69,7 @@ unsigned long TANK_SUMP_WATER_LEVEL_UPDATE_INTERVAL_ELAPSED_TIME = 0L;
 #include "z-sump_class.h"
 #include "z-tank_class.h"
 #include "z-motor_control_class.h"
+#include "zz-website.h"
 
 Sump sumpObj = Sump( SUMP_TRIGGER_PIN, SUMP_ECHO_PIN, TANK_SUMP_WATER_LEVEL_UPDATE_INTERVAL );
 Tank tankObj = Tank( TANK_TRIGGER_PIN, TANK_ECHO_PIN, TANK_SUMP_WATER_LEVEL_UPDATE_INTERVAL );
@@ -81,8 +82,8 @@ bool SEND_DEBUG_LOG = false;
 bool IS_MOTOR_CONTROLLED_LOCALLY = false;
 bool IS_MOTOR_CONTROLLED_ONLINE = false;
 
-const char* SSID = "Home Network";
-const char* PASSWORD = "helloworld";
+const char* SSID = "Madhura";
+const char* PASSWORD = "Network_Bridge";
 const char* AP_SSID = "HOMEATO Water Controller";
 const char* AP_PASSWORD = "36066585767";
 
@@ -111,11 +112,11 @@ StaticJsonDocument<96> deserializeStringifiedJsonDataFromLocalUser();
 
 // Server website serving functions
 String indexPage();
-// String settingsPage();
+String settingsPage();
 
 // Server Route Functions
 void serveIndexPage();
-// void serveSettingsPage();
+void serveSettingsPage();
 void initialMessage();
 void currentSettings();
 void toggleDebug();

@@ -12,18 +12,28 @@ void setup(){
     // ----- Motor Setup ------
     motorController.turnOff();
 
-    // Route for root / web page
+    // Routes for web pages
     server.on( "/", serveIndexPage );
 
-    server.on("/initial-message", initialMessage );
+    server.on("/settings", serveSettingsPage );
 
-    // server.on("/settings", serveSettingsPage );
+    server.onNotFound( serveIndexPage );
+
+    // Routes for data accessing / processing   
+    server.on("/initial-message", initialMessage );
 
     server.on("/current-settings", currentSettings );
 
     server.on("/td", toggleDebug ); // td = Toggle debug
+
+    server.on("/update-wifi-cred", [](){ } );
+
+    server.on("/update-tank-sensor", [](){ } );
+
+    server.on("/update-sump-sensor", [](){ } );
+
+    server.on("/commit-data", [](){ } );
     
-    server.onNotFound( serveIndexPage );
 
     // ----- Server Configuration ----
   	dnsServer.start( 53, "*", local_ip ); // DNS spoofing (Only for HTTP)
