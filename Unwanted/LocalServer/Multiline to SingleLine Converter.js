@@ -6,14 +6,9 @@ function reduce( which ){
     const url = ( which == 1 )? `${location}localServer.html` : `${location}settings.html`;
     let data = fs.readFileSync( url );
     let newStr = "";
-    
-    data.toString().split('\n').forEach( elm => {
-        let newElm = elm.replaceAll('"', '\'');
-        newElm = newElm.replace('\r', '');
-        newElm = newElm.replace('\t', '' );
-    
-        newStr += ' ' + newElm ;
-    })
+
+    newStr = data.toString().replace(/(\r\n|\n|\r|\t)/gm,"");
+    newStr = newStr.replace(/\s+/g," ");
     
     fs.writeFileSync(`${location}compressed.html`, newStr )
 }
@@ -29,7 +24,14 @@ reduce(1);
 
 
 
-
+    
+    // data.toString().split('\n').forEach( elm => {
+    //     let newElm = elm.replaceAll('"', '\'');
+    //     newElm = newElm.replace('\r', '');
+    //     newElm = newElm.replace('\t', '' );
+    
+    //     newStr += ' ' + newElm ;
+    // })
 
 
 
