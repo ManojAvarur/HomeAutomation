@@ -36,10 +36,8 @@ class Sump{
             isChangedForLocal = !isChangedForLocal;
         }
 
-        float waterLevelInSump(){
-            if( ( ( millis() - WATER_CHECK_INTERVAL_ELAPSED_TIME ) < WATER_CHECK_INTERVAL ) && ( oldWaterStatus != -1 ) ){
-                Serial.print("In Previous Sump data : ");
-                Serial.println(oldWaterStatus);
+        float waterLevelInSump( bool byPassTimeCheck = false ){
+            if( ( ( millis() - WATER_CHECK_INTERVAL_ELAPSED_TIME ) < WATER_CHECK_INTERVAL ) && ( oldWaterStatus != -1 ) && !byPassTimeCheck ){
                 return oldWaterStatus;
             }
             WATER_CHECK_INTERVAL_ELAPSED_TIME = millis();

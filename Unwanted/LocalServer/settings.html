@@ -513,7 +513,7 @@
         }
     </script> 
 </head>
-<body>
+<body onload="fetchCurrentData()">
 
     <div id="spinner"></div> 
 
@@ -671,7 +671,7 @@
             .then( settings => settings.json() )
             .then( userSetting => {
                 console.log( userSetting );
-                dataToDisplay( userSetting )
+                dataToDisplay( userSetting );
                 spinnerHandler.hideSpinner();
             }).catch( error => {
                 console.log( error );

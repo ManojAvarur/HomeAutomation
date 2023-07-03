@@ -120,3 +120,6 @@ void serveSettingsPage();
 void initialMessage();
 void currentSettings();
 void toggleDebug();
+
+// POST request handlers
+void updateWifiCred();

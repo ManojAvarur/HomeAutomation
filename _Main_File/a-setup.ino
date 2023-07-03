@@ -26,7 +26,7 @@ void setup(){
 
     server.on("/td", toggleDebug ); // td = Toggle debug
 
-    server.on("/update-wifi-cred", [](){ } );
+    server.on("/update-wifi-cred", updateWifiCred );
 
     server.on("/update-tank-sensor", [](){ } );
 

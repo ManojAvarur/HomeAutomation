@@ -37,12 +37,11 @@ void toggleDebug(){
 
 void updateWifiCred(){
     for(uint8_t i = 0; i < server.args(); i++){ 
-        String value = (String) server.arg(i);
+        const char* value = ((String) server.arg(i)).c_str();
+        const char* switchCondition = (( String ) server.argName(i)).c_str();
 
-        switch( server.argName(i) ){
-            case "ssid": SSID = value; break;
-            case "password": PASSWORD = value; break;
-        } 
+        if( strcmp("ssid", switchCondition) ){ SSID = value; }
+        if( strcmp("password", switchCondition) ){ PASSWORD = value; } 
     }
 
     server.sendHeader("Location", "/settings", true);

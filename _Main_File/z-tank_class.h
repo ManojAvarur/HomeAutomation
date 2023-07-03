@@ -35,8 +35,8 @@ class Tank{
             isChangedForLocal = !isChangedForLocal;
         }
 
-        float waterLevelInTank( bool updateFromStart = false ){
-            if( ( ( millis() - WATER_CHECK_INTERVAL_ELAPSED_TIME ) < WATER_CHECK_INTERVAL ) && ( oldWaterStatus != -1 ) ){
+        float waterLevelInTank( bool byPassTimeCheck = false ){
+            if( ( ( millis() - WATER_CHECK_INTERVAL_ELAPSED_TIME ) < WATER_CHECK_INTERVAL ) && ( oldWaterStatus != -1 ) && !byPassTimeCheck ){
                 return oldWaterStatus;
             }
             WATER_CHECK_INTERVAL_ELAPSED_TIME = millis();
