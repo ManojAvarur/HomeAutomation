@@ -37,13 +37,39 @@ void toggleDebug(){
 
 void updateWifiCred(){
     for(uint8_t i = 0; i < server.args(); i++){ 
-        const char* value = ((String) server.arg(i)).c_str();
-        const char* switchCondition = (( String ) server.argName(i)).c_str();
-
-        if( strcmp("ssid", switchCondition) ){ SSID = value; }
-        if( strcmp("password", switchCondition) ){ PASSWORD = value; } 
-    }
+        String value = server.arg(i);
+        String nameAttribute = server.argName(i);
+    
+        if( String("ssid") == nameAttribute ){ SSID = value; }
+        if( String("password") == nameAttribute ){ PASSWORD = value; } 
+`    }
 
     server.sendHeader("Location", "/settings", true);
     server.send(302, "text/plain", "");
+}
+
+void getSensorValue(){
+    general_purpose_json_holder.clear();
+
+    if( server.hasArg("plain") == false ){
+        server.send(400, "text/plain", "Body not received");
+        return;
+    }
+
+    String payloadString = server.arg("plain");
+
+    deserializeJson( general_purpose_json_holder, payloadString );
+
+    if( general_purpose_json_holder["captureFrom"] == "Tank" ){
+        general_purpose_json_holder["requestedData"] = tankObj.waterLevelInTank( true );
+    }
+
+    if( general_purpose_json_holder["captureFrom"] == "Sump" ){
+        general_purpose_json_holder["requestedData"] = sumpObj.waterLevelInSump( true );
+    }
+
+    payloadString = "";
+    serializeJson( general_purpose_json_holder, payloadString );
+
+    server.send( 200, "application/json", payloadString );
 }

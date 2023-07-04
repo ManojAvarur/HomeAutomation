@@ -1,7 +1,5 @@
 void setup(){
     Serial.begin(19200);
-    pinMode(LED_BUILTIN, OUTPUT);
-    digitalWrite(LED_BUILTIN, HIGH);
 
     // ----- WIFI Setup -------
     WiFi.mode( WIFI_AP_STA );
@@ -17,7 +15,7 @@ void setup(){
 
     server.on("/settings", serveSettingsPage );
 
-    server.onNotFound( serveIndexPage );
+    // server.onNotFound( serveIndexPage );
 
     // Routes for data accessing / processing   
     server.on("/initial-message", initialMessage );
@@ -28,11 +26,13 @@ void setup(){
 
     server.on("/update-wifi-cred", updateWifiCred );
 
-    server.on("/update-tank-sensor", [](){ } );
+    // server.on("/update-tank-sensor", [](){  } );
 
-    server.on("/update-sump-sensor", [](){ } );
+    // server.on("/update-sump-sensor", [](){ } );
 
-    server.on("/commit-data", [](){ } );
+    // server.on("/commit-data", [](){ } );
+
+    server.on("/get-sensor-value", getSensorValue );
     
 
     // ----- Server Configuration ----

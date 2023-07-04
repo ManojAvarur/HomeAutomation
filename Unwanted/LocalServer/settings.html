@@ -133,6 +133,23 @@
             margin: auto;
         }
 
+        label{
+            margin-bottom: 10px;
+            font-weight: 700;
+            letter-spacing: 5px;
+            margin-left: 20px;
+            font-size: 1.2rem;
+        }
+
+        label::after{  
+            content: '';    
+            width: 2px;    
+            height: 1rem;    
+            display: inline-block;  
+            background-color: #698b49;  
+            /* margin: 0.25rem;     */
+        } 
+
         #wifi-data form{
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -467,6 +484,10 @@
                 ;
             }
 
+            label{
+                margin-top: 15px;
+            }
+
             #sump-sensor-data form,
             #tank-sensor-data form{
                 grid-template-columns: 1fr;
@@ -515,7 +536,7 @@
 </head>
 <body onload="fetchCurrentData()">
 
-    <div id="spinner"></div> 
+    <div id="spinner" hidden></div> 
 
     <header>    
         <nav>   
@@ -536,13 +557,13 @@
     
                 <form action='/update-wifi-cred' method='post'>
                     <div class='form-group-1'>
-                        <input type='text' id='ssid' name='ssid' placeholder='SSID' required>
-                        <!-- <label for='ssid'>SSID</label> -->
+                        <label for='ssid'>SSID</label>
+                        <input type='text' id='ssid' name='ssid' placeholder='WiFi Name' required>
                     </div>
     
                     <div class='form-group-2'>
+                        <label for='password'>Password</label>
                         <input type='password' id='password' name='password' placeholder='Password' required>
-                        <!-- <label for='password'>Password</label> -->
                     </div>
     
                     <div class='form-group-3'>
@@ -559,13 +580,13 @@
     
                 <form action='/update-tank-sensor' method='post'>
                     <div class='form-group-1'>
-                        <input type='number' id='tlow' name='tlow' placeholder='Low' required>
-                        <!-- <label for='tlow'>Low</label> -->
+                        <label for='tlow'>Low</label>
+                        <input type='number' id='tlow' name='tlow' placeholder='Tank Low' required>
                     </div>
     
                     <div class='form-group-2'>
-                        <input type='number' id='thigh' name='thigh' placeholder='High' required>
-                        <!-- <label for='ssid'>High</label> -->
+                        <label for='ssid'>High</label>
+                        <input type='number' id='thigh' name='thigh' placeholder='Tank High' required>
                     </div>
     
                     <div class='form-group-3'>
@@ -585,13 +606,13 @@
     
                 <form action='/update-sump-sensor' method='post'>
                     <div class='form-group-1'>
-                        <input type='number' id='slow' name='slow' placeholder='Low' required>
-                        <!-- <label for='slow'>Low</label> -->
+                        <label for='slow'>Low</label>
+                        <input type='number' id='slow' name='slow' placeholder='Sump Low' required>
                     </div>
     
                     <div class='form-group-2'>
-                        <input type='number' id='shigh' name='shigh' placeholder='High' required>
-                        <!-- <label for='shigh'>High</label> -->
+                        <label for='shigh'>High</label>
+                        <input type='number' id='shigh' name='shigh' placeholder='Sump High' required>
                     </div>
     
                     <div class='form-group-3'>
@@ -650,36 +671,32 @@
         </div>
     </div>
     <script>
-        const dataCapturePreferences = {
-            Sump: {
-                selected: null,
-                data: { low: null, high: null }
-            },
-            Tank: {
-                selected: null,
-                data: { low: null, high: null }
-            }
-        };
+        const dataCapturePreferences = { Sump: { selected: null }, Tank: { selected: null } };
 
         let wifiSSID, wifiPassword, tankHigh, tankLow, sumpHigh, sumpLow;
 
         const spinnerHandler = new SpinnerHandler();
     
+        /*
+        * Fetch current data stored in nodemcu 
+        */
         function fetchCurrentData(){
             init();
             fetch(`/current-settings`)
             .then( settings => settings.json() )
             .then( userSetting => {
-                console.log( userSetting );
                 dataToDisplay( userSetting );
                 spinnerHandler.hideSpinner();
             }).catch( error => {
                 console.log( error );
                 alert(`failed to fetch current settings`);
-                window.location.href = `/`;
+                /* window.location.href = `/`; */
             });
         };
     
+        /*
+        * Used to display model and also pre populates model with Capture from data and Selected Radio button data
+        */
         function displayModel(event){
             const captureFrom = event.target.dataset.capturefrom;
     
@@ -695,12 +712,15 @@
             document.getElementById(`myModal`).style.display = `block`;
         };
     
+        /*
+        * Updates the global variable with current selected radio button with respect to ( Sump \ Tank ) 
+        */
         function handelRadioButtonChange(event){
             const captureFrom = event.target.dataset.capturefrom;
             dataCapturePreferences[captureFrom].selected = event.target.id;
         };
     
-        function handelCaptureRequest(event){
+        async function handelCaptureRequest(event){
             const captureFrom = event.target.dataset.capturefrom;
             const requestPayload = { captureFrom, sensorLevelSelector: `` };
     
@@ -714,19 +734,55 @@
                 return;
             }
 
+            spinnerHandler.showSpinner();
+
+            try{
+                const sensorResult = await fetch(`/get-sensor-value`, { method: `POST`, body: JSON.stringify( requestPayload ) } );
+
+                if( !sensorResult.ok ){
+                    throw new Error(`An error has occured: ${sensorResult.status}`);
+                }
+
+                const sensorValue = await sensorResult.json();
+
+                switch( captureFrom ) {
+                    case `Tank`:
+                            if( requestPayload.sensorLevelSelector === `low` && sensorValue.hasOwnProperty(`requestedData`) ){ tankLow.value = sensorValue.requestedData; };
+                            if( requestPayload.sensorLevelSelector === `high` && sensorValue.hasOwnProperty(`requestedData`) ){ tankHigh.value = sensorValue.requestedData; };
+                        break;
+
+                    case `Sump`:
+                            if( requestPayload.sensorLevelSelector === `low` && sensorValue.hasOwnProperty(`requestedData`) ){ sumpLow.value = sensorValue.requestedData; };
+                            if( requestPayload.sensorLevelSelector === `high` && sensorValue.hasOwnProperty(`requestedData`) ){ sumpHigh.value = sensorValue.requestedData; };
+                        break;
+                }
+            
+                document.getElementById(`myModal`).style.display = `none`;
+            } catch( error ) {
+                alert(`Failed to fetch selected sensor value`);
+                console.log( error );
+            }
+            
+            spinnerHandler.hideSpinner();
         };
     
+        /*
+        * Overrides the sensor value if present in userSettings else holds back value present in HTML element
+        */
         function dataToDisplay( userSetting ){
-            wifiSSID.value = userSetting.wifi.ssid;
-            wifiPassword.value = userSetting.wifi.password;
+            wifiSSID.value = userSetting.wifi.ssid || wifiSSID.value;
+            wifiPassword.value = userSetting.wifi.password || wifiPassword.value;
 
-            tankLow.value = userSetting.tank.low;
-            tankHigh.value = userSetting.tank.high;
+            tankLow.value = userSetting.tank.low || tankLow.value;
+            tankHigh.value = userSetting.tank.high || tankHigh.value;
 
-            sumpLow.value = userSetting.sump.low;
-            sumpHigh.value = userSetting.sump.high;
+            sumpLow.value = userSetting.sump.low || sumpLow.value;
+            sumpHigh.value = userSetting.sump.high || sumpHigh.value;
         };
 
+        /*
+        * Initilizes global variables with its coresponding HTML element
+        */
         function init(){
             wifiSSID = document.getElementById('ssid');
             wifiPassword = document.getElementById('password');

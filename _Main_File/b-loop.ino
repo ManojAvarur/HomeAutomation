@@ -1,26 +1,27 @@
 void loop(){
+    // Serial.println("Loop started");
     toLoopFunctionsMultipleTimes();
-    processLocalUserRequest();
+    // processLocalUserRequest();
 
     // water_pump();
-    if( WiFi.status() == WL_CONNECTED ){
+    // if( WiFi.status() == WL_CONNECTED ){
         // update_server(false, false, 0);
 
-        toLoopFunctionsMultipleTimes();
-        processLocalUserRequest();
+        // toLoopFunctionsMultipleTimes();
+        // processLocalUserRequest();
 
         // check_requests_from_server();
 
-        toLoopFunctionsMultipleTimes();
-        processLocalUserRequest();
+        // toLoopFunctionsMultipleTimes();
+        // processLocalUserRequest();
 
         // control_wifi_ap( false );
-    } else {
+    // } else {
         // if( ( millis() - WIFI_RECONNECTION_INTERVAL_ELAPSED_TIME ) >= WIFI_RECONNECTION_INTERVAL ){
             // setup_wifi( 0, 0 );
             // WIFI_RECONNECTION_INTERVAL_ELAPSED_TIME = millis();
             // WIFI_RECONNECTION_INTERVAL_ELAPSED_TIME += WIFI_RECONNECTION_INTERVAL;
         // }
         // control_wifi_ap( true );
-    }
+    // }
 }

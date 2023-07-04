@@ -24,14 +24,14 @@ WiFiClient client;
 
 
 // ------------------ Relay Settings -----------
-#define RELAY_1 D7 // For Water Pump
+#define RELAY_1 D8 // For Water Pump
 
 // ------------------ Water Level Sensor Settings ------
 // For Tank
 #define TANK_TRIGGER_PIN D1
 #define TANK_ECHO_PIN D2
 
-// For Sump
+// For Sump c4:5b:be:54:9b:a2
 #define SUMP_TRIGGER_PIN D3 
 #define SUMP_ECHO_PIN D4
 
@@ -52,8 +52,8 @@ int DEBUG_CLASS_DELAY_TIME = 0; // 1
 
 
 // ---------------- Execution Time Period -------------
-// unsigned long PERIOD = 5 * 60 * 1000L; // Executes in every 5 mins
-// int INITIAL_PUMP_LOAD_TIME = 5000; // 5 Sec
+unsigned long PERIOD = 5 * 60 * 1000L; // Executes in every 5 mins
+int INITIAL_PUMP_LOAD_TIME = 5000; // 5 Sec
 
 int USER_REQUEST_CHECK_INTERVAL = 30000;
 unsigned long USER_REQUEST_CHECK_INTERVAL_ELAPSED_TIME = 0L;
@@ -82,8 +82,8 @@ bool SEND_DEBUG_LOG = false;
 bool IS_MOTOR_CONTROLLED_LOCALLY = false;
 bool IS_MOTOR_CONTROLLED_ONLINE = false;
 
-const char* SSID = "Madhura";
-const char* PASSWORD = "Network_Bridge";
+String SSID = "Madhura";
+String PASSWORD = "Network_Bridge";
 const char* AP_SSID = "HOMEATO Water Controller";
 const char* AP_PASSWORD = "36066585767";
 
@@ -123,3 +123,6 @@ void toggleDebug();
 
 // POST request handlers
 void updateWifiCred();
+
+// Fetching sensor value 
+void getSensorValue();

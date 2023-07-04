@@ -49,7 +49,7 @@ UltraSonicSensor *uss;// = new UltraSonicSensor( trigPin, echoPin );
 void setup() {
   	Serial.begin(19200); // Starts the serial communication
 
-
+  WiFi.mode( WIFI_AP_STA );
 	WiFi.begin(ssid, password);
 
 	uss = new UltraSonicSensor( trigPin, echoPin );
@@ -121,7 +121,6 @@ void loop() {
   webSocket.loop();
 
 
-  delay(200);
 
     // Serial.println( webSocket.connectedClients() );
 }
