@@ -1,3 +1,66 @@
+void fetchDataFromMemory(){
+
+    int currentMemLocPointer = USER_SETTINGS_MEM_LOC.searchStartLocation;
+  
+    for( uint8_t i = 1; i <= 6; i++ ){
+    
+        String dataFromMemmory = "";
+        int count = 0;
+
+        while( EEPROM.read( currentMemLocPointer ) != '\0' && count < 200 ){
+            dataFromMemory += char( EEPROM.read( currentMemLocPointer ) ); 
+            currentMemLocPointer++;
+            count++;
+        }
+
+        if( count >= 200 ){
+            break;
+        }
+
+        switch(i){
+            case 1:
+                SSID = dataFromMemory;
+                USER_SETTINGS_MEM_LOC.ssidStart = USER_SETTINGS_MEM_LOC.searchStartLocation;
+            break;
+
+            case 2:
+                PASSWORD = dataFromMemory;
+                USER_SETTINGS_MEM_LOC.passwordStart = currentMemLocPointer;
+            break;
+
+            case 3:
+                float limitValue = dataFromMemory.toFloat();
+                TANK_AND_SUMP_LIMITS.tankLow = limitValue;
+                TANK_AND_SUMP_LIMITS_OLD.tankLow = limitValue;
+                USER_SETTINGS_MEM_LOC.tankLowStart = currentMemLocPointer;
+            break;
+
+            case 4:
+                float limitValue = dataFromMemory.toFloat();
+                TANK_AND_SUMP_LIMITS.tankHigh = limitValue;
+                TANK_AND_SUMP_LIMITS_OLD.tankHigh = limitValue;
+                USER_SETTINGS_MEM_LOC.tankHighStart = currentMemLocPointer;
+            break;
+
+            case 5:
+                float limitValue = dataFromMemory.toFloat();
+                TANK_AND_SUMP_LIMITS.sumpLow = limitValue;
+                TANK_AND_SUMP_LIMITS_OLD.sumpLow = limitValue;
+                USER_SETTINGS_MEM_LOC.sumpLowStart = currentMemLocPointer;
+            break;
+
+            case 5:
+                float limitValue = dataFromMemory.toFloat();
+                TANK_AND_SUMP_LIMITS.sumpHigh = limitValue;
+                TANK_AND_SUMP_LIMITS_OLD.sumpHigh = limitValue;
+                USER_SETTINGS_MEM_LOC.sumpHighStart = currentMemLocPointer;
+            break;
+        }
+
+        currentMemLocPointer++;
+    }
+}
+
 // This function is used to store the debug log in global variable
 void debug_log( String value ){
     DEBUG_LOG = value;

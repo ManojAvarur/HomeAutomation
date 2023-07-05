@@ -40,9 +40,50 @@ void updateWifiCred(){
         String value = server.arg(i);
         String nameAttribute = server.argName(i);
     
-        if( String("ssid") == nameAttribute ){ SSID = value; }
-        if( String("password") == nameAttribute ){ PASSWORD = value; } 
-`    }
+        if( String("ssid") == nameAttribute ){ 
+            SSID = value; 
+        }
+
+        if( String("password") == nameAttribute ){ 
+            PASSWORD = value; 
+        } 
+    }
+
+    server.sendHeader("Location", "/settings", true);
+    server.send(302, "text/plain", "");
+}
+
+void updateTankSensorLimits(){
+    for(uint8_t i = 0; i < server.args(); i++){ 
+        float value = server.arg(i).toFloat();
+        String nameAttribute = server.argName(i);
+    
+        if( String("tlow") == nameAttribute ){ 
+            TANK_AND_SUMP_LIMITS.tankLow = value; 
+        }
+
+        if( String("thigh") == nameAttribute ){ 
+            TANK_AND_SUMP_LIMITS.tankHigh = value; 
+        } 
+    }
+
+    server.sendHeader("Location", "/settings", true);
+    server.send(302, "text/plain", "");
+}
+
+void updateSumpSensorLimits(){
+    for(uint8_t i = 0; i < server.args(); i++){ 
+        float value = server.arg(i).toFloat();
+        String nameAttribute = server.argName(i);
+    
+        if( String("slow") == nameAttribute ){
+            TANK_AND_SUMP_LIMITS.sumpLow = value; 
+        }
+
+        if( String("shigh") == nameAttribute ){
+            TANK_AND_SUMP_LIMITS.sumpHigh = value; 
+        } 
+    }
 
     server.sendHeader("Location", "/settings", true);
     server.send(302, "text/plain", "");
@@ -72,4 +113,11 @@ void getSensorValue(){
     serializeJson( general_purpose_json_holder, payloadString );
 
     server.send( 200, "application/json", payloadString );
+}
+
+void commitTempSettingsDataToMemory(){
+    bool isChanged = false;
+
+    if( !isChanged &&  )
+
 }

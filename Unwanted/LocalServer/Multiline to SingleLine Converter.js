@@ -13,7 +13,7 @@ function reduce( which ){
     fs.writeFileSync(`${location}compressed.html`, newStr )
 }
 
-reduce(1);
+reduce(2);
 
 
 

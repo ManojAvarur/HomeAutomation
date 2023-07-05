@@ -3,7 +3,7 @@ void loop(){
     toLoopFunctionsMultipleTimes();
     // processLocalUserRequest();
 
-    // water_pump();
+    water_pump();
     // if( WiFi.status() == WL_CONNECTED ){
         // update_server(false, false, 0);
 

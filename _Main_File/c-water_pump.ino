@@ -1,7 +1,7 @@
 void water_pump(){
 
     // If failed to load data from EEPROM -> Stop this function execution
-    if( !TANK_AND_SUMP_LIMITS.dataLoadedFromMemory ){
+    if( TANK_AND_SUMP_LIMITS.tankLow < 0 || TANK_AND_SUMP_LIMITS.tankHigh < 0 || TANK_AND_SUMP_LIMITS.sumpLow < 0 || TANK_AND_SUMP_LIMITS.sumpHigh < 0 ){
         debug_log("\nTank and Sump data not loaded from memory");
         return;
     }
@@ -13,7 +13,7 @@ void water_pump(){
         return;
     }
 
-    // If tank level is less than high
+    // If sump level is less than or equal to low -> Turn motor off
     if ( sumpObj.waterLevelInSump() <= TANK_AND_SUMP_LIMITS.sumpLow ) {
         motorController.turnOff();
         debug_log("\nTank level low turning off the pump because low water in sump");
@@ -28,6 +28,6 @@ void water_pump(){
     } 
     
     motorController.turnOff();
-    debug_log("\nWater Level low in sump");
+    debug_log("\nNo conditions matched || Sump : " + String( sumpObj.waterLevelInSump() ) + " || Tank : " + String( tankObj.waterLevelInTank() ) );
 
 }

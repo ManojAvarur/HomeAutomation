@@ -1,6 +1,9 @@
 void setup(){
     Serial.begin(19200);
 
+    // Fetching data from memory
+    fetchDataFromMemory();
+
     // ----- WIFI Setup -------
     WiFi.mode( WIFI_AP_STA );
     WiFi.setAutoReconnect( false );
@@ -15,7 +18,7 @@ void setup(){
 
     server.on("/settings", serveSettingsPage );
 
-    // server.onNotFound( serveIndexPage );
+    server.onNotFound( serveIndexPage );
 
     // Routes for data accessing / processing   
     server.on("/initial-message", initialMessage );
@@ -26,11 +29,11 @@ void setup(){
 
     server.on("/update-wifi-cred", updateWifiCred );
 
-    // server.on("/update-tank-sensor", [](){  } );
+    server.on("/update-tank-sensor-limits", updateTankSensorLimits );
 
-    // server.on("/update-sump-sensor", [](){ } );
+    server.on("/update-sump-sensor-limits", updateSumpSensorLimits );
 
-    // server.on("/commit-data", [](){ } );
+    server.on("/commit-data", commitTempSettingsDataToMemory );
 
     server.on("/get-sensor-value", getSensorValue );
     

@@ -93,8 +93,17 @@ struct {
     float sumpLow = -1;
     float sumpHigh = -1;
     float motorSafeBuffer = 3;
-    bool dataLoadedFromMemory = false;
 } TANK_AND_SUMP_LIMITS, TANK_AND_SUMP_LIMITS_OLD;
+
+struct {
+    int searchStartLocation = 0;
+    int ssidStart = -1;
+    int passwordStart = -1;
+    int tankLowStart = -1;
+    int tankHighStart = -1;
+    int sumpLowStart = -1;
+    int sumpHighStart = -1;
+} USER_SETTINGS_MEM_LOC;
 
 // ---------------- Function Declaration -----------
 void water_pump();
@@ -109,6 +118,7 @@ void toLoopFunctionsMultipleTimes();
 String generateStringifiedJsonDataForLocalUser();
 void processLocalUserRequest();
 StaticJsonDocument<96> deserializeStringifiedJsonDataFromLocalUser();
+void fetchDataFromMemory();
 
 // Server website serving functions
 String indexPage();
@@ -123,6 +133,9 @@ void toggleDebug();
 
 // POST request handlers
 void updateWifiCred();
+void updateTankSensorLimits();
+void updateSumpSensorLimits();
+void commitTempSettingsDataToMemory();
 
 // Fetching sensor value 
 void getSensorValue();

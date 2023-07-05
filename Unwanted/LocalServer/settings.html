@@ -578,15 +578,15 @@
                     <h1>Tank Sensor</h3>    
                 </div>  
     
-                <form action='/update-tank-sensor' method='post'>
+                <form action='/update-tank-sensor-limits' method='post'>
                     <div class='form-group-1'>
                         <label for='tlow'>Low</label>
-                        <input type='number' id='tlow' name='tlow' placeholder='Tank Low' required>
+                        <input type='number' id='tlow' name='tlow' placeholder='Tank Low' step="any" required>
                     </div>
     
                     <div class='form-group-2'>
                         <label for='ssid'>High</label>
-                        <input type='number' id='thigh' name='thigh' placeholder='Tank High' required>
+                        <input type='number' id='thigh' name='thigh' placeholder='Tank High' step="any" required>
                     </div>
     
                     <div class='form-group-3'>
@@ -604,15 +604,15 @@
                     <h1>Sump Sensor</h3>    
                 </div>  
     
-                <form action='/update-sump-sensor' method='post'>
+                <form action='/update-sump-sensor-limits' method='post'>
                     <div class='form-group-1'>
                         <label for='slow'>Low</label>
-                        <input type='number' id='slow' name='slow' placeholder='Sump Low' required>
+                        <input type='number' id='slow' name='slow' placeholder='Sump Low' step="any" required>
                     </div>
     
                     <div class='form-group-2'>
                         <label for='shigh'>High</label>
-                        <input type='number' id='shigh' name='shigh' placeholder='Sump High' required>
+                        <input type='number' id='shigh' name='shigh' placeholder='Sump High' step="any" required>
                     </div>
     
                     <div class='form-group-3'>
