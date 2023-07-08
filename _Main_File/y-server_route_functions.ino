@@ -55,7 +55,7 @@ void updateWifiCred(){
 
 void updateTankSensorLimits(){
     for(uint8_t i = 0; i < server.args(); i++){ 
-        float value = server.arg(i).toFloat();
+        float value = String( server.arg(i).toFloat(), ROUND_FLOAT_VALUES_TO ).toFloat();
         String nameAttribute = server.argName(i);
     
         if( String("tlow") == nameAttribute ){ 
@@ -73,7 +73,7 @@ void updateTankSensorLimits(){
 
 void updateSumpSensorLimits(){
     for(uint8_t i = 0; i < server.args(); i++){ 
-        float value = server.arg(i).toFloat();
+        float value = String( server.arg(i).toFloat(), ROUND_FLOAT_VALUES_TO ).toFloat();
         String nameAttribute = server.argName(i);
     
         if( String("slow") == nameAttribute ){
@@ -98,16 +98,21 @@ void getSensorValue(){
     }
 
     String payloadString = server.arg("plain");
-
+    float sensorData = 0;
+    
     deserializeJson( general_purpose_json_holder, payloadString );
 
+
     if( general_purpose_json_holder["captureFrom"] == "Tank" ){
-        general_purpose_json_holder["requestedData"] = tankObj.waterLevelInTank( true );
+        sensorData = tankObj.waterLevelInTank( true );
     }
 
     if( general_purpose_json_holder["captureFrom"] == "Sump" ){
-        general_purpose_json_holder["requestedData"] = sumpObj.waterLevelInSump( true );
+        sensorData = sumpObj.waterLevelInSump( true );
     }
+
+    // Rounding of float to 2 decimals
+    general_purpose_json_holder["requestedData"] = String( sensorData, ROUND_FLOAT_VALUES_TO ).toFloat();
 
     payloadString = "";
     serializeJson( general_purpose_json_holder, payloadString );
@@ -116,8 +121,30 @@ void getSensorValue(){
 }
 
 void commitTempSettingsDataToMemory(){
-    bool isChanged = false;
+    
+    int currentMemLocPointer = EEPROM_DATA_START_LOC;
 
-    if( !isChanged &&  )
+    String settingsToBeCommited = 
+        SSID + '\0' +
+        PASSWORD + '\0' +
+        String( TANK_AND_SUMP_LIMITS.tankLow ) + '\0' + 
+        String( TANK_AND_SUMP_LIMITS.tankHigh ) + '\0' + 
+        String( TANK_AND_SUMP_LIMITS.sumpLow ) + '\0' + 
+        String( TANK_AND_SUMP_LIMITS.sumpHigh ) + '\0' 
+    ;
 
+    for( int i = 0; i < settingsToBeCommited.length(); i++, currentMemLocPointer++ ){
+
+        char dataFetchedFromMem = char( EEPROM.read( currentMemLocPointer ) );
+
+        if( dataFetchedFromMem != settingsToBeCommited.charAt(i) ){
+            Serial.println( "@ " + String(currentMemLocPointer) + " : " + dataFetchedFromMem + " != " + settingsToBeCommited.charAt(i) );
+            // EEPROM.write( currentMemLocPointer, settingsToBeCommited.charAt(i) );
+        }
+    }
+
+    // EEPROM.commit();
+
+    server.sendHeader("Location", "/settings", true);
+    server.send(302, "text/plain", "");
 }

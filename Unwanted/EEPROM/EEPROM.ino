@@ -1,43 +1,43 @@
-#include <EEPROM.h>
+// #include <EEPROM.h>
 
 
-void setup(){
+// void setup(){
 
-    Serial.begin(19200); // Starts the serial communication
+//     Serial.begin(19200); // Starts the serial communication
 
-    String word = "Hello World!";
+//     String word = "Hello World!";
 
-    EEPROM.begin(512);
+//     EEPROM.begin(512);
 
 
-    // EEPROM.get( 0, data ); 
+//     // EEPROM.get( 0, data ); 
 
    
 
 
-    // Serial.println( EEPROM.read(0) );
+//     // Serial.println( EEPROM.read(0) );
 
-    for( int i = 0; i < word.length(); i++ ){
-        EEPROM.write(i, word[i]);
-    }
+//     for( int i = 0; i < word.length(); i++ ){
+//         EEPROM.write(i, word[i]);
+//     }
 
-    EEPROM.write( word.length(), '\0');
+//     EEPROM.write( word.length(), '\0');
 
-    EEPROM.commit();
-}
+//     EEPROM.commit();
+// }
 
-void loop(){
+// void loop(){
 
-    String data = "";
-    for( int i = 0; EEPROM.read(i) != '\0'; i++ ){
-        data += char(EEPROM.read(i)); 
-    }
+//     String data = "";
+//     for( int i = 0; EEPROM.read(i) != '\0'; i++ ){
+//         data += char(EEPROM.read(i)); 
+//     }
 
-    Serial.println( data );
+//     Serial.println( data );
 
-    delay(5000);
+//     delay(5000);
 
-//   Serial.println( "@ " + String( i ) + " : " + String( EEPROM.read( i ) ) );
-//   i++;
-  // delay(1000);
-}
+// //   Serial.println( "@ " + String( i ) + " : " + String( EEPROM.read( i ) ) );
+// //   i++;
+//   // delay(1000);
+// }

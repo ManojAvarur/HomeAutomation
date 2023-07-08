@@ -370,7 +370,7 @@
         let tankStatus, sumpStatus, motorStatus, debugLog, manualOverideCheckbox, manualOverideController;  
 
         function calculatePercentage({ min, max, value }){
-            return ( ( value - min ) * 100 ) / ( max - min );
+            return Math.round( ( ( value - min ) * 100 ) / ( max - min ) );
         }
 
         function onChangeOverideCheckbox( event ){
@@ -430,20 +430,22 @@
             
             sumpStatus.className = ``;  
             tankStatus.className = ``; 
-            motorStatus.className = levelIndicators[ event.status.motor.displayState ] || levelIndicators.motor['-1']; 
+            motorStatus.className = ``;/*levelIndicators[ event.status.motor.displayState ] || levelIndicators.motor['-1']; */
 
             
             sumpStatus.innerText = `${calculatePercentage({
-                min: event.status.sump.maximumLevel,
-                max: event.status.sump.minimumLevel,  
+                max: event.status.sump.maximumLevel,
+                min: event.status.sump.minimumLevel,  
                 value: event.status.sump.currentLevel
             })} %`;
 
             tankStatus.innerText = `${calculatePercentage({
-                min: event.status.tank.maximumLevel,
-                max: event.status.tank.minimumLevel,  
+                max: event.status.tank.maximumLevel,
+                min: event.status.tank.minimumLevel,  
                 value: event.status.tank.currentLevel
             })} %`;
+
+            motorStatus.innerText = ( event.status.motor.displayState === 1 )? `ON` : `OFF`;
 
             if( event.debug.display ){  
                 debugLog.style.display = `block`;   

@@ -1,5 +1,7 @@
 void setup(){
     Serial.begin(19200);
+    
+    EEPROM.begin(512);
 
     // Fetching data from memory
     fetchDataFromMemory();

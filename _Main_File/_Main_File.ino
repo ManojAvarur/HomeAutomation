@@ -11,6 +11,7 @@ String UNIQUE_ID = "4bb7abf6d3782611339eb6fe6326b96b6b4fca3d6f7e16f33367268806c5
 #include <WebSocketsServer.h>
 #include <DNSServer.h> 
 #include <Hash.h>
+#include <EEPROM.h>
 
 IPAddress local_ip( 192, 168, 0, 1 );
 IPAddress gateway( 192, 168, 0, 1 );
@@ -69,7 +70,7 @@ unsigned long TANK_SUMP_WATER_LEVEL_UPDATE_INTERVAL_ELAPSED_TIME = 0L;
 #include "z-sump_class.h"
 #include "z-tank_class.h"
 #include "z-motor_control_class.h"
-#include "zz-website.h"
+#include "y-website.h"
 
 Sump sumpObj = Sump( SUMP_TRIGGER_PIN, SUMP_ECHO_PIN, TANK_SUMP_WATER_LEVEL_UPDATE_INTERVAL );
 Tank tankObj = Tank( TANK_TRIGGER_PIN, TANK_ECHO_PIN, TANK_SUMP_WATER_LEVEL_UPDATE_INTERVAL );
@@ -81,9 +82,11 @@ bool WIFI_AP_ENABLED = false;
 bool SEND_DEBUG_LOG = false;
 bool IS_MOTOR_CONTROLLED_LOCALLY = false;
 bool IS_MOTOR_CONTROLLED_ONLINE = false;
+int EEPROM_DATA_START_LOC = 0;
+int ROUND_FLOAT_VALUES_TO = 2;
 
-String SSID = "Madhura";
-String PASSWORD = "Network_Bridge";
+String SSID = "";
+String PASSWORD = "";
 const char* AP_SSID = "HOMEATO Water Controller";
 const char* AP_PASSWORD = "36066585767";
 
@@ -95,15 +98,6 @@ struct {
     float motorSafeBuffer = 3;
 } TANK_AND_SUMP_LIMITS, TANK_AND_SUMP_LIMITS_OLD;
 
-struct {
-    int searchStartLocation = 0;
-    int ssidStart = -1;
-    int passwordStart = -1;
-    int tankLowStart = -1;
-    int tankHighStart = -1;
-    int sumpLowStart = -1;
-    int sumpHighStart = -1;
-} USER_SETTINGS_MEM_LOC;
 
 // ---------------- Function Declaration -----------
 void water_pump();
