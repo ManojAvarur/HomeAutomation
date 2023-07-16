@@ -24,8 +24,15 @@ CREATE TABLE cookie_data (
 CREATE TABLE node_mcu_data (
   time_stamp datetime not null,
   unc_node_mcu_unique_id varchar(100) PRIMARY KEY,
-  sump_status tinyint NOT NULL,
-  tank_status tinyint NOT NULL,
+
+  sump_status int NOT NULL,
+  sump_low_limit int NOT NULL,
+  sump_high_limit int NOT NULL,
+
+  tank_status int NOT NULL,
+  tank_low_limit int NOT NULL,
+  tank_high_limit int NOT NULL,
+
   motor_status boolean NOT NULL,
   debug_log varchar(200),
   is_controlled_locally boolean NOT NULL,

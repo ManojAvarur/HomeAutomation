@@ -37,6 +37,10 @@ let loadSensorDataInterval = setInterval( () => {
 
 let updateTimeToServerInterval;
 
+function calculatePercentage({ min, max, value }){
+    return Math.round( ( ( value - min ) * 100 ) / ( max - min ) );
+}
+
 function loadSensorData(){
     fetch("handel_request/user/retrive_sensor_data.php")
     .then( result => result.json() )
@@ -56,77 +60,24 @@ function loadSensorData(){
             }
         }
 
-        switch( parseInt( sensorData.tank_status ) ){
-            case -1 :
-            default : 
-                tankStatusDisplay.classList.remove( tankStatusDisplay.classList[0] );
-                tankStatusDisplay.classList.add( "gradient_circle") ;
-            break;
+        tankStatusDisplay.className = '';
+        sumpStatusDisplay.className = '';
+        motorStatusDisplay.className = '';
+        
+        tankStatusDisplay.innerText = `${calculatePercentage({ 
+            min: sensorData.tank_low_limit,
+            max: sensorData.tank_high_limit,
+            value: sensorData.tank_status
+        })} %`;
 
-            case 0 :
-                tankStatusDisplay.classList.remove( tankStatusDisplay.classList[0] );
-                tankStatusDisplay.classList.add( "red_circle") ;
-            break;
+        sumpStatusDisplay.innerText = `${calculatePercentage({
+            min: sensorData.sump_low_limit,
+            max: sensorData.sump_high_limit,
+            value: sensorData.sump_status
+        })} %`;
 
-            case 1 :
-                tankStatusDisplay.classList.remove( tankStatusDisplay.classList[0] );
-                tankStatusDisplay.classList.add( "yellow_circle") ;
-            break;  
-
-            case 2 :
-                tankStatusDisplay.classList.remove( tankStatusDisplay.classList[0] );
-                tankStatusDisplay.classList.add( "orange_circle") ;
-            break;
-
-            case 3 :
-            case 4 :
-                tankStatusDisplay.classList.remove( tankStatusDisplay.classList[0] );
-                tankStatusDisplay.classList.add( "green_circle") ;
-            break;
-            
-        }
-
-        switch( parseInt( sensorData.sump_status ) ){
-            case -1 :
-            default : 
-                sumpStatusDisplay.classList.remove( sumpStatusDisplay.classList[0] );
-                sumpStatusDisplay.classList.add( "gradient_circle") ;
-            break;
-
-            case 0 :
-                sumpStatusDisplay.classList.remove( sumpStatusDisplay.classList[0] );
-                sumpStatusDisplay.classList.add( "red_circle") ;
-            break;
-
-            case 1 :
-                sumpStatusDisplay.classList.remove( sumpStatusDisplay.classList[0] );
-                sumpStatusDisplay.classList.add( "yellow_circle") ;
-            break;  
-
-            case 2 :
-            case 3 :
-                sumpStatusDisplay.classList.remove( sumpStatusDisplay.classList[0] );
-                sumpStatusDisplay.classList.add( "orange_circle") ;
-            break;
-        }
-
-        switch( parseInt( sensorData.motor_status ) ){
-            case -1 :
-            default : 
-                motorStatusDisplay.classList.remove( motorStatusDisplay.classList[0] );
-                motorStatusDisplay.classList.add( "gradient_circle") ;
-            break;
-
-            case 0 :
-                motorStatusDisplay.classList.remove( motorStatusDisplay.classList[0] );
-                motorStatusDisplay.classList.add( "red_circle") ;
-            break;
-
-            case 1 :
-                motorStatusDisplay.classList.remove( motorStatusDisplay.classList[0] );
-                motorStatusDisplay.classList.add( "green_circle") ;
-            break;  
-        }
+        motorStatusDisplay.innerText = ( sensorData.motor_status === 1 )? 'ON' : 'OFF';
+        
 
         let retrivedTimeStamp = new Date( sensorData.time_stamp );
         let currentTimeStamp = new Date();
