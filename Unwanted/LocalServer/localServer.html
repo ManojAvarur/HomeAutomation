@@ -361,9 +361,59 @@
         .green_circle{  
             background-color: rgb(0, 128, 0);   
         }   
+
+        /* Spinner */
+
+        @keyframes spinner {
+          to {transform: rotate(360deg);}
+        }
+         
+        #spinner:before {
+            content: '';
+            box-sizing: border-box;
+            position: absolute; 
+            top: 50%; 
+            left: 50%;
+            width: 100px;
+            height: 100px;
+            margin-top: -10px;
+            margin-left: -30px;
+            border-radius: 50%;
+            border: 3px solid #ccc;
+            border-top-color: #698b49;
+            animation: spinner .6s linear infinite;
+            z-index: 5;
+        }
+
+        #spinner{
+            position: fixed;
+            width: 100vw;
+            top: -10%;
+            height: 110vh;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1;
+        }
     </style>    
+
+    <script>
+        class SpinnerHandler{
+            _spinnerElement;
+            constructor(){
+                this._spinnerElement = document.getElementById('spinner');
+            };
+
+            showSpinner(){
+                this._spinnerElement.removeAttribute('hidden');
+            };
+
+            hideSpinner(){
+                this._spinnerElement.setAttribute('hidden', "");
+            };
+        }
+    </script>
     
     <script>    
+        const spinnerHandler = new SpinnerHandler();
         const connectionUrl = `ws://${window.location.host}:81/`;
         let ws = new WebSocket(connectionUrl); 
         
@@ -376,11 +426,11 @@
         function onChangeOverideCheckbox( event ){
             if( manualOverideCheckbox.checked ){
                 manualOverideController.disabled = false;
-                manualOverideController.parentElement.className =  `toggle`;    
+                manualOverideController.parentElement.className = `toggle`;    
             } else {
                 manualOverideController.checked = false;
                 manualOverideController.disabled = true;
-                manualOverideController.parentElement.className =  `toggle isDisabled`;    
+                manualOverideController.parentElement.className = `toggle isDisabled`;    
             }
         }
         
@@ -468,6 +518,7 @@
             }
 
             onChangeOverideCheckbox();
+            spinnerHandler.hideSpinner();
         };  
         
         ws.onerror = function( event ){ 
@@ -480,14 +531,17 @@
         }; 
             
         function motorController(){  
+            spinnerHandler.showSpinner();
             onChangeOverideCheckbox();
             ws.send(JSON.stringify({ isBeingControlled: manualOverideCheckbox.checked, state: manualOverideController.checked }));    
-        };   
-        
+        };           
     </script>   
 </head> 
     
 <body onload='loadElements()'>  
+
+    <div id="spinner" hidden></div> 
+
     <header>    
         <nav>   
             <div class='container'> 

@@ -8,15 +8,14 @@ class MotorControl{
         uint8_t previousState = MOTOR_OFF;
         // Should be depricated once NodeJs is completed
         bool isChangedForLocal = false;
-        int relayToControl;
-        // uint8_t MOTOR_ON, MOTOR_OFF;
+        int relayPinNoToControl;
 
         void motor_control( uint8_t value ){
-            digitalWrite( RELAY_1, value );
+            digitalWrite( relayPinNoToControl, value );
         }
 
         void setDataChangeNotifier(){
-            int currentState = digitalRead( RELAY_1 );
+            int currentState = digitalRead( relayPinNoToControl );
             if( previousState != currentState ){
                 isChanged = true;
                 isChangedForLocal = true;
@@ -56,8 +55,9 @@ class MotorControl{
             setDataChangeNotifier();
         }
 
-        MotorControl( int relay ){
-            relayToControl = relay;
-            pinMode(relayToControl, OUTPUT);
+        MotorControl( int relayPin ){
+            relayPinNoToControl = relayPin;
+            pinMode(relayPinNoToControl, OUTPUT);
+            motor_control( MOTOR_OFF );
         }
 };

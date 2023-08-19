@@ -42,6 +42,8 @@ class Tank{
             WATER_CHECK_INTERVAL_ELAPSED_TIME = millis();
 
             currentWaterStatus = ultraSonicSensor->getCurrentValue()->inInches();
+            Serial.print("In Current Tank data : ");
+            Serial.println(currentWaterStatus);
 
             if( currentWaterStatus != oldWaterStatus ){
                 isChanged = true;

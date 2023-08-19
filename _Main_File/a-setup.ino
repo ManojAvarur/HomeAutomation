@@ -1,5 +1,5 @@
 void setup(){
-    Serial.begin(19200);
+    // Serial.begin(19200);
     
     EEPROM.begin(512);
 
@@ -49,4 +49,6 @@ void setup(){
 	
     webSocket.begin();
     webSocket.onEvent(webSocketEvent);
+
+    delay(2000);
 }

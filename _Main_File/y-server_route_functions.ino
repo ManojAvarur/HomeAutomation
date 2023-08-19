@@ -139,11 +139,11 @@ void commitTempSettingsDataToMemory(){
 
         if( dataFetchedFromMem != settingsToBeCommited.charAt(i) ){
             Serial.println( "@ " + String(currentMemLocPointer) + " : " + dataFetchedFromMem + " != " + settingsToBeCommited.charAt(i) );
-            // EEPROM.write( currentMemLocPointer, settingsToBeCommited.charAt(i) );
+            EEPROM.write( currentMemLocPointer, settingsToBeCommited.charAt(i) );
         }
     }
 
-    // EEPROM.commit();
+    EEPROM.commit();
 
     server.sendHeader("Location", "/settings", true);
     server.send(302, "text/plain", "");

@@ -1,6 +1,6 @@
-// ------------------ Main Declaration --------------
+// ------------------ Main Declaration -------------- New : 48:55:19:e5:c1:17 - OLD : c4:5b:be:54:9b:a2	
 // String URL = "http://iotproject.coolpage.biz/home_automation/handel_request/nodemcu";
-String URL = "http://192.168.1.9/HomeAutomation/HomeAutomation%20-%20Website/handel_request/nodemcu";
+String URL = "http://192.168.1.8/HomeAutomation/HomeAutomation%20-%20Website/handel_request/nodemcu";
 String UNIQUE_ID = "4bb7abf6d3782611339eb6fe6326b96b6b4fca3d6f7e16f33367268806c5512c";
 
 // ------------------ Wi-Fi Settings ------------------
@@ -25,16 +25,16 @@ WiFiClient client;
 
 
 // ------------------ Relay Settings -----------
-#define RELAY_1 D8 // For Water Pump
+#define RELAY_1 D0 // For Water Pump
 
 // ------------------ Water Level Sensor Settings ------
 // For Tank
-#define TANK_TRIGGER_PIN D1
-#define TANK_ECHO_PIN D2
+#define TANK_TRIGGER_PIN D2
+#define TANK_ECHO_PIN D4
 
-// For Sump c4:5b:be:54:9b:a2
-#define SUMP_TRIGGER_PIN D3 
-#define SUMP_ECHO_PIN D4
+// For Sump
+#define SUMP_TRIGGER_PIN D5
+#define SUMP_ECHO_PIN D6
 
 // ----------------- Json Libraies Settings ------------
 #include "z-ArduinoJson-v6.18.5.h"
